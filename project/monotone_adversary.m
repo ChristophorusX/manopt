@@ -3,9 +3,10 @@
 
 % Generate random adjacency matrix (symmetric) of dimension n (even) 
 % according to inner- and inter-cluster edge probability p and q
-number_of_vertices = 300;
-a = 4;
-b = 6;
+
+number_of_vertices = 30;
+a = 16;
+b = 4;
 n = number_of_vertices;
 p = a*log(n)/n;
 q = b*log(n)/n;
@@ -37,6 +38,12 @@ end
 disp(['The average edge of every row should be around ' num2str((p*n + q*n)/2) '.'])
 disp(['The empirical average number of edges is ' num2str(sum(row_sum)/n)])
 
+% Properties of the planted partition
+z = [ones(n/2) -ones(n/2)]'; % planted partition
+true_cost_value = z'*A*z;
+disp(['The planted cost value of this problem is ' true_cost_value '.'])
+
+
 % Perform a manifold optimization on the cost function Tr(AX) given the
 % manifold (Symmetric positive semidefinite, fixed-rank with unit diagonal)
 % with rank(X)<=2
@@ -48,6 +55,7 @@ problem.M = manifold;
 problem.cost = @(X) -sum(diag((A*X)));
 
 [X, Xcost, info] = trustregions(problem);
+disp(['The output optimal cost by the algorithm is ' Xcost '.'])
 
 figure;
 semilogy([info.iter], [info.gradnorm], '.-');
