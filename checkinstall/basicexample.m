@@ -27,7 +27,7 @@ function basicexample()
     checkhessian(problem);
  
     % Solve.
-    [x, xcost, info] = trustregions(problem);          %#ok<ASGLU>
+    [x, xcost, info, options] = trustregions(problem);          %#ok<ASGLU>
     
     % Display some statistics.
     figure;

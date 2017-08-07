@@ -4,7 +4,7 @@
 % Generate random adjacency matrix (symmetric) of dimension n (even) 
 % according to inner- and inter-cluster edge probability p and q
 
-number_of_vertices = 30;
+number_of_vertices = 5000;
 a = 16;
 b = 4;
 n = number_of_vertices;
@@ -38,13 +38,8 @@ end
 disp(['The average edge of every row should be around ' num2str((p*n + q*n)/2) '.'])
 disp(['The empirical average number of edges is ' num2str(sum(row_sum)/n)])
 
-% Properties of the planted partition
-z = [ones(n/2) -ones(n/2)]'; % planted partition
-true_cost_value = z'*A*z;
-disp(['The planted cost value of this problem is ' true_cost_value '.'])
 
-
-% Perform a manifold optimization on the cost function Tr(AX) given the
+% Perform a manifold optimization on the cost function Tr(Q^TAQ) given the
 % manifold (Symmetric positive semidefinite, fixed-rank with unit diagonal)
 % with rank(X)<=2
 
@@ -52,10 +47,26 @@ k = 2;
 manifold = elliptopefactory(n, k);
 problem.M = manifold;
 
-problem.cost = @(X) -sum(diag((A*X)));
+problem.cost = @(Q) -trace(Q'*A*Q); % Note that Manopt only minimize the cost function
+problem.egrad = @(Q) -((A+A')*Q+[diag(A*diag(Q(:,1))) diag(A*diag(Q(:,2)))]); % by calculation
 
-[X, Xcost, info] = trustregions(problem);
-disp(['The output optimal cost by the algorithm is ' Xcost '.'])
+figure;
+checkgradient(problem);
+figure;
+checkhessian(problem);
+
+[Q, Qcost, info, options] = trustregions(problem);
+disp(['The output optimal cost by the algorithm is ' num2str(Qcost) '.'])
+
+%correlation = sqrt(z'*(Q*Q')*z)/n;
+%disp(['The correlation between output X and the planted vector z is ' num2str(correlation) '.'])
+
+% Properties of the planted partition
+z = [ones(1,n/2) -ones(1,n/2)]'; % planted partition
+%disp(z)
+true_cost_value = -z'*A*z;
+%disp(true_cost_value)
+disp(['The planted cost value of this problem is ' num2str(true_cost_value) '.'])
 
 figure;
 semilogy([info.iter], [info.gradnorm], '.-');
