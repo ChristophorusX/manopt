@@ -68,13 +68,6 @@ disp(['The planted cost value of this problem is ' num2str(true_cost_value) '.']
 correlation = sqrt(z'*(Q*Q')*z)/n;
 disp(['The correlation between output X and the planted vector z is ' num2str(correlation) '.'])
 
-% Properties of the planted partition
-z = [ones(1,n/2) -ones(1,n/2)]'; % planted partition
-%disp(z)
-true_cost_value = -z'*A*z;
-%disp(true_cost_value)
-disp(['The planted cost value of this problem is ' num2str(true_cost_value) '.'])
-
 figure;
 semilogy([info.iter], [info.gradnorm], '.-');
 xlabel('Iteration #');
