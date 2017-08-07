@@ -2,7 +2,8 @@
 % detection problem of 2 clusters. @author: Ruitu Xu
 
 % Generate random adjacency matrix (symmetric) A of dimension n (even) 
-% according to inner- and inter-cluster edge probability p and q
+% according to inner- and inter-cluster edge probability p and q.
+% NOTE: this setting is for stochastic block model.
 
 number_of_vertices = 5000;
 a = 16;
@@ -10,8 +11,8 @@ b = 4;
 n = number_of_vertices;
 p = a*log(n)/n;
 q = b*log(n)/n;
-% Properties of the planted partition
-z_sbm = [ones(1,n/2) -ones(1,n/2)]'; % planted partition
+% Properties of the planted partition.
+z_sbm = [ones(1,n/2) -ones(1,n/2)]'; % planted partition for SBM.
 R1_pre = rand(n/2,n/2) > (1-p);
 % display(R1_pre)
 R3_pre = rand(n/2,n/2) > (1-p);
@@ -42,7 +43,8 @@ disp(['The empirical average number of edges is ' num2str(sum(row_sum)/n)])
 
 % Generate random matrix Y of dimension n for Z2 synchronization problem,
 % where Y=zz^T+\sigma W, with W a Wigner matrix generated from Gaussian
-% distribution
+% distribution.
+% NOTE: this setting is for synchronization problem.
 
 percent_of_elements_being_one = 0.5;
 z_pre = rand(n,1) > (1-percent_of_elements_being_one);
@@ -55,7 +57,7 @@ W = R - diag(R);
 
 lambda = 20; % value to move around
 sigma = sqrt(n)/lambda;
-Y = z*z'+ sigma*W;
+Y = z_syn*z_syn'+ sigma*W;
 % display(Y)
 
 % Perform a manifold optimization on the cost function Tr(Q^TBQ) given the
