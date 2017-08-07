@@ -1,19 +1,19 @@
 % This is a MATLAB program of running monotone adversary on community
 % detection problem of 2 clusters. @author: Ruitu Xu
 
-% Generate random adjacency matrix (symmetric) of dimension n (even) 
+% Generate random adjacency matrix (symmetric) A of dimension n (even) 
 % according to inner- and inter-cluster edge probability p and q
 
-number_of_vertices = 5000;
+number_of_vertices = 50;
 a = 16;
 b = 4;
 n = number_of_vertices;
 p = a*log(n)/n;
 q = b*log(n)/n;
 R1_pre = rand(n/2,n/2) > (1-p);
-%display(R1_pre)
+% display(R1_pre)
 R3_pre = rand(n/2,n/2) > (1-p);
-%display(R3_pre)
+% display(R3_pre)
 for i = 1:(n/2)
     for j = 1:i
         if j < i
@@ -25,18 +25,32 @@ for i = 1:(n/2)
         end
     end
 end
-%display(R1_pre)
-%display(R3_pre)
+% display(R1_pre)
+% display(R3_pre)
 
 R2 = rand(n/2,n/2) > (1-q);
 A = [R1_pre R2; R2' R3_pre];
-%display(A)
+% display(A)
 row_sum = sum(A,2);
 for i = 1:n
     disp(['The summation of row #' num2str(i) ' is ' num2str(row_sum(i)) '.'])
 end
 disp(['The average edge of every row should be around ' num2str((p*n + q*n)/2) '.'])
 disp(['The empirical average number of edges is ' num2str(sum(row_sum)/n)])
+
+% Generate random matrix Y of dimension n for Z2 synchronization problem,
+% where Y=zz^T+\sigma W, with W a Wigner matrix generated from Gaussian
+% distribution
+
+percent_of_elements_being_one = 0.5;
+z_pre = rand(n,1) > (1-percent_of_elements_being_one);
+z_syn = (2*z_pre)-1;
+% display(z_syn)
+
+R = normrnd(0,1,n,n);
+W = R - diag(R);
+% display(W)
+
 
 
 % Perform a manifold optimization on the cost function Tr(Q^TAQ) given the
@@ -60,9 +74,9 @@ disp(['The output optimal cost by the algorithm is ' num2str(Qcost) '.'])
 
 % Properties of the planted partition
 z = [ones(1,n/2) -ones(1,n/2)]'; % planted partition
-%disp(z)
+% disp(z)
 true_cost_value = -z'*A*z;
-%disp(true_cost_value)
+% disp(true_cost_value)
 disp(['The planted cost value of this problem is ' num2str(true_cost_value) '.'])
 
 correlation = sqrt(z'*(Q*Q')*z)/n;
