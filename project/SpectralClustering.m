@@ -16,11 +16,11 @@ function [grps, eigvalues, V] =  SpectralClustering(W, k)
 % MATLAB Exercise 4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[n,m]=size(W);
+[n,~]=size(W);
 V = zeros(n,k,3);
 
 D1 = diag(sum(W,2));
-[X1, d1]=svd(D1-W);
+[X1, ~]=svd(D1-W);
 X1 = X1(:,end-k+1:end);
 rng(2);
 [grp1,~] = kmeans(X1,k);
@@ -29,7 +29,7 @@ V(:,:,1)=X1;
 % 
 D2 = diag(1./sum(W,2));
 L2 = speye(n) - D2*W;
-[X2, d2] = svd(L2);
+[X2, ~] = svd(L2);
 X2 = X2(:,end-k+1:end);
 rng(2);
 [grp2,~] = kmeans(X2, k);
@@ -38,7 +38,7 @@ V(:,:,2)=X2;
 %
 D3 = diag(1 ./ sqrt(sum(W, 2)));
 L3 = speye(n)- D3 * W * D3;
-[X3, d3] = svd(L3);
+[X3, ~] = svd(L3);
 X3 = X3(:,end-k+1:end);
 Y = X3 ./ repmat(sqrt(sum(X3.^2, 2)), 1, k);
 rng(2);

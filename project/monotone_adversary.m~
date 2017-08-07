@@ -1,7 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This is a MATLAB program of running monotone adversary on community
-% detection problem of 2 clusters and Z2 synchronization problem. 
-% @author: Ruitu Xu
+% detection problem of 2 clusters. @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,6 +33,7 @@ for i = 1:(n/2)
 end
 % display(R1_pre)
 % display(R3_pre)
+
 R2 = rand(n/2,n/2) > (1-q);
 A = [R1_pre R2; R2' R3_pre];
 % display(A)
@@ -54,10 +54,12 @@ percent_of_elements_being_one = 0.5;
 z_pre = rand(n,1) > (1-percent_of_elements_being_one);
 z_syn = (2*z_pre)-1;
 % display(z_syn)
+
 R = normrnd(0,1,n,n);
 W = R - diag(R);
 % display(W)
-lambda = 20; % lambda is the value to move around.
+
+lambda = 20; % value to move around
 sigma = sqrt(n)/lambda;
 Y = z_syn*z_syn'+ sigma*W;
 % display(Y)
@@ -65,39 +67,36 @@ Y = z_syn*z_syn'+ sigma*W;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Perform a manifold optimization on the cost function Tr(Q^TBQ) given the
 % manifold (Symmetric positive semidefinite, fixed-rank with unit diagonal)
-% with rank(X=QQ^T)<=2.
+% with rank(X=QQ^T)<=2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 B = Y; % Assign a specific problem to the solver
 k = 2;
 manifold = elliptopefactory(n, k);
 problem.M = manifold;
-% Note that Manopt only minimize the cost function.
-problem.cost = @(Q) -trace(Q'*B*Q);
-% The Euclidian gradient is given by calculation.
-problem.egrad = @(Q) -((B+B')*Q+[diag(B*diag(Q(:,1))) diag(B*diag(Q(:,2)))]);
-% Numerically check gradient and Hessian consistency.
+
+problem.cost = @(Q) -trace(Q'*B*Q); % Note that Manopt only minimize the cost function
+problem.egrad = @(Q) -((B+B')*Q+[diag(B*diag(Q(:,1))) diag(B*diag(Q(:,2)))]); % by calculation
+
+% Numerically check gradient and Hessian consistency
 figure;
 checkgradient(problem);
 figure;
 checkhessian(problem);
-% Pass the problem to the solver, i.e. trust regions.
+
 [Q, Qcost, info, options] = trustregions(problem);
 disp(['The output optimal cost by the algorithm is ' num2str(Qcost) '.'])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Performing some evaluations on the above methods on different problems
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-z = z_syn; % Assign a specific problem to the evaluator.
+% Performing some evaluations on the above methods on different prob
+z = z_syn; % Assign a specific problem to the evaluator
 % disp(z)
-true_cost_value = -z'*B*z; % Cost given ground truth z.
+true_cost_value = -z'*B*z;
 % disp(true_cost_value)
-disp(['The planted cost value of this problem is ' num2str(true_cost_value) ...
-    '.'])
-% Compute the correlation between the critical point Q and ground truth z.
+disp(['The planted cost value of this problem is ' num2str(true_cost_value) '.'])
+
 correlation = sqrt(z'*(Q*Q')*z)/n;
-disp(['The correlation between output X=QQ^T and the planted vector z is ' ...
-    num2str(correlation) '.'])
-% Figure on convergence of the algorithm.
+disp(['The correlation between output X=QQ^T and the planted vector z is ' num2str(correlation) '.'])
+
 figure;
 semilogy([info.iter], [info.gradnorm], '.-');
 xlabel('Iteration #');
