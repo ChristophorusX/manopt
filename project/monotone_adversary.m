@@ -45,6 +45,59 @@ disp(['The average edge of every row should be around ' num2str((p*n + q*n)/2) '
 disp(['The empirical average number of edges is ' num2str(sum(row_sum)/n)])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Implement a monotone adversary described in MPW16. It removes with
+% probability delta the edges of node with only two neighbors of different
+% spin. Delta is given by epsilon, the rate of b/(a+b).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Assign a matrix A as the adjacency matrix for the adversary.
+with_diagonal = 0;
+diagonal_elements = diag(A);
+if diagonal_elements ~= 0
+    V = A-diag(A); % If input A has diag(A)=1, remove the diagonal.
+    with_diagonal = 1;
+end
+epsilon = b/(a+b);
+if epsilon <= 1/3
+    delta = 1;
+else
+    delta = (1-2*epsilon)^2/epsilon^2;
+end
+degree_vector = sum(V,2);
+% Step 1: mark all the 'good' nodes.
+good_vector = zeros(n,1);
+for i = 1:n
+    if degree_vector(i) >= 3
+        neighbor_degree_vector = degree_vector.*V(i,:);
+        degree_check_vector = (neighbor_degree_vector ~= 2).* ...
+            (neighbor_degree_vector ~= 0); % Perform a filter on a filter.
+        if sum(degree_check_vector) >= 3 % If at least exists 3 such neighbors.
+            good_vector(i) = 1;
+        end
+    end
+end
+% Step 2: mark all the 'tagged' nodes.
+tagged_vector = zeros(n,1);
+for i = 1:n
+    if degree_vector(i) == 2
+        align_check_vector = good_vector.*V(i,:);
+        if sum(align_check_vector) == 2 % See if both neighbors are good.
+            tagged_vector(i) = 1;
+        end
+    end
+end
+% Step 3: remove edges of tagged nodes with probability delta.
+for i = 1:n
+    if tagged_vector(i) == 1
+        if rand(1,1) < delta
+            V(i,:) = zeros(1,n);
+        end
+    end
+end
+if with_diagonal == 1
+    V = V + diag(diagonal_elements);
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate random matrix Y of dimension n for Z2 synchronization problem,
 % where Y=zz^T+\sigma W, with W a Wigner matrix generated from Gaussian
 % distribution.
@@ -85,14 +138,13 @@ checkhessian(problem);
 disp(['The output optimal cost by the algorithm is ' num2str(Qcost) '.'])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Performing some evaluations on the above methods on different problems
+% Performing some evaluations on the above methods with different problems
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 z = z_syn; % Assign a specific problem to the evaluator.
 % disp(z)
 true_cost_value = -z'*B*z; % Cost given ground truth z.
 % disp(true_cost_value)
-disp(['The planted cost value of this problem is ' num2str(true_cost_value) ...
-    '.'])
+disp(['The planted cost value of this problem is ' num2str(true_cost_value) '.'])
 % Compute the correlation between the critical point Q and ground truth z.
 correlation = sqrt(z'*(Q*Q')*z)/n;
 disp(['The correlation between output X=QQ^T and the planted vector z is ' ...
