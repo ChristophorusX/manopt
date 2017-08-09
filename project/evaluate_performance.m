@@ -13,6 +13,7 @@ function [ true_cost_value, correlation ] = evaluate_performance( z, B, Q )
 % on a unit circle to reveal their relative position and potential
 % groupings.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+disp('Starting evaluating the performance...')
 % disp(z)
 true_cost_value = -z'*B*z; % Cost given ground truth z.
 % disp(true_cost_value)

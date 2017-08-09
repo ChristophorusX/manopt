@@ -48,6 +48,7 @@ A = [R1 R2; R2' R3]; % <= NOTE: A is the adjacency matrix of SBM
 % end
 % disp(['The average edge of every row should be around ' num2str((p*n + q*n)/2) '.'])
 % disp(['The empirical average number of edges is ' num2str(sum(row_sum)/n)])
+disp('Adjacency matrix for SBM generated!')
 
 end
 

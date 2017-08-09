@@ -6,13 +6,14 @@ function [ clustering, eigenvalues, eigenvectors ] = spectral_clustering( G )
 % It receives
 % - A matrix G to perform spectral clustering on.
 % It returns
-% - The resulting clustering of all the vertices in 0 and 1.
+% - The resulting clustering of all the vertices in -1 and +1.
 % - All the eigenvalues of the matrix.
 % - All the eigenvectors of the matrix.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [groups,eigenvalues,eigenvectors] = SpectralClustering(G,2); % Seperate into 2 groups
-clustering = groups(:,3)-1;
+clustering = 2*(groups(:,3)-1)-1;
 % display(clustering)
+disp('Spectral clustering finished!')
 
 end
 

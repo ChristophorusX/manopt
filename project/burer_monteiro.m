@@ -35,7 +35,7 @@ problem.egrad = @(Q) -((B+B')*Q+[diag(B*diag(Q(:,1))) diag(B*diag(Q(:,2)))]);
 % xlabel('Iteration #');
 % ylabel('Gradient norm');
 % title('Convergence of the trust-regions algorithm on the manifold');
-
+disp('Burer-Monteiro approach finished!')
 
 end
 

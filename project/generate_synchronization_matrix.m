@@ -1,9 +1,10 @@
-function [ Y, z_syn ] = generate_synchronization_matrix( percent_of_elements_being_one, lambda )
+function [ Y, z_syn ] = generate_synchronization_matrix( n, percent_of_elements_being_one, lambda )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate random matrix Y of dimension n for Z2 synchronization problem,
 % where Y=zz^T+\sigma W, with W a Wigner matrix generated from Gaussian
 % distribution.
 % It receives
+% - The number of elements in the group n.
 % - The rough percentage percent_of_elements_being_one of vertices being in
 % group 1.
 % - The signal-to-noise ratio lambda.
@@ -21,6 +22,6 @@ W = R - diag(R);
 sigma = sqrt(n)/lambda; % lambda is the value to move around.
 Y = z_syn*z_syn'+ sigma*W; % <= NOTE: Y is observed matrix of synchronization
 % display(Y)
-
+disp('Observed Z2 synchronization matrix is generated!')
 end
 
