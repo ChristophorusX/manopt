@@ -2,7 +2,7 @@ function [ A, z_sbm ] = generate_sbm_adjacency( number_of_vertices, a, b )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate random adjacency matrix (symmetric) A of dimension n (even)
 % according to inner- and inter-cluster edge probability p and q.
-% NOTE: this setting is for stochastic block model.
+% NOTE: this setting is for stochastic block model in sparse regime.
 %
 % @parameter: number of vertices in the model.
 % @parameter: constant a for inner cluster probability.
@@ -13,8 +13,8 @@ function [ A, z_sbm ] = generate_sbm_adjacency( number_of_vertices, a, b )
 % @return: The ground truth z_sbm marked by +1 and -1.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 n = number_of_vertices;
-p = a*log(n)/n;
-q = b*log(n)/n;
+p = a/n;
+q = b/n;
 % Properties of the planted partition.
 z_sbm = [ones(1,n/2) -ones(1,n/2)]'; % planted partition for SBM.
 R1_pre = rand(n/2,n/2) > (1-p);

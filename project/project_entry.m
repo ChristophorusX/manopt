@@ -38,7 +38,7 @@ disp(['The output optimal cost by Burer-Monteiro is ' num2str(Q_Vcost) '.'])
 disp(['The planted cost by Burer-Monteiro on V is ' num2str(true_cost_value_V) '.'])
 disp(['The correlation between output X=Q_VQ_V^T and the planted vector z is ' ...
     num2str(correlation_V) '.'])
-figure;
+critical_point_plot_SBM = figure;
 plot_x_A = Q_A(:,1);
 % display(plot_x_A)
 plot_y_A = Q_A(:,2);
@@ -56,6 +56,7 @@ xlabel('x')
 ylabel('y')
 title('Row vectors of second order critical point Q_A and Q_V on unit circle.')
 hold off;
+saveas(critical_point_plot_SBM,'SBM critical point plot','png')
 
 % Specify the synchronization model to use.
 percent_of_elements_being_one = 0.5;
@@ -72,7 +73,7 @@ disp(['The output optimal cost by Burer-Monteiro on Y is ' num2str(Q_Ycost) '.']
 disp(['The planted cost by Burer-Monteiro on Y is ' num2str(true_cost_value_Y) '.'])
 disp(['The correlation between output X=Q_YQ_Y^T and the planted vector z is ' ...
     num2str(correlation_Y) '.'])
-figure;
+critical_point_plot_syn = figure;
 plot_x_Y = Q_Y(:,1);
 plot_y_Y = Q_Y(:,2);
 plot(plot_x_Y,plot_y_Y, 'o', 'color', 'green')
@@ -83,6 +84,7 @@ xlabel('x')
 ylabel('y')
 title('Row vectors of second order critical point Q_Y on unit circle.')
 hold off;
+saveas(critical_point_plot_syn,'Synchronization critical point plot','png')
 
 % Apply spectral clustering on the same SBM model.
 [ clustering_A, eigenvalues_A, eigenvectors_A ] = spectral_clustering( A );
