@@ -38,7 +38,7 @@ disp(['The output optimal cost by Burer-Monteiro is ' num2str(Q_Vcost) '.'])
 disp(['The planted cost by Burer-Monteiro on V is ' num2str(true_cost_value_V) '.'])
 disp(['The correlation between output X=Q_VQ_V^T and the planted vector z is ' ...
     num2str(correlation_V) '.'])
-critical_point_plot_SBM = figure;
+critical_point_plot_SBM = figure('Visible','off');
 plot_x_A = Q_A(:,1);
 % display(plot_x_A)
 plot_y_A = Q_A(:,2);
@@ -73,7 +73,7 @@ disp(['The output optimal cost by Burer-Monteiro on Y is ' num2str(Q_Ycost) '.']
 disp(['The planted cost by Burer-Monteiro on Y is ' num2str(true_cost_value_Y) '.'])
 disp(['The correlation between output X=Q_YQ_Y^T and the planted vector z is ' ...
     num2str(correlation_Y) '.'])
-critical_point_plot_syn = figure;
+critical_point_plot_syn = figure('Visible','off');
 plot_x_Y = Q_Y(:,1);
 plot_y_Y = Q_Y(:,2);
 plot(plot_x_Y,plot_y_Y, 'o', 'color', 'green')
