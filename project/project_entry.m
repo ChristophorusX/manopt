@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Specify the SBM model to use.
-n = 5000;
+n = 1000;
 a = 28;
 b = 12;
 % Generate adjacency matrix.
@@ -99,7 +99,7 @@ disp(['The error rate of clustering on V compared to the planted vector z is ' .
     num2str(error_rate_V) '.'])
 
 % Apply spectral clustering on the same Synchronization model.
-[ clustering_Y, eigenvalues_Y, eigenvectors_Y ] = spectral_clustering_unnormalized( Y, 2 );
+[ clustering_Y, eigenvalues_Y, eigenvectors_Y ] = spectral_clustering_rw( Y, 2 );
 % Evaluate the performance of spectral method.
 error_rate_Y = compute_error_rate(clustering_Y,z_syn);
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
