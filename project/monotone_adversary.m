@@ -3,14 +3,14 @@ function [ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b )
 % Implement a monotone adversary described in MPW16. It removes with
 % probability delta the edges of node with only two neighbors of different
 % spin. Delta is given by epsilon, the rate of b/(a+b).
-% It receives
-% - An adjacency matrix given by a SBM model.
-% - constant a for inner cluster probability.
-% - constant b for inter cluster probability.
-% It returns
-% - An adjacency matrix after the operation of the adversary.
-% - An 0-1 vector giving all the vertices marked 'good'.
-% - An 0-1 vector giving all the vertices marked 'tagged'.
+%
+% @parameter: An adjacency matrix given by a SBM model.
+% @parameter: constant a for inner cluster probability.
+% @parameter: constant b for inter cluster probability.
+%
+% @return: An adjacency matrix after the operation of the adversary.
+% @return: An 0-1 vector giving all the vertices marked 'good'.
+% @return: An 0-1 vector giving all the vertices marked 'tagged'.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Assign a matrix A as the adjacency matrix for the adversary.
 with_diagonal = 0;
@@ -69,4 +69,3 @@ end
 disp('Monotone adversary performed!')
 
 end
-

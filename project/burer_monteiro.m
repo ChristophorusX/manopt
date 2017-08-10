@@ -3,13 +3,13 @@ function [ Q, Qcost, info, options ] = burer_monteiro( B )
 % Perform a manifold optimization on the cost function Tr(Q^TBQ) given the
 % manifold (Symmetric positive semidefinite, fixed-rank with unit diagonal)
 % with rank(X=QQ^T)<=2.
-% It receives
-% - A matrix to perform Burer-Monteiro on.
-% It returns
-% - The resulting n by 2 matrix Q.
-% - The value of cost function under Q.
-% - Information returned by the trust region method.
-% - Options used by the trust region method.
+%
+% @parameter: A matrix B to perform Burer-Monteiro on.
+%
+% @return: The resulting n by 2 matrix Q.
+% @return: The value of cost function under Q.
+% @return: Information returned by the trust region method.
+% @return: Options used by the trust region method.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 k = 2;
 dimensions = size(B);
@@ -38,4 +38,3 @@ problem.egrad = @(Q) -((B+B')*Q+[diag(B*diag(Q(:,1))) diag(B*diag(Q(:,2)))]);
 disp('Burer-Monteiro approach finished!')
 
 end
-

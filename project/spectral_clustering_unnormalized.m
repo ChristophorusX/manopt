@@ -1,20 +1,4 @@
 function [grp, eigvalues, V] =  spectral_clustering_unnormalized(W, k)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Helper function to implement the 3 variations of the Specral Clustering
-% Input 
-% W: n * n adjacency matrix
-% k: the number of desired clusters
-% Output
-% grps : n*3 vector, indicating the cluster assigment 
-% === first column indicates the cluster assigment based on SC1(unnormalized) 
-% === second column indicates the cluster assigment based on SC2(rw-noramlized) 
-% === third column indicates the cluster assigment based on SC3(sym-normalized) 
-%
-% EC 500: Learning from Data
-% Fall Semester, 2015
-% Instructor: Prakash Ishwar
-% MATLAB Exercise 4
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [n,~]=size(W);
 V = zeros(n,k,3);
@@ -26,7 +10,7 @@ rng(2);
 [grp1,~] = kmeans(X1,k);
 eigvalues(:,1)=eig(D1-W);
 V(:,:,1)=X1;
-% 
+%
 D2 = diag(1./sum(W,2));
 L2 = speye(n) - D2*W;
 [X2, ~] = svd(L2);

@@ -2,13 +2,13 @@ function [ true_cost_value, correlation ] = evaluate_performance( z, B, Q )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Performing some evaluations on the Burer-Monteiro methods on respective
 % problems.
-% It receives
-% - A ground truth vector z.
-% - A cost matrix of the problem B.
-% - The second order critical point Q from Burer-Monteiro.
-% It returns
-% - The cost value of the ground truth vector on cost matrix.
-% - The correlation between ground truth z and critical point Q.
+% 
+% @parameter: A ground truth vector z.
+% @parameter: A cost matrix of the problem B.
+% @parameter: The second order critical point Q from Burer-Monteiro.
+%
+% @return: The cost value of the ground truth vector on cost matrix.
+% @return: The correlation between ground truth z and critical point Q.
 % The function also plots the row vectors of second order critical point Q
 % on a unit circle to reveal their relative position and potential
 % groupings.
@@ -34,4 +34,3 @@ correlation = sqrt(z'*(Q*Q')*z)/dimension;
 % scatter(plot_x,plot_y)
 
 end
-
