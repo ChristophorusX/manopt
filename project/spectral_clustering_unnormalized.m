@@ -31,3 +31,5 @@ grp3 = zeros(n,1);
 eigvalues(:,3)=eig(L3);
 V(:,:,3)=Y;
 grp = grp1;
+
+end
