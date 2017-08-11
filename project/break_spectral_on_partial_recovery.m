@@ -10,7 +10,7 @@ percentage = 0.5;
 % Set a to a fixed number and the set b according to the treshold.
 a = 25;
 % Set an array recording the times of failing trails.
-num_of_trails = 10;
+num_of_trails = 15;
 num_of_repititions = 10;
 fail_records_A = zeros(num_of_trails,1);
 fail_records_V = zeros(num_of_trails,1);
