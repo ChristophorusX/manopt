@@ -6,7 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 n = 1000;
 % Fix a percentage of partial recovery.
-percentage = 0.6;
+percentage = 0.5;
 % Set a to a fixed number and the set b according to the treshold.
 a = 25;
 % Set an array recording the times of failing trails.
