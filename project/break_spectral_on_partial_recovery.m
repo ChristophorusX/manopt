@@ -4,14 +4,14 @@
 % on it (in sparse regime).
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-n = 1000;
+n = 5000;
 % Fix a percentage of partial recovery.
 percentage = 0.5;
 % Set a to a fixed number and the set b according to the treshold.
 a = 25;
 % Set an array recording the times of failing trails.
 num_of_trails = 15;
-num_of_repititions = 10;
+num_of_repititions = 5;
 fail_records_A = zeros(num_of_trails,1);
 fail_records_V = zeros(num_of_trails,1);
 for iteration = 1:num_of_trails
