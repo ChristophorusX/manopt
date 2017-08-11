@@ -33,6 +33,8 @@ for iteration = 1:num_of_trails
         [ clustering_V, eigenvalues_V, eigenvectors_V ] = spectral_clustering_rw( V, 2 );
         error_rate_A = compute_error_rate(clustering_A,z_sbm);
         error_rate_V = compute_error_rate(clustering_V,z_sbm);
+        disp(['Error rate for recovery from A is ' num2str(error_rate_A)])
+        disp(['Error rate for recovery from V is ' num2str(error_rate_V)])
         if error_rate_A < (1 - percentage)
             disp(['GOOD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
             num2str(b) ', and over threshold with amount ' num2str(jump)]);
