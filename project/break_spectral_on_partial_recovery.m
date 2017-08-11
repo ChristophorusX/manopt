@@ -29,8 +29,8 @@ for iteration = 1:num_of_trails
         % display(sum(tagged_vector))
         % display(sum(sum(A-V)))
         % display(good_vector)
-        [ clustering_A, eigenvalues_A, eigenvectors_A ] = spectral_clustering_rw( A );
-        [ clustering_V, eigenvalues_V, eigenvectors_V ] = spectral_clustering_rw( V );
+        [ clustering_A, eigenvalues_A, eigenvectors_A ] = spectral_clustering_rw( A, 2 );
+        [ clustering_V, eigenvalues_V, eigenvectors_V ] = spectral_clustering_rw( V, 2 );
         error_rate_A = compute_error_rate(clustering_A,z_sbm);
         error_rate_V = compute_error_rate(clustering_V,z_sbm);
         if error_rate_A < (1 - percentage)
