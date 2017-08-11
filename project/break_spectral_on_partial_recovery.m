@@ -4,7 +4,6 @@
 % on it (in sparse regime).
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-n = 1000;
 % Fix a percentage of partial recovery.
 percentage = 0.6;
 % Set a to a fixed number and the set b according to the treshold.
@@ -17,8 +16,9 @@ fail_records_V = zeros(num_of_trails,1);
 for iteration = 1:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration/10;
-    b;
-    vpasolve((a-b)^2==(2+jump)*(a+b),b); % obtain b from a and threshold.
+    syms x;
+    vpasolve((a-x)^2==(2+jump)*(a+x),x); % obtain b from a and threshold.
+    disp(x);
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
         disp(['Working on repitition ' num2str(repitition) '.'])
