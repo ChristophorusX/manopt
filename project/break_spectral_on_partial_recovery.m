@@ -10,13 +10,13 @@ percentage = 0.6;
 % Set a to a fixed number and the set b according to the treshold.
 a = 25;
 % Set an array recording the times of failing trails.
-num_of_trails = 100;
+num_of_trails = 10;
 num_of_repititions = 100;
 fail_records_A = zeros(num_of_trails,1);
 fail_records_V = zeros(num_of_trails,1);
 for iteration = 1:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
-    jump = iteration/10;
+    jump = iteration;
     % obtain b from a and threshold.
     b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*(a-(2+jump))))/2;
     disp(['b = ' num2str(b)])
@@ -58,7 +58,7 @@ disp('Summary');
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 for iteration = 1:num_of_trails
     disp(['The trail failed ' num2str(fail_records_A(iteration)) ' times ' ...
-    'on random model with gap ' num2str(iteration/10) ' from threshold.']);
+    'on random model with gap ' num2str(iteration) ' from threshold.']);
     disp(['The trail failed ' num2str(fail_records_V(iteration)) ' times ' ...
-    'on semi-random model with gap ' num2str(iteration/10) ' from threshold.']);
+    'on semi-random model with gap ' num2str(iteration) ' from threshold.']);
 end
