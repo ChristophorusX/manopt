@@ -4,6 +4,7 @@
 % on it (in sparse regime).
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+n = 1000;
 % Fix a percentage of partial recovery.
 percentage = 0.6;
 % Set a to a fixed number and the set b according to the treshold.
