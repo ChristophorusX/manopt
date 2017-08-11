@@ -8,7 +8,7 @@ n = 1000;
 % Fix a percentage of partial recovery.
 percentage = 0.6;
 % Set a to a fixed number and the set b according to the treshold.
-a = 20;
+a = 25;
 % Set an array recording the times of failing trails.
 num_of_trails = 100;
 num_of_repititions = 100;
@@ -17,8 +17,8 @@ fail_records_V = zeros(num_of_trails,1);
 for iteration = 1:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration/10;
-    syms x;
-    b = vpasolve((a-x)^2==(2+jump)*(a+x),x); % obtain b from a and threshold.
+    % obtain b from a and threshold.
+    b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*(a-(2+jump))))/2;
     disp(['b = ' num2str(b)])
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
