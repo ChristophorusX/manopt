@@ -18,7 +18,7 @@ for iteration = 1:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration;
     % obtain b from a and threshold.
-    b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*(a-(2+jump))))/2;
+    b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*a*(a-(2+jump))))/2;
     disp(['b = ' num2str(b)])
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
