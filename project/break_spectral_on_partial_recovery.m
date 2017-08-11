@@ -20,10 +20,15 @@ for iteration = 10:num_of_trails
     % obtain b from a and threshold.
     b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*a*(a-(2+jump))))/2;
     disp(['b = ' num2str(b)])
+    if iteration > 10
+        disp('Compare matrix A of different repititions.')
+        disp(['Sum of the difference is ' num2str(sum(sum(A_pre-A)))])
+    end
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
         disp(['Working on repitition ' num2str(repitition) '.'])
         [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
+        A_pre = A;
         % Put matrix A into monotone adversary.
         [ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b );
         % display(sum(tagged_vector))
@@ -52,8 +57,6 @@ for iteration = 10:num_of_trails
             fail_records_V(iteration) = fail_records_V(iteration) + 1;
         end
         disp(['Finishing on repitition ' num2str(repitition) '.'])
-        clear A V z_sbm good_vector tagged_vector clustering_A clustering_V ...
-        error_rate_A error_rate_V;
     end
     disp(['Finishing on iteration ' num2str(iteration) '.'])
 end
