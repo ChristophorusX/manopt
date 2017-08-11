@@ -4,22 +4,21 @@
 % on it (in sparse regime).
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-n = 5000;
+n = 1000;
 % Fix a percentage of partial recovery.
 percentage = 0.5;
 % Set a to a fixed number and the set b according to the treshold.
 a = 25;
 % Set an array recording the times of failing trails.
 num_of_trails = 15;
-num_of_repititions = 1;
+num_of_repititions = 10;
 fail_records_A = zeros(num_of_trails,1);
 fail_records_V = zeros(num_of_trails,1);
 for iteration = 10:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration;
     % obtain b from a and threshold.
-    % b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*a*(a-(2+jump))))/2;
-    b = 2;
+    b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*a*(a-(2+jump))))/2;
     disp(['b = ' num2str(b)])
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
@@ -53,6 +52,8 @@ for iteration = 10:num_of_trails
             fail_records_V(iteration) = fail_records_V(iteration) + 1;
         end
         disp(['Finishing on repitition ' num2str(repitition) '.'])
+        clear A V z_sbm good_vector tagged_vector clustering_A clustering_V ...
+        error_rate_A error_rate_V;
     end
     disp(['Finishing on iteration ' num2str(iteration) '.'])
 end
