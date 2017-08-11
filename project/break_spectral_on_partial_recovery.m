@@ -11,10 +11,10 @@ percentage = 0.5;
 a = 25;
 % Set an array recording the times of failing trails.
 num_of_trails = 15;
-num_of_repititions = 5;
+num_of_repititions = 1;
 fail_records_A = zeros(num_of_trails,1);
 fail_records_V = zeros(num_of_trails,1);
-for iteration = 1:num_of_trails
+for iteration = 10:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration;
     % obtain b from a and threshold.
