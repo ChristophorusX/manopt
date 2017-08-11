@@ -16,7 +16,8 @@ fail_records_V = zeros(num_of_trails,1);
 for iteration = 1:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration/10;
-    b = vpasolve((a-x)^2==(2+jump)*(a+x),x); % obtain b from a and threshold.
+    syms b;
+    vpasolve((a-b)^2==(2+jump)*(a+b),b); % obtain b from a and threshold.
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
         disp(['Working on repitition ' num2str(repitition) '.'])
