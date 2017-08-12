@@ -21,7 +21,7 @@ end
 % display(delta)
 [ dimension, ~ ] = size(A);
 for iter = 1:dimension
-    adding_sign = - (2 * V(iter,:) - 1);
+    adding_sign = - (2 * V(iter,:) - 1)';
     if iter <= dimension/2
         first_half = [ones(1,dimension/2) zeros(1,dimension/2)]';
         second_half = [zeros(1,dimension/2) ones(1,dimension/2)]';
@@ -37,8 +37,8 @@ for iter = 1:dimension
         validity_vec = ((1 - (2 * row_second_half - 1)) / 2) .* second_half + ...
         row_first_half;
     end
-    moving_vec = rand(1,1) > (1 - delta);
-    V(iter,:) = V(iter,:) + moving_vec .* adding_sign .* validity_vec;
+    moving_vec = rand(dimension,1) > (1 - delta);
+    V(iter,:) = V(iter,:) + (moving_vec .* adding_sign .* validity_vec)';
     % for subiter = iter:dimension
     %     if V(iter,subiter) == 0 && ((iter <= dimension/2 && subiter > dimension/2) ...
     %         || (iter > dimension/2 && subiter <= dimension/2))
