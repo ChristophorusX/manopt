@@ -19,7 +19,7 @@ for iteration = 1:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration/100;
     % obtain b from a and threshold.
-    b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*a*(a-(2+jump))))/2;
+    b = ((2*a+(2-jump))-sqrt((2*a+(2-jump))^2-4*a*(a-(2-jump))))/2;
     disp(['b = ' num2str(b)])
     % A_store = zeros(n,n,num_of_repititions);
     % V_store = zeros(n,n,num_of_repititions);
