@@ -29,10 +29,11 @@ else
     delta = (1-2*epsilon)^2/epsilon^2;
 end
 % display(delta)
+[ dimension, ~ ] = size(A);
+temp = [ones(1,dimension/2) -ones(1,dimension/2)]';
 degree_vector = sum(V,2);
 % display(degree_vector)
 % Step 1: mark all the 'good' nodes.
-[ dimension, ~ ] = size(A);
 good_vector = zeros(dimension,1);
 for iter = 1:dimension
     if degree_vector(iter) >= 3
@@ -58,7 +59,6 @@ end
 for iter = 1:dimension
     if tagged_vector(iter) == 1
         rng('shuffle');
-        temp = [ones(1,dimension/2) -ones(1,dimension/2)]';
         if iter <= dimension/2 && sum(temp .* V(iter,:)') < 0
             if rand(1,1) < delta
                 V(iter,:) = V(iter,:) - V(iter,:);
