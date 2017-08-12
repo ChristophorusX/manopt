@@ -5,6 +5,7 @@
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 n = 1000;
+% [ ~, z_sbm ] = generate_sbm_adjacency(n,a,b);
 % Fix a percentage of partial recovery.
 percentage = 0.5;
 % Set a to a fixed number and the set b according to the treshold.
@@ -20,24 +21,27 @@ for iteration = 1:num_of_trails
     % obtain b from a and threshold.
     b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*a*(a-(2+jump))))/2;
     disp(['b = ' num2str(b)])
-    A_store = zeros(n,n,num_of_repititions);
-    V_store = zeros(n,n,num_of_repititions);
-    for iter = 1:num_of_repititions
-        A_store(:,:,iter) = generate_sbm_adjacency(n,a,b);
-        V_store(:,:,iter) = monotone_adversary(A_store(:,:,iter),a,b);
-    end
+    % A_store = zeros(n,n,num_of_repititions);
+    % V_store = zeros(n,n,num_of_repititions);
+    % for iter = 1:num_of_repititions
+    %     A_store(:,:,iter) = generate_sbm_adjacency(n,a,b);
+    %     V_store(:,:,iter) = monotone_adversary(A_store(:,:,iter),a,b);
+    % end
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
         disp(['Working on repitition ' num2str(repitition) '.'])
-        % [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
+        [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
         % Put matrix A into monotone adversary.
-        % V = monotone_adversary( A, a, b );
+        V = monotone_adversary( A, a, b );
         % display(sum(tagged_vector))
         % display(sum(sum(A-V)))
         % display(good_vector)
-        z_sbm = [ones(1,n/2) -ones(1,n/2)]';
-        [ clustering_A, eigenvalues_A, eigenvectors_A ] = spectral_clustering( A_store(:,:,repitition) );
-        [ clustering_V, eigenvalues_V, eigenvectors_V ] = spectral_clustering( V_store(:,:,repitition) );
+        % [ clustering_A, eigenvalues_A, eigenvectors_A ] = ...
+        % spectral_clustering( A_store(:,:,repitition) );
+        % [ clustering_V, eigenvalues_V, eigenvectors_V ] = ...
+        % spectral_clustering( V_store(:,:,repitition) );
+        [ clustering_A, eigenvalues_A, eigenvectors_A ] = spectral_clustering( A );
+        [ clustering_V, eigenvalues_V, eigenvectors_V ] = spectral_clustering( V );
         error_rate_A = compute_error_rate(clustering_A,z_sbm);
         error_rate_V = compute_error_rate(clustering_V,z_sbm);
         disp(['Error rate for recovery from A is ' num2str(error_rate_A)])
