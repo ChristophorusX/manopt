@@ -4,7 +4,7 @@
 % on it (in sparse regime).
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-n = 1000;
+n = 2000;
 % [ ~, z_sbm ] = generate_sbm_adjacency(n,a,b);
 % Fix a percentage of partial recovery.
 percentage = 0.5;
