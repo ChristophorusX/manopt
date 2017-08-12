@@ -4,7 +4,7 @@ function [grp2, eigvalues, V] =  spectral_clustering_rw(W, k)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [n,~]=size(W);
-V = zeros(n,k,1);
+V = zeros(n,k,2);
 
 D2 = diag(1./sum(W,2));
 L2 = speye(n) - D2*W;
