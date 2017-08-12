@@ -23,10 +23,8 @@ for iteration = 10:num_of_trails
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
         disp(['Working on repitition ' num2str(repitition) '.'])
-        clear A;
-        [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
+        [ A, z_sbm ] = generate_sbm_adjacency_iter(n, a, b, iteration, repitition);
         % Put matrix A into monotone adversary.
-        clear V;
         [ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b );
         % display(sum(tagged_vector))
         % display(sum(sum(A-V)))
