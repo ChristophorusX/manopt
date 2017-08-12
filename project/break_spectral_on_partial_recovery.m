@@ -19,7 +19,7 @@ for iteration = 1:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration/1;
     % obtain b from a and threshold.
-    b = ((2*a+(2-jump))-sqrt((2*a+(2-jump))^2-4*a*(a-(2-jump))))/2;
+    b = ((2*a+(2+jump))-sqrt((2*a+(2+jump))^2-4*a*(a-(2+jump))))/2;
     disp(['b = ' num2str(b)])
     % A_store = zeros(n,n,num_of_repititions);
     % V_store = zeros(n,n,num_of_repititions);
@@ -33,10 +33,10 @@ for iteration = 1:num_of_trails
         disp(['Working on repitition ' num2str(repitition) '.'])
         [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
         % Put matrix A into monotone adversary.
-        V = monotone_adversary( A, a, b );
-        % display(sum(tagged_vector))
-        % display(sum(sum(A-V)))
-        % display(good_vector)
+        [ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b );
+        display(sum(tagged_vector))
+        display(sum(sum(A-V)))
+        display(good_vector)
         % [ clustering_A, eigenvalues_A, eigenvectors_A ] = ...
         % spectral_clustering( A_store(:,:,repitition) );
         % [ clustering_V, eigenvalues_V, eigenvectors_V ] = ...
