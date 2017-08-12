@@ -24,7 +24,7 @@ for iteration = 10:num_of_trails
     V_store = zeros(n,n,num_of_repititions);
     for iter = 1:num_of_repititions
         A_store(:,:,iter) = generate_sbm_adjacency(n,a,b);
-        V_store(:,:,iter) = monotone_adversary(A(:,:,iter),a,b);
+        V_store(:,:,iter) = monotone_adversary(A_store(:,:,iter),a,b);
     end
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
