@@ -76,6 +76,6 @@ if with_diagonal == 1
     V = V + diag(diagonal_elements); % <= NOTE: V is adjacency matrix after adversary
 end
 % display(V)
-disp('Monotone adversary performed!')
+disp('Monotone adversary (MPW version) performed!')
 
 end
