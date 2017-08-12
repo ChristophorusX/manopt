@@ -4,7 +4,7 @@
 % on it (in sparse regime).
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-n = 5000;
+n = 2000;
 % [ ~, z_sbm ] = generate_sbm_adjacency(n,a,b);
 % Fix a percentage of partial recovery.
 percentage = 0.5;
@@ -42,29 +42,29 @@ for iteration = 14:num_of_trails
         % spectral_clustering( A_store(:,:,repitition) );
         % [ clustering_V, eigenvalues_V, eigenvectors_V ] = ...
         % spectral_clustering( V_store(:,:,repitition) );
-        % [ clustering_A, eigenvalues_A, eigenvectors_A ] = spectral_clustering( A );
-        % [ clustering_V, eigenvalues_V, eigenvectors_V ] = spectral_clustering( V );
-        % error_rate_A = compute_error_rate(clustering_A,z_sbm);
-        % error_rate_V = compute_error_rate(clustering_V,z_sbm);
-        % disp(['Error rate for recovery from A is ' num2str(error_rate_A)])
-        % disp(['Error rate for recovery from V is ' num2str(error_rate_V)])
-        % if error_rate_A < (1 - percentage)
-        %     disp(['GOOD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
-        %     num2str(b) ', and over threshold with amount ' num2str(jump)]);
-        % else
-        %     disp(['BAD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
-        %     num2str(b) ', and over threshold with amount ' num2str(jump)]);
-        %     fail_records_A(iteration) = fail_records_A(iteration) + 1;
-        % end
-        % if error_rate_V < (1 - percentage)
-        %     disp(['GOOD RESULT on semi-random model with parameter a = ' num2str(a) ', b = ' ...
-        %     num2str(b) ', and over threshold with amount ' num2str(jump)]);
-        % else
-        %     disp(['BAD RESULT on semi-random model with parameter a = ' num2str(a) ', b = ' ...
-        %     num2str(b) ', and over threshold with amount ' num2str(jump)]);
-        %     fail_records_V(iteration) = fail_records_V(iteration) + 1;
-        % end
-        % disp(['Finishing on repitition ' num2str(repitition) '.'])
+        [ clustering_A, eigenvalues_A, eigenvectors_A ] = spectral_clustering( A );
+        [ clustering_V, eigenvalues_V, eigenvectors_V ] = spectral_clustering( V );
+        error_rate_A = compute_error_rate(clustering_A,z_sbm);
+        error_rate_V = compute_error_rate(clustering_V,z_sbm);
+        disp(['Error rate for recovery from A is ' num2str(error_rate_A)])
+        disp(['Error rate for recovery from V is ' num2str(error_rate_V)])
+        if error_rate_A < (1 - percentage)
+            disp(['GOOD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
+            num2str(b) ', and over threshold with amount ' num2str(jump)]);
+        else
+            disp(['BAD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
+            num2str(b) ', and over threshold with amount ' num2str(jump)]);
+            fail_records_A(iteration) = fail_records_A(iteration) + 1;
+        end
+        if error_rate_V < (1 - percentage)
+            disp(['GOOD RESULT on semi-random model with parameter a = ' num2str(a) ', b = ' ...
+            num2str(b) ', and over threshold with amount ' num2str(jump)]);
+        else
+            disp(['BAD RESULT on semi-random model with parameter a = ' num2str(a) ', b = ' ...
+            num2str(b) ', and over threshold with amount ' num2str(jump)]);
+            fail_records_V(iteration) = fail_records_V(iteration) + 1;
+        end
+        disp(['Finishing on repitition ' num2str(repitition) '.'])
     end
     disp(['Finishing on iteration ' num2str(iteration) '.'])
 end
