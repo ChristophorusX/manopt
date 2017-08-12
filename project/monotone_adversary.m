@@ -59,12 +59,12 @@ for iter = 1:dimension
     if tagged_vector(iter) == 1
         rng('shuffle');
         temp = [ones(1,dimension/2) -ones(1,dimension/2)]';
-        if iter <= n/2 && sum(temp .* V(iter,:)') < 0
+        if iter <= dimension/2 && sum(temp .* V(iter,:)') < 0
             if rand(1,1) < delta
                 V(iter,:) = V(iter,:) - V(iter,:);
                 V(:,iter) = V(:,iter) - V(iter,:)';
             end
-        elseif iter > n/2 && sum(temp .* V(iter,:)') > 0
+        elseif iter > dimension/2 && sum(temp .* V(iter,:)') > 0
             if rand(1,1) < delta
                 V(iter,:) = V(iter,:) - V(iter,:);
                 V(:,iter) = V(:,iter) - V(iter,:)';
