@@ -17,7 +17,7 @@ fail_records_A = zeros(num_of_trails,1);
 fail_records_V = zeros(num_of_trails,1);
 for iteration = 1:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
-    jump = iteration/100;
+    jump = iteration/1;
     % obtain b from a and threshold.
     b = ((2*a+(2-jump))-sqrt((2*a+(2-jump))^2-4*a*(a-(2-jump))))/2;
     disp(['b = ' num2str(b)])
@@ -71,7 +71,7 @@ disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
 disp('Summary');
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 for iteration = 1:num_of_trails
-    jump = iteration/100;
+    jump = iteration/1;
     disp(['The trail failed ' num2str(fail_records_A(iteration)) ' times ' ...
     'on random model with gap ' num2str(jump) ' from threshold.']);
     disp(['The trail failed ' num2str(fail_records_V(iteration)) ' times ' ...
