@@ -15,7 +15,7 @@ num_of_trails = 15;
 num_of_repititions = 100;
 fail_records_A = zeros(num_of_trails,1);
 fail_records_V = zeros(num_of_trails,1);
-for iteration = 1:num_of_trails
+for iteration = 14:num_of_trails
     disp(['Working on iteration ' num2str(iteration) '.'])
     jump = iteration/1;
     % obtain b from a and threshold.
