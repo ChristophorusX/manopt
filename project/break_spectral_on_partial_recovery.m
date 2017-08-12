@@ -23,9 +23,9 @@ for iteration = 10:num_of_trails
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
         disp(['Working on repitition ' num2str(repitition) '.'])
-        [ A, z_sbm ] = generate_sbm_adjacency_iter(n, a, b, iteration, repitition);
+        [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
         % Put matrix A into monotone adversary.
-        [ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b );
+        V = monotone_adversary( A, a, b );
         % display(sum(tagged_vector))
         % display(sum(sum(A-V)))
         % display(good_vector)
@@ -35,22 +35,22 @@ for iteration = 10:num_of_trails
         error_rate_V = compute_error_rate(clustering_V,z_sbm);
         disp(['Error rate for recovery from A is ' num2str(error_rate_A)])
         disp(['Error rate for recovery from V is ' num2str(error_rate_V)])
-        if error_rate_A < (1 - percentage)
-            disp(['GOOD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
-            num2str(b) ', and over threshold with amount ' num2str(jump)]);
-        else
-            disp(['BAD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
-            num2str(b) ', and over threshold with amount ' num2str(jump)]);
-            fail_records_A(iteration) = fail_records_A(iteration) + 1;
-        end
-        if error_rate_V < (1 - percentage)
-            disp(['GOOD RESULT on semi-random model with parameter a = ' num2str(a) ', b = ' ...
-            num2str(b) ', and over threshold with amount ' num2str(jump)]);
-        else
-            disp(['BAD RESULT on semi-random model with parameter a = ' num2str(a) ', b = ' ...
-            num2str(b) ', and over threshold with amount ' num2str(jump)]);
-            fail_records_V(iteration) = fail_records_V(iteration) + 1;
-        end
+        % if error_rate_A < (1 - percentage)
+        %     disp(['GOOD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
+        %     num2str(b) ', and over threshold with amount ' num2str(jump)]);
+        % else
+        %     disp(['BAD RESULT on random model with parameter a = ' num2str(a) ', b = ' ...
+        %     num2str(b) ', and over threshold with amount ' num2str(jump)]);
+        %     fail_records_A(iteration) = fail_records_A(iteration) + 1;
+        % end
+        % if error_rate_V < (1 - percentage)
+        %     disp(['GOOD RESULT on semi-random model with parameter a = ' num2str(a) ', b = ' ...
+        %     num2str(b) ', and over threshold with amount ' num2str(jump)]);
+        % else
+        %     disp(['BAD RESULT on semi-random model with parameter a = ' num2str(a) ', b = ' ...
+        %     num2str(b) ', and over threshold with amount ' num2str(jump)]);
+        %     fail_records_V(iteration) = fail_records_V(iteration) + 1;
+        % end
         disp(['Finishing on repitition ' num2str(repitition) '.'])
     end
     disp(['Finishing on iteration ' num2str(iteration) '.'])
