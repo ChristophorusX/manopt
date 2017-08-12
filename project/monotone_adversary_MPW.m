@@ -1,4 +1,4 @@
-function [ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b )
+function [ V, good_vector, tagged_vector ] = monotone_adversary_MPW( A, a, b )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Implement a monotone adversary described in MPW16. It removes with
 % probability delta the edges of node with only two neighbors of different

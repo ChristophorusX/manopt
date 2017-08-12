@@ -14,7 +14,7 @@ b = 12;
 [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
 % display(A)
 % Put matrix A into monotone adversary.
-[ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b );
+[ V, good_vector, tagged_vector ] = monotone_adversary_MPW( A, a, b );
 % display(sum(tagged_vector))
 % display(sum(sum(A-V)))
 % display(good_vector)

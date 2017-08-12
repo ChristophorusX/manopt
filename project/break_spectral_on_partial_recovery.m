@@ -26,7 +26,7 @@ for iteration = 1:num_of_trails
     % V_store = zeros(n,n,num_of_repititions);
     % for iter = 1:num_of_repititions
     %     A_store(:,:,iter) = generate_sbm_adjacency(n,a,b);
-    %     V_store(:,:,iter) = monotone_adversary(A_store(:,:,iter),a,b);
+    %     V_store(:,:,iter) = monotone_adversary_MPW(A_store(:,:,iter),a,b);
     % end
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
@@ -34,7 +34,7 @@ for iteration = 1:num_of_trails
         disp(['Working on repitition ' num2str(repitition) '.'])
         [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
         % Put matrix A into monotone adversary.
-        [ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b );
+        [ V, good_vector, tagged_vector ] = monotone_adversary_MPW( A, a, b );
         % display(sum(tagged_vector))
         % display(sum(sum(A-V)))
         % display(sum(good_vector))
