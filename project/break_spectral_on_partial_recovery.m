@@ -36,7 +36,7 @@ for iteration = 1:num_of_trails
         [ V, good_vector, tagged_vector ] = monotone_adversary( A, a, b );
         display(sum(tagged_vector))
         display(sum(sum(A-V)))
-        display(good_vector)
+        display(sum(good_vector))
         % [ clustering_A, eigenvalues_A, eigenvectors_A ] = ...
         % spectral_clustering( A_store(:,:,repitition) );
         % [ clustering_V, eigenvalues_V, eigenvectors_V ] = ...
