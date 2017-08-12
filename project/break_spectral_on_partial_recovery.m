@@ -4,7 +4,6 @@
 % on it (in sparse regime).
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-rng('shuffle');
 n = 1000;
 % [ ~, z_sbm ] = generate_sbm_adjacency(n,a,b);
 % Fix a percentage of partial recovery.
@@ -30,6 +29,7 @@ for iteration = 1:num_of_trails
     % end
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
+        rng('shuffle');
         disp(['Working on repitition ' num2str(repitition) '.'])
         [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
         % Put matrix A into monotone adversary.
