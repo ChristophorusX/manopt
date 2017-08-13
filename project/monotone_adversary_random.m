@@ -22,16 +22,14 @@ end
 [ dimension, ~ ] = size(A);
 for iter = 1:dimension
     adding_sign = - (2 * V(iter,:) - 1)';
+    first_half = [ones(1,dimension/2) zeros(1,dimension/2)]';
+    second_half = [zeros(1,dimension/2) ones(1,dimension/2)]';
     if iter <= dimension/2
-        first_half = [ones(1,dimension/2) zeros(1,dimension/2)]';
-        second_half = [zeros(1,dimension/2) ones(1,dimension/2)]';
         row_first_half = first_half .* V(iter,:)';
         row_second_half = second_half .* V(iter,:)';
         validity_vec = ((1 - (2 * row_first_half - 1)) / 2) .* first_half + ...
         row_second_half;
     else
-        first_half = [ones(1,dimension/2) zeros(1,dimension/2)]';
-        second_half = [zeros(1,dimension/2) ones(1,dimension/2)]';
         row_first_half = first_half .* V(iter,:)';
         row_second_half = second_half .* V(iter,:)';
         validity_vec = ((1 - (2 * row_second_half - 1)) / 2) .* second_half + ...
