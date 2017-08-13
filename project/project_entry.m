@@ -61,7 +61,7 @@ saveas(critical_point_plot_SBM,'SBM critical point plot','png')
 % Specify the synchronization model to use.
 percent_of_elements_being_one = 0.5;
 lambda = 8;
-[ Y, z_syn ] = generate_synchronization_matrix( n, percent_of_elements_being_one, lambda );
+[ Y, z_syn ] = generate_synchronization_gaussian( n, percent_of_elements_being_one, lambda );
 % Perform Burer-Monteiro on Y.
 [ Q_Y, Q_Ycost, info_Y, options_Y ] = burer_monteiro( Y );
 % Evaluate the performance of Burer-Monteiro on model.

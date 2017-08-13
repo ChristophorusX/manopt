@@ -1,4 +1,4 @@
-function [ Y, z_syn ] = generate_synchronization_matrix( n, percent_of_elements_being_one, lambda )
+function [ Y, z_syn ] = generate_synchronization_gaussian( n, percent_of_elements_being_one, lambda )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate random matrix Y of dimension n for Z2 synchronization problem,
 % where Y=zz^T+\sigma W, with W a Wigner matrix generated from Gaussian
@@ -18,7 +18,8 @@ rng('shuffle');
 z_pre = rand(n,1) > (1-percent_of_elements_being_one);
 z_syn = (2*z_pre)-1;
 % display(z_syn)
-R = normrnd(0,1,n,n);
+R_pre = normrnd(0,sqrt(2)/2,n,n);
+R = R_pre + R_pre'; % Sum of independent normal is also normal
 W = R - diag(R);
 % display(W)
 sigma = sqrt(n)/lambda; % lambda is the value to move around.
