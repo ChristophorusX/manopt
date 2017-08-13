@@ -37,6 +37,7 @@ for iter = 1:dimension
         validity_vec = ((1 - (2 * row_second_half - 1)) / 2) .* second_half + ...
         row_first_half;
     end
+    rng('shuffle');
     moving_vec = rand(dimension,1) > (1 - delta);
     V(iter,:) = V(iter,:) + (moving_vec .* adding_sign .* validity_vec)';
     % for subiter = iter:dimension
