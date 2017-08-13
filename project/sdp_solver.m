@@ -21,7 +21,7 @@ variable X(dimension,dimension) semidefinite;
 dual variable D;
 minimize( -trace(Y*X) );
 subject to
-    D : diag(X) == 1;
+    diag(X) == 1;
     X >= 0;
 cvx_end
 
