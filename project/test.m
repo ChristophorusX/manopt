@@ -5,6 +5,7 @@
 %     display(V)
 % end
 
+rgn('shuffle');
 A = generate_sbm_adjacency( 20, 5, 2 );
 [ X, Xcost, D ] = sdp_solver(A);
 display(X)
