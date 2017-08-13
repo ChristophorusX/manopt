@@ -17,7 +17,7 @@ function [ X, Xcost, D ] = sdp_solver( Y )
 cvx_clear
 
 cvx_begin sdp
-variable X(dimension,dimension) semidefinite;
+variable X(dimension,dimension);
 dual variable D;
 maximize( trace(Y*X) );
 subject to
