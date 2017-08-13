@@ -7,7 +7,7 @@
 
 rng('shuffle');
 A = generate_sbm_adjacency( 1000, 5, 2 );
-[ X, Xcost, D ] = sdp_solver(A);
+[ X, Xcost, D ] = sdp_solver_sym(A);
 % display(X)
 % display(Xcost)
 % display(D)
