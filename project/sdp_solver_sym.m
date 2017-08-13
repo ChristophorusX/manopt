@@ -1,4 +1,4 @@
-function [ X, Xcost, D ] = sdp_solver_sym( Y )
+function [ X, Xcost, D, eigenvalues ] = sdp_solver_sym( Y )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This function takes a symmetric cost matrix Y and perform semidefinite
 % programming under constraint X_{ii}=1 and X being positive semidefinite.
@@ -27,5 +27,7 @@ cvx_end
 
 D = -diag(D);
 Xcost = trace(Y*X);
+e = eig(D - Y);
+eigenvalues = sort(e);
 
 end  % function
