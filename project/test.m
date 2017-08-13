@@ -11,3 +11,4 @@ A = generate_sbm_adjacency( 20, 5, 2 );
 display(X)
 display(Xcost)
 display(D)
+disp(['Check dual optimal: ' num2str(trace(D))]);

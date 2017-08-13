@@ -21,10 +21,11 @@ variable X(dimension,dimension) semidefinite;
 dual variable D;
 minimize( -trace(Y*X) );
 subject to
-    diag(X) == 1;
+    D : diag(X) == 1;
     X >= 0;
 cvx_end
 
+D = diag(D);
 Xcost = trace(Y*X);
 
 end  % function
