@@ -19,7 +19,7 @@ cvx_clear
 cvx_begin sdp
 variable X(dimension,dimension) semidefinite;
 dual variable D;
-minimize( -trace(Y*X) );
+maximize( trace(Y*X) );
 subject to
     D : diag(X) == 1;
     X >= 0;
