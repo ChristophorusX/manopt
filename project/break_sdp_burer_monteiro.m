@@ -10,7 +10,7 @@ b = 2;
 rng('shuffle');
 A = generate_sbm_adjacency_logrithmic( n, a, b );
 all_ones = ones(n, 1);
-B = 2 * A - (all_ones * all_ones' - eye(n));
+B = 2 * A - (all_ones * all_ones' + eye(n));
 [ X, Xcost, D, eigenvalues ] = sdp_solver_sym(B);
 disp(['Check dual optimal: ' num2str(trace(D))]);
 disp('The smallest 10 eigenvalues are: ');
