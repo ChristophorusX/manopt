@@ -6,7 +6,7 @@
 % end
 
 rng('shuffle');
-A = generate_sbm_adjacency( 1000, 5, 2 );
+A = generate_sbm_adjacency_logrithmic( 1000, 5, 2 );
 [ X, Xcost, D, eigenvalues ] = sdp_solver_sym(A);
 disp(['Check dual optimal: ' num2str(trace(D))]);
 disp('The smallest 10 eigenvalues are: ');

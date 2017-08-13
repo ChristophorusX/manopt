@@ -5,7 +5,7 @@
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 n = 1000;
-% [ ~, z_sbm ] = generate_sbm_adjacency(n,a,b);
+% [ ~, z_sbm ] = generate_sbm_adjacency_sparse(n,a,b);
 % Fix a percentage of partial recovery.
 percentage = 0.5;
 % Set a to a fixed number and the set b according to the treshold.
@@ -28,14 +28,14 @@ for iteration = 1:num_of_trails
     % A_store = zeros(n,n,num_of_repititions);
     % V_MPW_store = zeros(n,n,num_of_repititions);
     % for iter = 1:num_of_repititions
-    %     A_store(:,:,iter) = generate_sbm_adjacency(n,a,b);
+    %     A_store(:,:,iter) = generate_sbm_adjacency_sparse(n,a,b);
     %     V_MPW_store(:,:,iter) = monotone_adversary_MPW(A_store(:,:,iter),a,b);
     % end
     % Generate adjacency matrix.
     for repitition = 1:num_of_repititions
         rng('shuffle');
         disp(['Working on repitition ' num2str(repitition) '.'])
-        [ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
+        [ A, z_sbm ] = generate_sbm_adjacency_sparse(n, a, b);
         % Put matrix A into monotone adversary.
         [ V_MPW, good_vector, tagged_vector ] = monotone_adversary_MPW( A, a, b );
         V_hub = monotone_adversary_hub( A, delta );

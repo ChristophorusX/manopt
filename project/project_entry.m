@@ -11,7 +11,7 @@ n = 1000;
 a = 28;
 b = 12;
 % Generate adjacency matrix.
-[ A, z_sbm ] = generate_sbm_adjacency(n, a, b);
+[ A, z_sbm ] = generate_sbm_adjacency_sparse(n, a, b);
 % display(A)
 % Put matrix A into monotone adversary.
 [ V, good_vector, tagged_vector ] = monotone_adversary_MPW( A, a, b );
