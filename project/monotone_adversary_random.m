@@ -1,6 +1,8 @@
 function [ V ] = monotone_adversary_random( A, delta )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Implement a monotone adversary creating random modify on graph.
+% Implement a monotone adversary creating random modify on graph. It
+% randomly generates inner-cluster edges and cuts inter-cluster edges
+% with probability delta*log(n)/n.
 %
 % @parameter: An adjacency matrix given by a SBM model.
 % @parameter: constant delta for probability of creating and deleting
@@ -36,7 +38,7 @@ for iter = 1:dimension
         row_first_half;
     end
     rng('shuffle');
-    moving_vec = rand(dimension,1) > (1 - delta);
+    moving_vec = rand(dimension,1) > (1 - delta*log(dimension)/dimension);
     V(iter,:) = V(iter,:) + (moving_vec .* adding_sign .* validity_vec)';
     % for subiter = iter:dimension
     %     if V(iter,subiter) == 0 && ((iter <= dimension/2 && subiter > dimension/2) ...
