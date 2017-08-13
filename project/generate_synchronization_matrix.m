@@ -13,6 +13,7 @@ function [ Y, z_syn ] = generate_synchronization_matrix( n, percent_of_elements_
 % @return: The ground truth of partition z_syn given in +1 and -1.
 % NOTE: this setting is for synchronization problem.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+rng('shuffle');
 z_pre = rand(n,1) > (1-percent_of_elements_being_one);
 z_syn = (2*z_pre)-1;
 % display(z_syn)
