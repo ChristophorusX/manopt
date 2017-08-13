@@ -13,6 +13,7 @@ all_ones = ones(n, 1);
 B = 2 * A - (all_ones * all_ones' + eye(n));
 [ X, Xcost, D, eigenvalues ] = sdp_solver_sym(B);
 disp(['Check dual optimal: ' num2str(trace(D))]);
+display(eigenvalues)
 disp('The smallest 10 eigenvalues are: ');
 for iter = 1:10
     disp(num2str(eigenvalues(iter)));
