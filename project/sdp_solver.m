@@ -25,7 +25,7 @@ subject to
     X >= 0;
 cvx_end
 
-D = diag(D);
+D = -diag(D);
 Xcost = trace(Y*X);
 
 end  % function
