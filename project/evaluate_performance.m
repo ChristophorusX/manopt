@@ -2,7 +2,8 @@ function [ true_cost_value, correlation ] = evaluate_performance( z, B, Q )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Performing some evaluations on the Burer-Monteiro methods on respective
 % problems.
-% 
+% @author: Ruitu Xu
+%
 % @parameter: A ground truth vector z.
 % @parameter: A cost matrix of the problem B.
 % @parameter: The second order critical point Q from Burer-Monteiro.

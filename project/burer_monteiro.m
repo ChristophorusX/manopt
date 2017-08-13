@@ -3,6 +3,7 @@ function [ Q, Qcost, info, options ] = burer_monteiro( B )
 % Perform a manifold optimization on the cost function Tr(Q^TBQ) given the
 % manifold (Symmetric positive semidefinite, fixed-rank with unit diagonal)
 % with rank(X=QQ^T)<=2.
+% @author: Ruitu Xu
 %
 % @parameter: A matrix B to perform Burer-Monteiro on.
 %

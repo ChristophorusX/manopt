@@ -3,6 +3,7 @@ function [ V ] = monotone_adversary_hub( A, delta )
 % Implement a monotone adversary creating a hub on graph. Add to the
 % first point a linear portion of the total possible edges within the
 % group and remove a linar portion of those crossing the groups.
+% @author: Ruitu Xu
 %
 % @parameter: An adjacency matrix given by a SBM model.
 % @parameter: constant delta for probability of creating hub edges.

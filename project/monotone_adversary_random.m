@@ -3,6 +3,7 @@ function [ V ] = monotone_adversary_random( A, delta )
 % Implement a monotone adversary creating random modify on graph. It
 % randomly generates inner-cluster edges and cuts inter-cluster edges
 % with probability delta*log(n)/n.
+% @author: Ruitu Xu
 %
 % @parameter: An adjacency matrix given by a SBM model.
 % @parameter: constant delta for probability of creating and deleting

@@ -3,6 +3,7 @@ function [ V, good_vector, tagged_vector ] = monotone_adversary_MPW( A, a, b )
 % Implement a monotone adversary described in MPW16. It removes with
 % probability delta the edges of node with only two neighbors of different
 % spin. Delta is given by epsilon, the rate of b/(a+b).
+% @author: Ruitu Xu
 %
 % @parameter: An adjacency matrix given by a SBM model.
 % @parameter: constant a for inner cluster probability.

@@ -2,6 +2,7 @@ function [ X, Xcost, D, eigenvalues ] = sdp_solver( Y )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This function takes a cost matrix Y and perform semidefinite programming
 % under constraint X_{ii}=1 and X being positive semidefinite.
+% @author: Ruitu Xu
 %
 % @parameter: Y be a cost function given by the problem setting.
 %

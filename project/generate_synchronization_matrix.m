@@ -3,6 +3,7 @@ function [ Y, z_syn ] = generate_synchronization_matrix( n, percent_of_elements_
 % Generate random matrix Y of dimension n for Z2 synchronization problem,
 % where Y=zz^T+\sigma W, with W a Wigner matrix generated from Gaussian
 % distribution.
+% @author: Ruitu Xu
 %
 % @parameter: The number of elements in the group n.
 % @parameter: The rough percentage percent_of_elements_being_one of vertices being in

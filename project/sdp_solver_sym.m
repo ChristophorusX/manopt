@@ -2,6 +2,7 @@ function [ X, Xcost, D, eigenvalues ] = sdp_solver_sym( Y )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This function takes a symmetric cost matrix Y and perform semidefinite
 % programming under constraint X_{ii}=1 and X being positive semidefinite.
+% @author: Ruitu Xu
 %
 % @parameter: Y be a symmetric cost function given by the problem setting.
 %

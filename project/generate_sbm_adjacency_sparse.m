@@ -2,6 +2,7 @@ function [ A, z_sbm ] = generate_sbm_adjacency_sparse( number_of_vertices, a, b 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate random adjacency matrix (symmetric) A of dimension n (even)
 % according to inner- and inter-cluster edge probability p and q.
+% @author: Ruitu Xu
 % NOTE: this setting is for stochastic block model in sparse regime.
 %
 % @parameter: number of vertices in the model.

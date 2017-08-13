@@ -1,6 +1,7 @@
 function [ error_rate ] = compute_error_rate( clustering, z )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Computes the error rate given a clustering result and the ground truth.
+% @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 dimensions = size(z);
@@ -12,4 +13,3 @@ errors_2 = sum(diff_2 ~=0);
 error_rate = min(errors_1,errors_2)/dimension;
 
 end
-

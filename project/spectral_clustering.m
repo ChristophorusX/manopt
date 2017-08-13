@@ -3,6 +3,7 @@ function [ clustering, eigenvalues, eigenvectors ] = spectral_clustering( G )
 % Perform spectral clustering function on the graph, trying to recover the
 % planted partition by grouping the eigenvectors of the adjacency matrix
 % with k-means. (The helping function is in seperate function file.)
+% @author: Ruitu Xu
 %
 % @parameter: A matrix G to perform spectral clustering on.
 %
