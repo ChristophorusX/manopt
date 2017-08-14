@@ -6,7 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 n = 1000;
 a = 15;
-b = 5;
+b = 2;
 rng('shuffle');
 [ A, z_sbm ] = generate_sbm_adjacency_logrithmic( n, a, b );
 [ Q_A, Q_Acost, info_A, options_A ] = burer_monteiro( A );
