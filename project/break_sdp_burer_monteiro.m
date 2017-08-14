@@ -7,6 +7,8 @@
 n = 1000;
 a = 15;
 b = 2;
+warning('off', 'manopt:getHessian:approx')
+warning('off', 'manopt:elliptopefactory:exp')
 rng('shuffle');
 [ A, z_sbm ] = generate_sbm_adjacency_logrithmic( n, a, b );
 [ Q_A, Q_Acost, info_A, options_A ] = burer_monteiro( A );
