@@ -5,6 +5,8 @@
 % these problems.
 % @author: Ruitu Xu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+warning('off', 'manopt:getHessian:approx')
+warning('off', 'manopt:elliptopefactory:exp')
 n = 1000;
 a = 25;
 num_of_trails = 10;
@@ -12,9 +14,15 @@ num_of_repititions = 1;
 density_of_jump = 1;
 lambda_base = 10;
 percent_of_elements_being_one = 0.5;
+disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+disp('%%%%% Starting comparing on synchronization model with Gaussian noise. %%%%%');
+disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 for iter = 1:num_of_trails
     jump = iter/density_of_jump;
     lambda = lambda_base + jump;
+    disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+    disp(['>>>>>>>>This is trail' num2str(iter) ' with lambda ' num2str(lambda)]);
+    disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     for subiter = 1:num_of_repititions
         [ Y, z_syn ] = generate_synchronization_gaussian( n, percent_of_elements_being_one, lambda );
         % Perform Burer-Monteiro on Y.
@@ -44,12 +52,16 @@ for iter = 1:num_of_trails
 end
 
 
-warning('off', 'manopt:getHessian:approx')
-warning('off', 'manopt:elliptopefactory:exp')
 b_base = 10;
+disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+disp('%%%%%%%%%%%%%%%%%% Starting comparing on SBM model. %%%%%%%%%%%%%%%%%%');
+disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 for iter = 1:num_of_trails
     jump = iter/density_of_jump;
     b = b_base + jump;
+    disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+    disp(['>>>>>>>>This is trail' num2str(iter) ' with a ' num2str(a) ' and b ' num2str(b)]);
+    disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     for subiter = 1:num_of_repititions
         rng('shuffle');
         [ A, z_sbm ] = generate_sbm_adjacency_logrithmic( n, a, b );
