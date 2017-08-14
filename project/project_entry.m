@@ -29,12 +29,12 @@ warning('off', 'manopt:elliptopefactory:exp')
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 disp('Start printing evaluation output on BM-SBM.')
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-disp(['The output optimal cost by Burer-Monteiro on A is ' num2str(Q_Acost) '.'])
+disp(['The output optimal cost by Burer-Monteiro on A is ' num2str(-Q_Acost) '.'])
 disp(['The planted cost by Burer-Monteiro on A is ' num2str(true_cost_value_A) '.'])
 disp(['The correlation between output X=Q_AQ_A^T and the planted vector z is ' ...
     num2str(correlation_A) '.'])
 disp('compared to')
-disp(['The output optimal cost by Burer-Monteiro is ' num2str(Q_Vcost) '.'])
+disp(['The output optimal cost by Burer-Monteiro is ' num2str(-Q_Vcost) '.'])
 disp(['The planted cost by Burer-Monteiro on V is ' num2str(true_cost_value_V) '.'])
 disp(['The correlation between output X=Q_VQ_V^T and the planted vector z is ' ...
     num2str(correlation_V) '.'])
@@ -69,7 +69,7 @@ lambda = 8;
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 disp('Start printing evaluation output on BM-Synchronization.')
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-disp(['The output optimal cost by Burer-Monteiro on Y is ' num2str(Q_Ycost) '.'])
+disp(['The output optimal cost by Burer-Monteiro on Y is ' num2str(-Q_Ycost) '.'])
 disp(['The planted cost by Burer-Monteiro on Y is ' num2str(true_cost_value_Y) '.'])
 disp(['The correlation between output X=Q_YQ_Y^T and the planted vector z is ' ...
     num2str(correlation_Y) '.'])

@@ -14,7 +14,7 @@ rng('shuffle');
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 disp('Start printing evaluation output on BM-SBM.')
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-disp(['The output optimal cost by Burer-Monteiro on A is ' num2str(Q_Acost) '.'])
+disp(['The output optimal cost by Burer-Monteiro on A is ' num2str(-Q_Acost) '.'])
 disp(['The planted cost by Burer-Monteiro on A is ' num2str(true_cost_value_A) '.'])
 disp(['The correlation between output X=Q_AQ_A^T and the planted vector z is ' ...
     num2str(correlation_A) '.'])

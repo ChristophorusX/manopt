@@ -16,7 +16,7 @@ function [ true_cost_value, correlation ] = evaluate_performance( z, B, Q )
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 disp('Starting evaluating the performance...')
 % disp(z)
-true_cost_value = -z'*B*z; % Cost given ground truth z.
+true_cost_value = z'*B*z; % Cost given ground truth z.
 % disp(true_cost_value)
 % disp(['The planted cost value of this problem is ' num2str(true_cost_value) '.'])
 % Compute the correlation between the critical point Q and ground truth z.
