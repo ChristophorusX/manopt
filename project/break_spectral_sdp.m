@@ -9,7 +9,7 @@ a = 25;
 num_of_trails = 10;
 num_of_repititions = 1;
 density_of_jump = 1;
-
+delta = 1;
 b_base = 10;
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 disp('%%%%%%%%%%%%%%%%%% Starting comparing on SBM model. %%%%%%%%%%%%%%%%%%');
