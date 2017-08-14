@@ -79,9 +79,6 @@ for iter = 1:num_of_trails
         disp('Start printing evaluation output on SDP-SBM.')
         disp('=========================================================================')
         disp('The smallest 3 eigenvalues are: ');
-        for subsubiter = 1:3
-            disp(num2str(eigenvalues(subsubiter)));
-        end
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         disp('Exact recovery??????')
         if eigenvalues_B(2) > eps
