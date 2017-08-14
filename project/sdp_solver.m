@@ -35,8 +35,8 @@ D_dual = -diag(D);
 
 D_planted_pre = diag(z) * Y * diag(z);
 D_planted = diag(sum(D_planted_pre, 2));
-e = eig(D_planted - Y);
+e = eig(D_planted - diag(z) * Y * diag(z));
 eigenvalues_pre = sort(e);
-eigenvalues = eigenvalues_pre .* (eigenvalues_pre > eps)
+eigenvalues = eigenvalues_pre .* (eigenvalues_pre > eps);
 
 end  % function
