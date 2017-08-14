@@ -21,7 +21,7 @@ for iter = 1:num_of_trails
     jump = iter/density_of_jump;
     lambda = lambda_base + jump;
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-    disp(['>>>>>>>>This is trail' num2str(iter) ' with lambda ' num2str(lambda)]);
+    disp(['>>>>>>>>This is trail ' num2str(iter) ' with lambda ' num2str(lambda)]);
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     for subiter = 1:num_of_repititions
         [ Y, z_syn ] = generate_synchronization_gaussian( n, percent_of_elements_being_one, lambda );
@@ -31,16 +31,25 @@ for iter = 1:num_of_trails
         [ true_cost_value_Y, correlation_Y ] = evaluate_performance( z_syn, Y, Q_Y );
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         disp('Start printing evaluation output on BM-Synchronization.')
-        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('=========================================================================')
         disp(['The output optimal cost by Burer-Monteiro on Y is ' num2str(-Q_Ycost) '.'])
         disp(['The planted cost by Burer-Monteiro on Y is ' num2str(true_cost_value_Y) '.'])
         disp(['The correlation between output X=Q_YQ_Y^T and the planted vector z is ' ...
             num2str(correlation_Y) '.'])
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('Exact recovery??????')
+        if correlation_Y > eps
+            disp('Yes, it achieves exact recovery.');
+        else
+            disp('No, it does not achieve exact recovery.');
+        end
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 
         [ ~, Xcost, ~, eigenvalues, D_dual ] = sdp_solver_sym( Y, z_syn );
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         disp('Start printing evaluation output on SDP-Synchronization.')
-        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('=========================================================================')
         disp(['The output primal optimum is: ' num2str(Xcost)]);
         disp(['Check dual optimality: ' num2str(trace(D_dual))]);
         % display(eigenvalues)
@@ -48,6 +57,15 @@ for iter = 1:num_of_trails
         for subsubiter = 1:10
             disp(num2str(eigenvalues(subsubiter)));
         end
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('Exact recovery??????')
+        if eigenvalues(2) > eps
+            disp('Yes, it achieves exact recovery.');
+        else
+            disp('No, it does not achieve exact recovery.');
+        end
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
     end
 end
 
@@ -60,7 +78,7 @@ for iter = 1:num_of_trails
     jump = iter/density_of_jump;
     b = b_base + jump;
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-    disp(['>>>>>>>>This is trail' num2str(iter) ' with a ' num2str(a) ' and b ' num2str(b)]);
+    disp(['>>>>>>>>This is trail ' num2str(iter) ' with a ' num2str(a) ' and b ' num2str(b)]);
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     for subiter = 1:num_of_repititions
         rng('shuffle');
@@ -69,18 +87,27 @@ for iter = 1:num_of_trails
         [ true_cost_value_A, correlation_A ] = evaluate_performance( z_sbm, A, Q_A );
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         disp('Start printing evaluation output on BM-SBM.')
-        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('=========================================================================')
         disp(['The output optimal cost by Burer-Monteiro on A is ' num2str(-Q_Acost) '.'])
         disp(['The planted cost by Burer-Monteiro on A is ' num2str(true_cost_value_A) '.'])
         disp(['The correlation between output X=Q_AQ_A^T and the planted vector z is ' ...
             num2str(correlation_A) '.'])
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('Exact recovery??????')
+        if correlation_A > eps
+            disp('Yes, it achieves exact recovery.');
+        else
+            disp('No, it does not achieve exact recovery.');
+        end
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 
         all_ones = ones(n, 1);
         B = 2 * A - (all_ones * all_ones' + eye(n));
         [ ~, Xcost, ~, eigenvalues, D_dual ] = sdp_solver_sym(B, z_sbm);
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         disp('Start printing evaluation output on SDP-SBM.')
-        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('=========================================================================')
         disp(['The output primal optimum is: ' num2str(Xcost)]);
         disp(['Check dual optimality: ' num2str(trace(D_dual))]);
         % display(eigenvalues)
@@ -88,5 +115,14 @@ for iter = 1:num_of_trails
         for subsubiter = 1:10
             disp(num2str(eigenvalues(subsubiter)));
         end
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('Exact recovery??????')
+        if eigenvalues(2) > eps
+            disp('Yes, it achieves exact recovery.');
+        else
+            disp('No, it does not achieve exact recovery.');
+        end
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
     end
 end
