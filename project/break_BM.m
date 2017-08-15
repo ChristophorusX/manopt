@@ -6,6 +6,7 @@ num_of_trails = 10;
 num_of_repititions = 1;
 density_of_jump = 1;
 lambda_base = 10;
+delta = 1/10;
 percent_of_elements_being_one = 0.5;
 b_base = 2;
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
