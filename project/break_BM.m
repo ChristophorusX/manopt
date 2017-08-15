@@ -1,20 +1,20 @@
 warning('off', 'manopt:getHessian:approx')
 warning('off', 'manopt:elliptopefactory:exp')
 n = 1000;
-a = 200;
-num_of_trails = 10;
+b = 1;
+num_of_trails = 20;
 num_of_repititions = 1;
-density_of_jump = 1;
+density_of_jump = 0.1;
 lambda_base = 10;
 delta = 1/10;
 percent_of_elements_being_one = 0.5;
-b_base = 2;
+a_base = 10;
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 disp('%%%%%%%%%%%%%%%%%% Starting comparing on SBM model. %%%%%%%%%%%%%%%%%%');
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 for iter = 1:num_of_trails
     jump = iter/density_of_jump;
-    b = b_base + jump;
+    a = a_base + jump;
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     disp(['>>>>>>>>This is trail ' num2str(iter) ' with a ' num2str(a) ' and b ' num2str(b)]);
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
