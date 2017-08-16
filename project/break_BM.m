@@ -34,6 +34,20 @@ for iter = 1:num_of_trails
         [ true_cost_value_V_MPW, correlation_V_MPW ] = evaluate_performance( z_sbm, V_MPW, Q_V_MPW );
         [ true_cost_value_V_hub, correlation_V_hub ] = evaluate_performance( z_sbm, V_hub, Q_V_hub );
         [ true_cost_value_V_random, correlation_V_random ] = evaluate_performance( z_sbm, V_random, Q_V_random );
+
+        clustering_A = k_means_rows(Q_A);
+        clustering_V_MPW = k_means_rows(Q_V_MPW);
+        clustering_V_hub = k_means_rows(Q_V_hub);
+        clustering_V_random = k_means_rows(Q_V_random);
+        error_rate_A = compute_error_rate(clustering_A,z_sbm);
+        error_rate_V_MPW = compute_error_rate(clustering_V_MPW,z_sbm);
+        error_rate_V_hub = compute_error_rate(clustering_V_hub,z_sbm);
+        error_rate_V_random = compute_error_rate(clustering_V_random,z_sbm);
+        disp(['Error rate for recovery from A is ' num2str(error_rate_A)])
+        disp(['Error rate for recovery from V_MPW is ' num2str(error_rate_V_MPW)])
+        disp(['Error rate for recovery from V_hub is ' num2str(error_rate_V_hub)])
+        disp(['Error rate for recovery from V_random is ' num2str(error_rate_V_random)])
+
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         disp('Start printing evaluation output on BM-SBM.')
         disp('=========================================================================')
