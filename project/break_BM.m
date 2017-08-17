@@ -2,13 +2,13 @@ warning('off', 'manopt:getHessian:approx')
 warning('off', 'manopt:elliptopefactory:exp')
 n = 1000;
 b = 2;
-num_of_trails = 20;
+num_of_trails = 10;
 num_of_repititions = 1;
-density_of_jump = 1/5;
+density_of_jump = 1;
 lambda_base = 10;
 delta = 1/10;
 percent_of_elements_being_one = 0.5;
-a_base = 30;
+a_base = 120;
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 disp('%%%%%%%%%%%%%%%%%% Starting comparing on SBM model. %%%%%%%%%%%%%%%%%%');
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
