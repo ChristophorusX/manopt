@@ -19,6 +19,9 @@ for iter = 1:num_of_trails
     disp(['>>>>>>>>This is trail ' num2str(iter) ' with a ' num2str(a) ' and b ' num2str(b)]);
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     for subiter = 1:num_of_repititions
+        disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        disp(['>>>>>>>>Rep #' num2str(subiter) ' with a ' num2str(a) ' and b ' num2str(b)]);
+        disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         rng('shuffle');
         [ A, z_sbm ] = generate_sbm_adjacency_logrithmic( n, a, b );
         [ V_MPW, good_vector, tagged_vector ] = monotone_adversary_MPW( A, a, b );
