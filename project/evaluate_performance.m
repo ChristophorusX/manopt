@@ -22,7 +22,7 @@ true_cost_value = z'*B*z; % Cost given ground truth z.
 % Compute the correlation between the critical point Q and ground truth z.
 dimensions = size(B);
 dimension = dimensions(1);
-correlation = sqrt(z'*(Q*Q')*z)/dimension;
+correlation = sqrt((Q' * z) * (Q' * z))/dimension;
 % disp(['The correlation between output X=QQ^T and the planted vector z is ' ...
 %     num2str(correlation) '.'])
 
