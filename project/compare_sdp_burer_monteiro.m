@@ -24,6 +24,9 @@ for iter = 1:num_of_trails
     disp(['>>>>>>>>This is trail ' num2str(iter) ' with lambda ' num2str(lambda)]);
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     for subiter = 1:num_of_repititions
+        disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        disp(['>>>>>>>>Rep #' num2str(subiter) ' with lambda ' num2str(lambda)]);
+        disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         [ Y, z_syn ] = generate_synchronization_gaussian( n, percent_of_elements_being_one, lambda );
         % Perform Burer-Monteiro on Y.
         [ Q_Y, Q_Ycost, info_Y, options_Y ] = burer_monteiro( Y );
