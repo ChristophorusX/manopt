@@ -10,7 +10,7 @@ warning('off', 'manopt:elliptopefactory:exp')
 n = 2000;
 a = 25;
 num_of_trails = 10;
-num_of_repititions = 1;
+num_of_repititions = 10;
 density_of_jump = 1;
 lambda_base = 10;
 percent_of_elements_being_one = 0.5;
