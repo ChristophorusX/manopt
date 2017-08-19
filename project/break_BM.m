@@ -1,6 +1,6 @@
 warning('off', 'manopt:getHessian:approx')
 warning('off', 'manopt:elliptopefactory:exp')
-n = 5000;
+n = 10000;
 b = 1;
 num_of_trails = 10;
 num_of_repititions = 10;
