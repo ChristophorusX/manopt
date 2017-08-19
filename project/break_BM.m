@@ -1,7 +1,7 @@
 warning('off', 'manopt:getHessian:approx')
 warning('off', 'manopt:elliptopefactory:exp')
 n = 5000;
-b = 2;
+b = 5;
 num_of_trails = 10;
 num_of_repititions = 10;
 density_of_jump = 1;
