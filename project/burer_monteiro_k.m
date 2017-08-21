@@ -13,7 +13,7 @@ function [ Q, Qcost, info, options ] = burer_monteiro_k( B )
 % @return: Options used by the trust region method.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [ dimension, ~ ] = size(B);
-k = sqrt(2*dimension);
+k = round(sqrt(2*dimension), 1);
 manifold = elliptopefactory(dimension, k);
 problem.M = manifold;
 % Note that Manopt only minimize the cost function.
