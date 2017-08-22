@@ -3,16 +3,16 @@ warning('off', 'manopt:elliptopefactory:exp')
 n = 1000;
 b = 5;
 num_of_trails = 10;
-num_of_repititions = 3;
-density_of_jump = 1;
+num_of_repititions = 5;
+density_of_jump = 10;
 lambda_base = 10;
 delta = 1/10;
 percent_of_elements_being_one = 0.5;
-a_base = 10;
+a_base = 12;
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 disp('%%%%%%%%%%%%%%%%%% Starting comparing on SBM model. %%%%%%%%%%%%%%%%%%');
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-for iter = 0:num_of_trails
+for iter = 1:num_of_trails
     jump = iter/density_of_jump;
     a = a_base + jump;
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
