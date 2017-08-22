@@ -19,9 +19,12 @@ problem.M = manifold;
 % Note that Manopt only minimize the cost function.
 problem.cost = @(Q) -trace(Q'*B*Q);
 % The Euclidian gradient is given by calculation.
-generator = @(iter) diag(B * diag(Q(:, iter)));
-arr = 1:k;
-problem.egrad = @(Q) -((B+B')*Q + arrayfunc(generator, arr);
+add_on_matrix = zeros(n, k);
+for iter = 1:k
+    add_on_matrix(:, iter) = diag(B * diag(Q(:, iter)));
+end
+generator = @(column) diag(B * diag(column));
+problem.egrad = @(Q) -((B+B')*Q + add_on_matrix; % Broken here TODO
 % Numerically check gradient and Hessian consistency.
 % figure;
 % checkgradient(problem);
