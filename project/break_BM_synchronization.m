@@ -22,7 +22,7 @@ for iter = 1:num_of_trails
         disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         rng('shuffle');
         [ Y_normalized, z_syn ] = generate_synchronization_gaussian_normalized( n, percent_of_elements_being_one, lambda );
-        [ Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized ] = burer_monteiro( Y_normalized_bm );
+        [ Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized ] = burer_monteiro( Y_normalized );
         [ true_cost_value_Y_normalized, correlation_Y_normalized ] = evaluate_performance( z_syn, Y_normalized, Q_Y_normalized );
         error_rate_Y_normalized = compute_error_rate(clustering_Y_normalized,z_syn);
         disp(['Error rate for recovery from Y_normalized is ' num2str(error_rate_Y_normalized)])
