@@ -2,8 +2,8 @@ warning('off', 'manopt:getHessian:approx')
 warning('off', 'manopt:elliptopefactory:exp')
 n = 2000;
 num_of_trails = 10;
-num_of_repititions = 5;
-density_of_jump = 2;
+num_of_repititions = 1;
+density_of_jump = 1;
 lambda_base = sqrt(2*log(n));
 delta = 1/10;
 percent_of_elements_being_one = 0.5;
