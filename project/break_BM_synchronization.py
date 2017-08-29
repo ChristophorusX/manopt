@@ -52,7 +52,7 @@ for iter in range(1, num_of_trails):
         print('Exact recovery??????')
         if correlation_Y_normalized > eps:
             print('Yes, it achieves exact recovery.')
-        else
+        else:
             print('No, it does not achieve exact recovery.')
         # all_ones = ones(n, 1)
         # B = 2 * Y_normalized - (all_ones * all_ones' + eye(n))
