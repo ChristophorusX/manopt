@@ -3,7 +3,7 @@ warning('off', 'manopt:elliptopefactory:exp')
 n = 1000;
 num_of_trails = 10;
 num_of_repititions = 5;
-density_of_jump = 100;
+density_of_jump = 10;
 lambda_base = sqrt(2*log(n));
 delta = 1/10;
 percent_of_elements_being_one = 0.5;
