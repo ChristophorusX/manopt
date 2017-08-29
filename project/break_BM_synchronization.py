@@ -1,5 +1,5 @@
 import matlab.engine
-import numpy, scipy
+import numpy as np, scipy as sp
 ml = matlab.engine.start_matlab()
 
 ml.warning('off', 'manopt:getHessian:approx', nargout = 0)
@@ -8,7 +8,7 @@ n = 1000
 num_of_trails = 10
 num_of_repititions = 1
 density_of_jump = 10
-lambda_base = sqrt(2*log(n))
+lambda_base = np.sqrt(2*np.log(n))
 delta = 1/10
 percent_of_elements_being_one = 0.5
 print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
