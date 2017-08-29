@@ -1,9 +1,9 @@
 warning('off', 'manopt:getHessian:approx')
 warning('off', 'manopt:elliptopefactory:exp')
-n = 1000;
+n = 2000;
 num_of_trails = 10;
 num_of_repititions = 5;
-density_of_jump = 10;
+density_of_jump = 2;
 lambda_base = sqrt(2*log(n));
 delta = 1/10;
 percent_of_elements_being_one = 0.5;
@@ -12,7 +12,7 @@ disp('%%%%%%%%%%%%%%%%%% Starting comparing on sync model. %%%%%%%%%%%%%%%%%%');
 disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 for iter = 1:num_of_trails
     jump = iter / density_of_jump;
-    lambda = lambda_base * (1 + iter * jump);
+    lambda = lambda_base * (1 + jump);
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
     disp(['>>>>>>>>This is trail ' num2str(iter) ' with lambda ' num2str(lambda) ]);
     disp('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
