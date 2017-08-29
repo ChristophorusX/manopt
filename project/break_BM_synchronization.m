@@ -3,7 +3,7 @@ warning('off', 'manopt:elliptopefactory:exp')
 n = 1000;
 num_of_trails = 10;
 num_of_repititions = 5;
-density_of_jump = 10;
+density_of_jump = 1;
 lambda_base = 10;
 delta = 1/10;
 percent_of_elements_being_one = 0.5;
@@ -24,6 +24,7 @@ for iter = 1:num_of_trails
         [ Y_normalized, z_syn ] = generate_synchronization_gaussian_normalized( n, percent_of_elements_being_one, lambda );
         [ Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized ] = burer_monteiro( Y_normalized );
         [ true_cost_value_Y_normalized, correlation_Y_normalized ] = evaluate_performance( z_syn, Y_normalized, Q_Y_normalized );
+        clustering_Y_normalized = k_means_rows(Q_Y_normalized);
         error_rate_Y_normalized = compute_error_rate(clustering_Y_normalized,z_syn);
         disp(['Error rate for recovery from Y_normalized is ' num2str(error_rate_Y_normalized)])
 
@@ -37,7 +38,7 @@ for iter = 1:num_of_trails
         hold off;
 
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-        disp('Start printing evaluation output on BM-SBM.')
+        disp('Start printing evaluation output on BM-sync.')
         disp('=========================================================================')
         disp(['The output optimal cost by Burer-Monteiro on Y_normalized is ' num2str(-Q_Y_normalizedcost) '.'])
         disp(['The planted cost by Burer-Monteiro on Y_normalized is ' num2str(true_cost_value_Y_normalized) '.'])
