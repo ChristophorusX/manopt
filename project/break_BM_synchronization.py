@@ -1,36 +1,49 @@
 import matlab.engine
-import numpy as np, scipy as sp
+import numpy as np
+import scipy as sp
 ml = matlab.engine.start_matlab()
 
-ml.warning('off', 'manopt:getHessian:approx', nargout = 0)
-ml.warning('off', 'manopt:elliptopefactory:exp', nargout = 0)
+ml.warning('off', 'manopt:getHessian:approx', nargout=0)
+ml.warning('off', 'manopt:elliptopefactory:exp', nargout=0)
 n = 1000
 num_of_trails = 10
 num_of_repititions = 1
 density_of_jump = 10
-lambda_base = np.sqrt(2*np.log(n))
-delta = 1/10
+lambda_base = np.sqrt(2 * np.log(n))
+delta = 1 / 10
 percent_of_elements_being_one = 0.5
-print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-print('%%%%%%%%%%%%%%%%%% Starting comparing on sync model. %%%%%%%%%%%%%%%%%%')
-print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
+      >>>>>>>>>>')
+print('%%%%%%%%%%%%%%%%%% Starting comparing on sync model. %%%%%%%% \
+      %%%%%%%%%%')
+print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
+      >>>>>>>>>>')
 for iter in range(1, num_of_trails):
     jump = iter / density_of_jump
     lambda_SNR = lambda_base * (3 + jump)
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    print('>>>>>>>>This is trail' +  iter + ' with lambda ' + lambda_SNR)
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
+          >>>>>>>>>>>>>>')
+    print('>>>>>>>>This is trail' + str(iter) +
+          ' with lambda ' + str(lambda_SNR))
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
+          >>>>>>>>>>>>>>')
     for subiter in range(1, num_of_repititions):
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        print('>>>>>>>>Rep #' + subiter + ' with lambda ' + lambda_SNR)
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        ml.rng('shuffle', nargout = 0)
-        Y_normalized, z_syn = ml.generate_synchronization_gaussian_normalized(n, percent_of_elements_being_one, lambda_SNR, nargout = 2)
-        Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized = ml.burer_monteiro(Y_normalized, nargout = 4)
-        true_cost_value_Y_normalized, correlation_Y_normalized = ml.evaluate_performance(z_syn, Y_normalized, Q_Y_normalized, nargout = 3)
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
+              >>>>>>>>>>>>>>>>>>')
+        print('>>>>>>>>Rep #' + str(subiter) +
+              ' with lambda ' + str(lambda_SNR))
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
+              >>>>>>>>>>>>>>>>>>')
+        ml.rng('shuffle', nargout=0)
+        Y_normalized, z_syn = ml.generate_synchronization_gaussian_normalized(
+            n, percent_of_elements_being_one, lambda_SNR, nargout=2)
+        Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized = ml.burer_monteiro(Y_normalized, nargout=4)
+        true_cost_value_Y_normalized, correlation_Y_normalized = ml.evaluate_performance(z_syn, Y_normalized, Q_Y_normalized, nargout=3)
         clustering_Y_normalized = ml.k_means_rows(Q_Y_normalized)
-        error_rate_Y_normalized = ml.compute_error_rate(clustering_Y_normalized, z_syn)
-        print('Error rate for recovery from Y_normalized is ' + error_rate_Y_normalized)
+        error_rate_Y_normalized = ml.compute_error_rate(
+            clustering_Y_normalized, z_syn)
+        print('Error rate for recovery from Y_normalized is ' +
+              str(error_rate_Y_normalized))
 
         # plot_x_Y_normalized = Q_Y_normalized(:,1)
         # plot_y_Y_normalized = Q_Y_normalized(:,2)
@@ -38,16 +51,22 @@ for iter in range(1, num_of_trails):
         # hold on
         # xlabel('x')
         # ylabel('y')
-        # title('Row vectors of second order critical point Q_Y_normalized on unit circle.')
+        # title('Row vectors of second order critical point \
+        #  Q_Y_normalized on unit circle.')
         # hold off
 
-        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \
+              %%%%%%%%%%%%%%%%%%%')
         print('Start printing evaluation output on BM-sync.')
-        print('=========================================================================')
-        print('The output optimal cost by Burer-Monteiro on Y_normalized is ' + -Q_Y_normalizedcost + '.')
-        print('The planted cost by Burer-Monteiro on Y_normalized is ' + true_cost_value_Y_normalized + '.')
-        print('The correlation between output X=Q_Y_normalizedQ_Y_normalized^T and the planted vector z is ' +
-            correlation_Y_normalized + '.')
+        print('====================================================== \
+              ===================')
+        print('The output optimal cost by Burer-Monteiro on Y_normalized is ' +
+              str(-Q_Y_normalizedcost) + '.')
+        print('The planted cost by Burer-Monteiro on Y_normalized is ' +
+              str(true_cost_value_Y_normalized) + '.')
+        print('The correlation between output X=Q_Y_normalizedQ_Y_normalized^T \
+              and the planted vector z is ' +
+              str(correlation_Y_normalized) + '.')
         print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         print('Exact recovery??????')
         if correlation_Y_normalized > eps:
@@ -65,4 +84,5 @@ for iter in range(1, num_of_trails):
         # for subsubiter in range(1, 10):
         #     print(eigenvalues(subsubiter))
         print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \
+              %%%%%%%%%%%%%%%%%%%')
