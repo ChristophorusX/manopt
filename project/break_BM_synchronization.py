@@ -2,6 +2,9 @@ import matlab.engine
 import numpy as np
 import scipy as sp
 ml = matlab.engine.start_matlab()
+print('Started MATLAB deamon successfully!')
+ml.importmanopt(nargout=0)
+print('Imported MANOPT package successfully!')
 
 ml.warning('off', 'manopt:getHessian:approx', nargout=0)
 ml.warning('off', 'manopt:elliptopefactory:exp', nargout=0)
