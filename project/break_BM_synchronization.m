@@ -1,6 +1,6 @@
 warning('off', 'manopt:getHessian:approx')
 warning('off', 'manopt:elliptopefactory:exp')
-n = 2000;
+n = 500;
 num_of_trails = 10;
 num_of_repititions = 1;
 density_of_jump = 10;
@@ -53,6 +53,7 @@ for iter = 1:num_of_trails
         end
         D_planted_pre = diag(z_syn) * Y_normalized * diag(z_syn);
         D_planted = diag(sum(D_planted_pre, 2));
+        % We do not demean the rows when percent_of_elements_being_one=0.5
         e = eig(D_planted - Y_normalized);
         eigenvalues_pre = sort(e);
         eigenvalues = eigenvalues_pre .* (eigenvalues_pre > eps);
