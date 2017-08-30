@@ -32,7 +32,7 @@ for iter in range(0, num_of_trails):
               ' with lambda ' + str(lambda_SNR))
         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
         ml.rng('shuffle', nargout=0)
-        Y_normalized, z_syn = ml.generate_synchronization_gaussian_normalized(n, percent_of_elements_being_one, lambda_SNR_ml, nargout=2)
+        Y_normalized, z_syn = ml.generate_synchronization_gaussian_normalized(int(n), float(percent_of_elements_being_one), lambda_SNR_ml, nargout=2)
         Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized = ml.burer_monteiro(Y_normalized, nargout=4)
         true_cost_value_Y_normalized, correlation_Y_normalized = ml.evaluate_performance(z_syn, Y_normalized, Q_Y_normalized, nargout=3)
         clustering_Y_normalized = ml.k_means_rows(Q_Y_normalized)
