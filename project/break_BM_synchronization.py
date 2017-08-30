@@ -12,36 +12,27 @@ density_of_jump = 10
 lambda_base = np.sqrt(2 * np.log(n))
 delta = 1 / 10
 percent_of_elements_being_one = 0.5
-print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
-      >>>>>>>>>>')
-print('%%%%%%%%%%%%%%%%%% Starting comparing on sync model. %%%%%%%% \
-      %%%%%%%%%%')
-print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
-      >>>>>>>>>>')
-for iter in range(1, num_of_trails):
+print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+print('%%%%%%%%%%%%%%%% Starting comparing on sync model. %%%%%%%%%%%%%%')
+print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+for iter in range(0, num_of_trails):
     jump = iter / density_of_jump
     lambda_SNR = lambda_base * (3 + jump)
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
-          >>>>>>>>>>>>>>')
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     print('>>>>>>>>This is trail' + str(iter) +
           ' with lambda ' + str(lambda_SNR))
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
-          >>>>>>>>>>>>>>')
-    for subiter in range(1, num_of_repititions):
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
-              >>>>>>>>>>>>>>>>>>')
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    for subiter in range(0, num_of_repititions):
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
         print('>>>>>>>>Rep #' + str(subiter) +
               ' with lambda ' + str(lambda_SNR))
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> \
-              >>>>>>>>>>>>>>>>>>')
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
         ml.rng('shuffle', nargout=0)
-        Y_normalized, z_syn = ml.generate_synchronization_gaussian_normalized(
-            n, percent_of_elements_being_one, lambda_SNR, nargout=2)
+        Y_normalized, z_syn = ml.generate_synchronization_gaussian_normalized(n, percent_of_elements_being_one, lambda_SNR, nargout=2)
         Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized = ml.burer_monteiro(Y_normalized, nargout=4)
         true_cost_value_Y_normalized, correlation_Y_normalized = ml.evaluate_performance(z_syn, Y_normalized, Q_Y_normalized, nargout=3)
         clustering_Y_normalized = ml.k_means_rows(Q_Y_normalized)
-        error_rate_Y_normalized = ml.compute_error_rate(
-            clustering_Y_normalized, z_syn)
+        error_rate_Y_normalized = ml.compute_error_rate(ßclustering_Y_normalized, z_syn)
         print('Error rate for recovery from Y_normalized is ' +
               str(error_rate_Y_normalized))
 
@@ -55,11 +46,9 @@ for iter in range(1, num_of_trails):
         #  Q_Y_normalized on unit circle.')
         # hold off
 
-        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \
-              %%%%%%%%%%%%%%%%%%%')
+        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         print('Start printing evaluation output on BM-sync.')
-        print('====================================================== \
-              ===================')
+        print('=======================================================')
         print('The output optimal cost by Burer-Monteiro on Y_normalized is ' +
               str(-Q_Y_normalizedcost) + '.')
         print('The planted cost by Burer-Monteiro on Y_normalized is ' +
@@ -67,7 +56,7 @@ for iter in range(1, num_of_trails):
         print('The correlation between output X=Q_Y_normalizedQ_Y_normalized^T \
               and the planted vector z is ' +
               str(correlation_Y_normalized) + '.')
-        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         print('Exact recovery??????')
         if correlation_Y_normalized > eps:
             print('Yes, it achieves exact recovery.')
@@ -83,6 +72,5 @@ for iter in range(1, num_of_trails):
         # print('The smallest 10 eigenvalues are: ')
         # for subsubiter in range(1, 10):
         #     print(eigenvalues(subsubiter))
-        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \
-              %%%%%%%%%%%%%%%%%%%')
+        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+        print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
