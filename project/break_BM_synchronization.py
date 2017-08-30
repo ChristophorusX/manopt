@@ -13,14 +13,14 @@ density_of_jump = 10
 lambda_base = np.sqrt(2 * np.log(n))
 delta = 1 / 10
 percent_of_elements_being_one = 0.5
-ml_percent_of_elements_being_one = ml.double(percent_of_elements_being_one)
+percent_of_elements_being_one_ml = ml.double(percent_of_elements_being_one)
 print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 print('%%%%%%%%%%%%%%%% Starting comparing on sync model. %%%%%%%%%%%%%%')
 print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 for iter in range(0, num_of_trails):
     jump = iter / density_of_jump
     lambda_SNR = lambda_base * (3 + jump)
-    ml_lambda_SNR = ml.double(float(lambda_SNR))
+    lambda_SNR_ml = ml.double(float(lambda_SNR))
     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     print('>>>>>>>>This is trail' + str(iter) +
           ' with lambda ' + str(lambda_SNR))
@@ -31,7 +31,7 @@ for iter in range(0, num_of_trails):
               ' with lambda ' + str(lambda_SNR))
         print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
         ml.rng('shuffle', nargout=0)
-        Y_normalized, z_syn = ml.generate_synchronization_gaussian_normalized(ml_n, ml_percent_of_elements_being_one, ml_lambda_SNR, nargout=2)
+        Y_normalized, z_syn = ml.generate_synchronization_gaussian_normalized(n_ml, percent_of_elements_being_one_ml, lambda_SNR_ml, nargout=2)
         Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized = ml.burer_monteiro(Y_normalized, nargout=4)
         true_cost_value_Y_normalized, correlation_Y_normalized = ml.evaluate_performance(z_syn, Y_normalized, Q_Y_normalized, nargout=3)
         clustering_Y_normalized = ml.k_means_rows(Q_Y_normalized)
