@@ -28,14 +28,14 @@ for iter = 1:num_of_trails
         error_rate_Y_normalized = compute_error_rate(clustering_Y_normalized,z_syn);
         disp(['Error rate for recovery from Y_normalized is ' num2str(error_rate_Y_normalized)])
 
-        plot_x_Y_normalized = Q_Y_normalized(:,1);
-        plot_y_Y_normalized = Q_Y_normalized(:,2);
-        plot(plot_x_Y_normalized,plot_y_Y_normalized, 'o', 'color', 'blue')
-        hold on;
-        xlabel('x')
-        ylabel('y')
-        title('Row vectors of second order critical point Q_Y_normalized on unit circle.')
-        hold off;
+        % plot_x_Y_normalized = Q_Y_normalized(:,1);
+        % plot_y_Y_normalized = Q_Y_normalized(:,2);
+        % plot(plot_x_Y_normalized,plot_y_Y_normalized, 'o', 'color', 'blue')
+        % hold on;
+        % xlabel('x')
+        % ylabel('y')
+        % title('Row vectors of second order critical point Q_Y_normalized on unit circle.')
+        % hold off;
 
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         disp('Start printing evaluation output on BM-sync.')
@@ -46,16 +46,14 @@ for iter = 1:num_of_trails
             num2str(correlation_Y_normalized) '.'])
         disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
         disp('Exact recovery??????')
-        if correlation_Y_normalized > eps
+        if error_rate_Y_normalized == 0
             disp('Yes, it achieves exact recovery.');
         else
             disp('No, it does not achieve exact recovery.');
         end
-        all_ones = ones(n, 1);
-        B = 2 * Y_normalized - (all_ones * all_ones' + eye(n));
-        D_planted_pre = diag(z_syn) * B * diag(z_syn);
+        D_planted_pre = diag(z_syn) * Y_normalized * diag(z_syn);
         D_planted = diag(sum(D_planted_pre, 2));
-        e = eig(D_planted - diag(z_syn) * B * diag(z_syn));
+        e = eig(D_planted - Y_normalized);
         eigenvalues_pre = sort(e);
         eigenvalues = eigenvalues_pre .* (eigenvalues_pre > eps);
         disp('The smallest 10 eigenvalues are: ');
