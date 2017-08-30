@@ -20,7 +20,7 @@ print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 for iter in range(0, num_of_trails):
     jump = iter / density_of_jump
     lambda_SNR = lambda_base * (3 + jump)
-    ml_lambda_SNR = ml.double(lambda_SNR)
+    ml_lambda_SNR = ml.double(float(lambda_SNR))
     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     print('>>>>>>>>This is trail' + str(iter) +
           ' with lambda ' + str(lambda_SNR))
