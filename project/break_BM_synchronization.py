@@ -6,14 +6,14 @@ ml = matlab.engine.start_matlab()
 ml.warning('off', 'manopt:getHessian:approx', nargout=0)
 ml.warning('off', 'manopt:elliptopefactory:exp', nargout=0)
 n = 1000
-n_ml = ml.double(n.toList())
+n_ml = ml.double(n)
 num_of_trails = 10
 num_of_repititions = 1
 density_of_jump = 10
 lambda_base = np.sqrt(2 * np.log(n))
 delta = 1 / 10
 percent_of_elements_being_one = 0.5
-ml_percent_of_elements_being_one = ml.double(percent_of_elements_being_one.toList())
+ml_percent_of_elements_being_one = ml.double(percent_of_elements_being_one)
 print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
 print('%%%%%%%%%%%%%%%% Starting comparing on sync model. %%%%%%%%%%%%%%')
 print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
