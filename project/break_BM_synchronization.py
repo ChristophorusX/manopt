@@ -32,7 +32,7 @@ for iter in range(0, num_of_trails):
         Q_Y_normalized, Q_Y_normalizedcost, info_Y_normalized, options_Y_normalized = ml.burer_monteiro(Y_normalized, nargout=4)
         true_cost_value_Y_normalized, correlation_Y_normalized = ml.evaluate_performance(z_syn, Y_normalized, Q_Y_normalized, nargout=3)
         clustering_Y_normalized = ml.k_means_rows(Q_Y_normalized)
-        error_rate_Y_normalized = ml.compute_error_rate(ßclustering_Y_normalized, z_syn)
+        error_rate_Y_normalized = ml.compute_error_rate(clustering_Y_normalized, z_syn)
         print('Error rate for recovery from Y_normalized is ' +
               str(error_rate_Y_normalized))
 
