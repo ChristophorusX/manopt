@@ -13,6 +13,7 @@ Y = generate_synchronization_gaussian(n, percentage, lambda);
 % Generate linear part of the GPM
 L = Y / n;
 [eigen_vec, V] = eigs(Y);
+size(V)
 largest = 1;
 largest_val = 0;
 for iter = 1:n
@@ -30,4 +31,4 @@ for iter = 1:n
     x = 2 * (l > 0) - 1;
 end
 error_rate = compute_error_rate(x, z);
-disp(['The error rate is ' error_rate]);
+disp(['The error rate is ' num2str(error_rate)]);
