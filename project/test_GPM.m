@@ -12,8 +12,8 @@ lambda = 10;
 Y = generate_synchronization_gaussian(n, percentage, lambda);
 % Generate linear part of the GPM
 L = Y / n;
-[eigen_vec, V] = eigs(Y);
-size(V)
+[V, D] = eigs(Y);
+eigen_vec = diag(D);
 largest = 1;
 largest_val = 0;
 for iter = 1:n
@@ -25,6 +25,7 @@ for iter = 1:n
     end
 end
 x_0 = V(:,largest);
+disp('First eigenvector extracted!');
 x = x_0;
 for iter = 1:n
     l = L * x;
