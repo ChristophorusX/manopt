@@ -8,7 +8,7 @@
 % Generate a synchronization matrix
 n = 1000;
 percentage = 0.5;
-lambda = 10;
+lambda = sqrt(log(n));
 [Y, z] = generate_synchronization_gaussian(n, percentage, lambda);
 % Generate linear part of the GPM
 L = Y / n;
