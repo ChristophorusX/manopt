@@ -6,7 +6,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate a synchronization matrix
-n = 1000;
+n = 5000;
 percentage = 0.5;
 lambda = sqrt(log(n));
 [Y, z] = generate_synchronization_gaussian(n, percentage, lambda);
