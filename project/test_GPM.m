@@ -12,10 +12,9 @@ lambda = 10;
 Y = generate_synchronization_gaussian(n, percentage, lambda);
 % Generate linear part of the GPM
 L = Y / n;
-[D, V] = eigs(Y);
+[eigen_vec, V] = eigs(Y);
 largest = 1;
 largest_val = 0;
-eigen_vec = diag(D);
 for iter = 1:n
     if eigen_vec(iter) > largest_val
         largest = iter;
