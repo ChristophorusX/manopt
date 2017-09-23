@@ -16,6 +16,7 @@ L = Y / n;
 eigen_vec = diag(D);
 largest = 1;
 largest_val = 0;
+disp('Finding the leading eigenvector...');
 for iter = 1:n
     if eigen_vec(iter) > largest_val
         disp('Encounter a larger eigenvalue!');
@@ -25,12 +26,14 @@ for iter = 1:n
     end
 end
 x_0 = V(:,largest);
-disp('First eigenvector extracted!');
+disp('Leading eigenvector extracted!');
 x = x_0;
 for iter = 1:n
     disp(['Performing the ' num2str(iter) 'th round of GPM.']);
     l = L * x;
     x = 2 * (l > 0) - 1;
+    error_rate = compute_error_rate(x, z);
+    disp(['The error rate is ' num2str(error_rate) '.']);
 end
 error_rate = compute_error_rate(x, z);
-disp(['The error rate is ' num2str(error_rate)]);
+disp(['The final error rate is ' num2str(error_rate) '.']);
