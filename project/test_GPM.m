@@ -15,10 +15,11 @@ L = Y / n;
 [D, V] = eigs(Y);
 largest = 1;
 largest_val = 0;
+eigen_vec = diag(D);
 for iter = 1:n
-    if D(iter,iter) > largest_val
+    if eigen_vec(iter) > largest_val
         largest = iter;
-        largest_val = D(iter,iter);
+        largest_val = eigen_vec(iter);
     end
 end
 x_0 = V(:,largest);
