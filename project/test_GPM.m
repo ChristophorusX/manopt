@@ -9,7 +9,7 @@
 n = 1000;
 percentage = 0.5;
 lambda = 10;
-Y = generate_synchronization_gaussian(n, percentage, lambda);
+[Y, z] = generate_synchronization_gaussian(n, percentage, lambda);
 % Generate linear part of the GPM
 L = Y / n;
 [V, D] = eig(Y);
