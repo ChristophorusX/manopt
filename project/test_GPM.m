@@ -16,9 +16,9 @@ L = Y / n;
 largest = 1;
 largest_val = 0;
 for iter = 1:n
-    if D(1i,1i) > largest_val
-        largest = 1i;
-        largest_val = D(1i,1i);
+    if D(iter,iter) > largest_val
+        largest = iter;
+        largest_val = D(iter,iter);
     end
 end
 x_0 = V(:,largest);
