@@ -28,6 +28,7 @@ x_0 = V(:,largest);
 disp('First eigenvector extracted!');
 x = x_0;
 for iter = 1:n
+    disp(['Performing the ' num2str(iter) 'th round of GPM.']);
     l = L * x;
     x = 2 * (l > 0) - 1;
 end
