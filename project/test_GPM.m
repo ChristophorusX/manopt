@@ -19,7 +19,7 @@ for iter = 1:n
     if eigen_vec(iter) > largest_val
         disp('Encounter a larger eigenvalue!');
         largest = iter;
-        disp(['Updated the largest one to be the ' str2num(iter) 'th eigenvalue.']);
+        disp(['Updated the largest one to be the ' num2str(iter) 'th eigenvalue.']);
         largest_val = eigen_vec(iter);
     end
 end
