@@ -8,10 +8,9 @@
 warning('off', 'manopt:getHessian:approx')
 % Generating the observed advhronization matrix.
 Y_sync = generate_synchronization_gaussian(100, 0.5, 10);
-disp(Y_sync);
 % Generating the advhronization matrix under monotone adversary.
 Y_adv = monotone_adversary_sync(Y_sync, 1);
-disp(Y_adv);
+disp(((Y_adv - Y_sync) .* Y_sync) > 0);
 % Perform BM on both matrix.
 [ Q_Y_sync, ~, ~, ~ ] = burer_monteiro( Y_sync );
 [ Q_Y_adv, ~, ~, ~ ] = burer_monteiro( Y_adv );
