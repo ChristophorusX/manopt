@@ -28,8 +28,9 @@ disp('Observed Z2 synchronization matrix is generated!')
 
 M = normrnd(0,deviation,n,n);
 M_plus = abs(M);
-M_pre = M_plus .* (((W > 0) + (W < 0)) > 0);
-multiplier = (W > 0) * 2 - ones(n,n);
+Z = z_syn * z_syn';
+M_pre = M_plus .* (((Z > 0) + (Z < 0)) > 0);
+multiplier = (Z > 0) * 2 - ones(n,n);
 Y_adv = Y_sync + multiplier .* M_pre;
 disp('Monotone adversary matrix of Z2 synchronization is generated!')
 end
