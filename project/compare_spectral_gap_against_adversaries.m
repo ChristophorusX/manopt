@@ -6,11 +6,11 @@
 % NOTE: this setting is for advhronization problem.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generating the observed advhronization matrix.
-Y_adv = generate_synchronization_gaussian(100, 0.5, 10);
+Y_sync = generate_synchronization_gaussian(100, 0.5, 10);
 % Generating the advhronization matrix under monotone adversary.
 Y_adv = monotone_adversary_adv(Y_sync, 1);
 % Perform BM on both matrix.
-[ Q_Y_adv, ~, ~, ~ ] = burer_monteiro( Y_sync );
+[ Q_Y_sync, ~, ~, ~ ] = burer_monteiro( Y_sync );
 [ Q_Y_adv, ~, ~, ~ ] = burer_monteiro( Y_adv );
 % Construct S
 S_sync = diag(diag(Y_sync * Q_Y_sync * Q_Y_sync')) - Y_sync;
