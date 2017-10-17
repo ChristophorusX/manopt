@@ -15,7 +15,7 @@ rng('shuffle');
 [n,~] = size(Y_sync);
 M = normrnd(0,sigma,n,n);
 M_plus = abs(M);
-M_pre = M_plus .* (Y_sync != 0);
+M_pre = M_plus .* (((Y_sync > 0) + (Y_sync < 0)) > 0);
 multiplier = (Y_sync > 0) * 2 - ones(n,n);
 Y_adv = Y_sync + multiplier .* M_pre;
 disp('Monotone adversary matrix of Z2 synchronization is generated!')
