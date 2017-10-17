@@ -23,7 +23,7 @@ R = R_pre + R_pre'; % Sum of independent normal is also normal
 W = R - diag(R);
 % display(W)
 sigma = sqrt(n)/lambda; % lambda is the value to move around.
-Y = z_syn*z_syn'+ sigma*W; % <= NOTE: Y is observed matrix of synchronization
+Y_sync = z_syn*z_syn'+ sigma*W; % <= NOTE: Y is observed matrix of synchronization
 disp('Observed Z2 synchronization matrix is generated!')
 
 M = normrnd(0,sigma,n,n);
