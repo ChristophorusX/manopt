@@ -1,9 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This is a program verifying the spectral gap increase of advhronization
+% This is a program verifying the spectral gap increase of synchronization
 % problem under rank 2 Burer-Monteiro approach against monotone adversary.
 %
 % @author: Ruitu Xu
-% NOTE: this setting is for advhronization problem.
+% NOTE: this setting is for synchronization problem.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 warning('off', 'manopt:getHessian:approx')
 % Generating the observed advhronization matrix.
