@@ -22,8 +22,15 @@ e_adv = eig(S_adv);
 % Sorting eigenvalues
 eigenvalues_sync = sort(e_sync);
 eigenvalues_adv = sort(e_adv);
-disp(['spectrum of the sync is: ' num2str(eigenvalues_sync(1)) ',' num2str(eigenvalues_sync(2)) ',' num2str(eigenvalues_sync(3))]);
-disp(['spectrum of the adv is: ' num2str(eigenvalues_adv(1)) ',' num2str(eigenvalues_adv(2)) ',' num2str(eigenvalues_adv(3))]);
+output_sync = 'spectrum of the sync is: ';
+output_adv = 'spectrum of the adv is: ';
+output_spectral_gap_increase = 'spectral gap increase is: ';
+for iter = 1:10
+    output_sync = output_sync + num2str(eigenvalues_sync(iter)) + ', ';
+    output_adv = output_adv + num2str(eigenvalues_adv(iter)) + ', ';
+    output_spectral_gap_increase = output_spectral_gap_increase + num2str(eigenvalues_adv(iter)-eigenvalues_sync(iter)) + ', ';
+end
+disp(output_sync);
+disp(output_adv);
 % Compute spectral gap increase.
-spectral_gap_increase = eigenvalues_adv(2) - eigenvalues_sync(2);
-disp(['The spectral gap increase is ' num2str(spectral_gap_increase)]);
+disp(output_spectral_gap_increase);
