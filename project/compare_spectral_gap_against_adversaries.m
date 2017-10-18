@@ -8,7 +8,8 @@
 warning('off', 'manopt:getHessian:approx')
 % Generating the observed advhronization matrix.
 % Generating the advhronization matrix under monotone adversary.
-[ Y_sync, Y_adv ] = monotone_adversary_sync(100, 0.5, 10, 1);
+n = 500;
+[ Y_sync, Y_adv ] = monotone_adversary_sync(n, 0.5, 10, 1);
 % disp(((Y_adv - Y_sync) .* Y_sync) > 0);
 % Perform BM on both matrix.
 [ Q_Y_sync, ~, ~, ~ ] = burer_monteiro( Y_sync );
@@ -25,7 +26,7 @@ eigenvalues_adv = sort(e_adv);
 output_sync = 'spectrum of the sync is: ';
 output_adv = 'spectrum of the adv is: ';
 output_spectral_gap_increase = 'spectral gap increase is: ';
-for iter = 1:100
+for iter = 1:n
     output_sync = strcat(output_sync, num2str(eigenvalues_sync(iter)), ', ');
     output_adv = strcat(output_adv, num2str(eigenvalues_adv(iter)), ', ');
     if eigenvalues_adv(iter) >= eigenvalues_sync(iter)
