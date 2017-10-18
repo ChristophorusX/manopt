@@ -26,9 +26,9 @@ output_sync = 'spectrum of the sync is: ';
 output_adv = 'spectrum of the adv is: ';
 output_spectral_gap_increase = 'spectral gap increase is: ';
 for iter = 1:10
-    output_sync = output_sync + num2str(eigenvalues_sync(iter)) + ', ';
-    output_adv = output_adv + num2str(eigenvalues_adv(iter)) + ', ';
-    output_spectral_gap_increase = output_spectral_gap_increase + num2str(eigenvalues_adv(iter)-eigenvalues_sync(iter)) + ', ';
+    output_sync = strcat(output_sync, num2str(eigenvalues_sync(iter)), ', ');
+    output_adv = strcat(output_adv, num2str(eigenvalues_adv(iter)), ', ');
+    output_spectral_gap_increase = strcat(output_spectral_gap_increase, num2str(eigenvalues_adv(iter)-eigenvalues_sync(iter)), ', ');
 end
 disp(output_sync);
 disp(output_adv);
