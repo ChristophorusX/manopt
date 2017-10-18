@@ -8,7 +8,7 @@
 warning('off', 'manopt:getHessian:approx')
 % Generating the observed advhronization matrix.
 % Generating the advhronization matrix under monotone adversary.
-n = 500;
+n = 1000;
 [ Y_sync, Y_adv ] = monotone_adversary_sync(n, 0.5, 10, 1);
 % disp(((Y_adv - Y_sync) .* Y_sync) > 0);
 % Perform BM on both matrix.
