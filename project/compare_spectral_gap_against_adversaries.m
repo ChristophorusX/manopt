@@ -28,7 +28,7 @@ output_spectral_gap_increase = 'spectral gap increase is: ';
 for iter = 1:10
     output_sync = strcat(output_sync, num2str(eigenvalues_sync(iter)), ', ');
     output_adv = strcat(output_adv, num2str(eigenvalues_adv(iter)), ', ');
-    if eigenvalues_adv >= eigenvalues_sync
+    if eigenvalues_adv(iter) >= eigenvalues_sync(iter)
         output_spectral_gap_increase = strcat(output_spectral_gap_increase, 'LARGER', ', ');
     else
         output_spectral_gap_increase = strcat(output_spectral_gap_increase, 'smaller', ', ');
