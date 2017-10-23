@@ -6,8 +6,8 @@
 % NOTE: this setting is for synchronization problem.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 warning('off', 'manopt:getHessian:approx')
-% Generating the observed advhronization matrix.
-% Generating the advhronization matrix under monotone adversary.
+% Generating the observed synchronization matrix.
+% Generating the synchronization matrix under monotone adversary.
 n = 1000;
 [ Y_sync, Y_adv ] = monotone_adversary_sync(n, 0.5, 10, 1);
 % disp(((Y_adv - Y_sync) .* Y_sync) > 0);
