@@ -22,7 +22,6 @@ def _stochastic_block_model(n, p, q):
     return Y, z_sbm
 
 
-
 def sbm_logarithm(n, a, b):
     p = a * log(n) / n
     q = b * log(n) / n

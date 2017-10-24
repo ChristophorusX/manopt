@@ -24,7 +24,6 @@ def synchronization_usual(n, percentage, snr):
     return _synchronization(n, percentage, snr)
 
 
-
 if __name__ == "__main__":
     print('Test starts for module sync_generator...')
     Y_usual, z_usual = synchronization_usual(10, 0.5, 15)
