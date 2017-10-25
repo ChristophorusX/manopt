@@ -17,7 +17,7 @@ def sdp_relaxation(Y, z):
     print('Verifying optimality (dual value): \n', np.sum(constraints[0].dual_value))
     print('Optimal X: \n', X.value)
     print('Optimal dual D (only diagonal entries): \n', constraints[0].dual_value)
-
+    return problem.value, X, constraints[0].dual_value
 
 
 if __name__ == "__main__":
