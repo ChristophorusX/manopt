@@ -3,6 +3,7 @@ from scipy import cluster
 import aux
 import sbm_generator
 
+
 def spectral_clustering_unnormalized(S, k):
     n, _ = S.shape
     L = aux.laplacian(S)
@@ -23,7 +24,7 @@ def spectral_clustering_rw(S, k):
     return label.reshape((-1, 1))
 
 
-def spectral_clustering_sym(S,k):
+def spectral_clustering_sym(S, k):
     n, _ = S.shape
     L = aux.laplacian(S)
     D = np.diag(np.sum(S, axis=1))
@@ -40,9 +41,9 @@ def spectral_clustering_sym(S,k):
 
 
 def _stack_vec(V, k, index):
-    U = V[:,index[0]].reshape(-1,1)
+    U = V[:, index[0]].reshape(-1, 1)
     for i in range(1, k):
-        U = np.hstack((U, V[:,index[i]].reshape(-1,1)))
+        U = np.hstack((U, V[:, index[i]].reshape(-1, 1)))
     return U
 
 

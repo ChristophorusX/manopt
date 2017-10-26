@@ -2,22 +2,25 @@ from math import sqrt
 import numpy as np
 import aux
 
+
 def _synchronization(n, percentage, snr):
     z = aux.rounding_with_prob(np.random.random_sample(n), percentage)
-    z = 2 * z.reshape(n,1) - 1
+    z = 2 * z.reshape(n, 1) - 1
     ground_truth = z.dot(z.T)
-    gaussian = np.random.normal(0, sqrt(2)/2, n**2).reshape(n, n)
+    gaussian = np.random.normal(0, sqrt(2) / 2, n**2).reshape(n, n)
     sym_gaussian = gaussian + gaussian.T
     W = sym_gaussian - np.diag(np.diag(sym_gaussian))
-    sigma = sqrt(n)/snr
+    sigma = sqrt(n) / snr
     Y = ground_truth + sigma * W
     return Y, z
 
+
 def synchronization_normalized(n, percentage, snr):
     Y, z = _synchronization(n, percentage, snr)
-    Y_normalized = snr/n * Y
+    Y_normalized = snr / n * Y
     print('Observed Z2 synchronization matrix (normalized) is generated!')
     return Y_normalized, z
+
 
 def synchronization_usual(n, percentage, snr):
     print('Observed Z2 synchronization matrix (usual) is generated!')

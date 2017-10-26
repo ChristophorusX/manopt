@@ -71,8 +71,8 @@ def monotone_sync(n, percentage, snr, noise_deviation, generator=gen.synchroniza
     Y, z = generator(n, percentage, snr)
     Y_sync = Y.copy()
     Z = z.dot(z.T)
-    for i in range(0, n):
-        for j in range(0, n):
+    for i in range(n):
+        for j in range(n):
             if Z[i, j] > 0 and i != j:
                 noise = abs(np.random.normal(0, noise_deviation))
                 Y[i, j] += noise

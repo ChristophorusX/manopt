@@ -1,9 +1,11 @@
 import numpy as np
 
+
 def rounding_with_prob(vec, p):
-    for index in range(0, vec.size):
+    for index in range(vec.size):
         vec[index] = vec[index] < p
     return vec
+
 
 def demean(A, p, q):
     n, _ = A.shape
@@ -11,6 +13,7 @@ def demean(A, p, q):
     A_bm = A - (p + q) / 2 * (one_vector.dot(one_vector.T))
     print('Demeaned the SBM matrix into non-biased matrix for BM...')
     return A_bm
+
 
 def demean_adversary(V):
     n, _ = V.shape
@@ -20,8 +23,10 @@ def demean_adversary(V):
     print('Demeaned the adversary SBM matrix into non-biased matrix for BM...')
     return V_bm
 
+
 def create_one_vector(n):
-    return np.ones(int(n)).shape(-1, 1)
+    return np.ones(n).reshape((-1, 1))
+
 
 def laplacian_eigs(Y):
     D = np.diag(np.sum(Y, axis=1))
@@ -30,12 +35,14 @@ def laplacian_eigs(Y):
     eigs = np.sort(w, axis=None)
     print('Successfully computed the Laplacian eigenvalues...')
     n, _ = Y.shape
-    return eigs.reshape(n,1)
+    return eigs.reshape(n, 1)
+
 
 def laplacian(Y):
     D = np.diag(np.sum(Y, axis=1))
     L = D - Y
     return L
+
 
 def normalize(vec):
     norm = np.linalg.norm(vec)
@@ -44,11 +51,13 @@ def normalize(vec):
     return vec / norm
 
 if __name__ == "__main__":
-    Y = np.diag([1,1,3,4])+ [[2,5,3,5], [4,5,1,2], [4,5,1,2], [4,5,1,2]]
+    Y = np.diag([1, 1, 3, 4]) + [[2, 5, 3, 5],
+                                 [4, 5, 1, 2], [4, 5, 1, 2], [4, 5, 1, 2]]
     print(Y)
     # eigs = laplacian_eigs(np.diag([1,1,3,4])+ [[2,5,3,5], [4,5,1,2], [4,5,1,2], [4,5,1,2]])
     # L = laplacian(Y)
     # print(eigs)
     # print(L)
-    norm = normalize(Y[1,:])
+    norm = normalize(Y[1, :])
     print(norm)
+    print(create_one_vector(10))
