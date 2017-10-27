@@ -27,7 +27,7 @@ def augmented_lagrangian(Y, k):
         # print(_jacobian(Rv, Y, A, y, penalty, k))
         print('Starting L-BFGS-B on augmented Lagrangian...')
         optimizer = opt.minimize(lambda R_vec: _augmented_lagrangian_func(
-            A, R_vec, y, penalty, n, k), Rv, jac=lambda R_vec: _jacobian(R_vec, Y, A, y, penalty, k), method="L-BFGS-B")
+            A, R_vec, y, penalty, n, k), Rv, jac=lambda R_vec: _jacobian(R_vec, Y, A, y, penalty, k), method="BFGS")
         print('Finishing L-BFGS-B on augmented Lagrangian...')
         R = _Rv_to_R(optimizer.x.reshape((-1, 1)), n, k)
         X = R.dot(R.T)
