@@ -21,7 +21,7 @@ def dual_feasibility(Y):
     return S
 
 if __name__ == "__main__":
-    increase_vec = spectral_gap_increase(1000, 0.5, 1, .0001)
+    increase_vec = spectral_gap_increase(1000, 0.5, 2, .00001)
 
     def compare(x):
         if np.real(x) >= 0:
@@ -30,4 +30,6 @@ if __name__ == "__main__":
             return -1
 
     vec_compare = np.vectorize(compare)
-    print(vec_compare(increase_vec).reshape((1, -1)))
+    base_vec = np.arange(1000)
+    plt.plot(base_vec, vec_compare(increase_vec).ravel())
+    plt.show()
