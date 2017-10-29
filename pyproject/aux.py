@@ -50,10 +50,15 @@ def normalize(vec):
         return vec
     return vec / norm
 
+def sorted_eigenvalues(S):
+    return np.sort(np.linalg.eigvals(S)).reshape((-1, 1))
+
 if __name__ == "__main__":
     Y = np.diag([1, 1, 3, 4]) + [[2, 5, 3, 5],
                                  [4, 5, 1, 2], [4, 5, 1, 2], [4, 5, 1, 2]]
     print(Y)
+    S = Y + Y.T
+    print(S)
     # eigs = laplacian_eigs(np.diag([1,1,3,4])+ [[2,5,3,5], [4,5,1,2], [4,5,1,2], [4,5,1,2]])
     # L = laplacian(Y)
     # print(eigs)
@@ -61,3 +66,4 @@ if __name__ == "__main__":
     norm = normalize(Y[1, :])
     print(norm)
     print(create_one_vector(10))
+    print(sorted_eigenvalues(S))

@@ -73,12 +73,16 @@ def monotone_sync(n, percentage, snr, noise_deviation, generator=gen.synchroniza
     Z = z.dot(z.T)
     for i in range(n):
         for j in range(n):
-            if Z[i, j] > 0 and i != j:
+            if Z[i, j] > 0 and i < j:
                 noise = abs(np.random.normal(0, noise_deviation))
                 Y[i, j] += noise
-            elif i != j:
+            elif i < j:
                 noise = abs(np.random.normal(0, noise_deviation))
                 Y[i, j] -= noise
+    for i in range(n):
+        for j in range(n):
+            if i > j:
+                Y[i,j] = Y[j,i]
     print('Monotone adversary (Gaussian) has been performed...')
     return Y, Y_sync, z
 
@@ -87,6 +91,6 @@ if __name__ == "__main__":
     test_vec = aux.rounding_with_prob(np.random.random_sample(100), .5)
     test_matrix = test_vec.reshape(10, 10)
     print(test_matrix)
-    result = monotone_random(test_matrix, .5)
-    print(result)
-    print(monotone_sync(10, .5, 10, 1))
+    # result = monotone_random(test_matrix, .5)
+    # print(result)
+    print(monotone_sync(10, .5, 10, 1)[0])

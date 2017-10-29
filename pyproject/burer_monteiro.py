@@ -4,11 +4,9 @@ from scipy import optimize as opt
 import sbm_generator as gensbm
 import sync_generator as gensync
 import aux
-import time
 
 
 def augmented_lagrangian(Y, k):
-    start_pre = time.time()
     n, _ = Y.shape
     y = np.ones(n).reshape((-1, 1))
     R = np.random.random_sample((n, k))
@@ -19,14 +17,12 @@ def augmented_lagrangian(Y, k):
     vec = _constraint_term_vec(n, R)
     v = vec.reshape((1, -1)).dot(vec)
     v_best = v
-    end_pre = time.time()
-    start_loop = time.time()
     while v > target:
         Rv = _R_to_Rv(R, k)
         # print(_jacobian(Rv, Y, A, y, penalty, k))
         print('Starting L-BFGS-B on augmented Lagrangian...')
         optimizer = opt.minimize(lambda R_vec: _augmented_lagrangian_func(
-            R_vec, y, penalty, n, k), Rv, jac=lambda R_vec: _jacobian(R_vec, Y, n, y, penalty, k), method="L-BFGS-B")
+            R_vec, Y, y, penalty, n, k), Rv, jac=lambda R_vec: _jacobian(R_vec, Y, n, y, penalty, k), method="L-BFGS-B")
         print('Finishing L-BFGS-B on augmented Lagrangian...')
         R = _Rv_to_R(optimizer.x, n, k)
         vec = _constraint_term_vec(n, R)
@@ -42,10 +38,8 @@ def augmented_lagrangian(Y, k):
             v_best = v
         else:
             penalty = gamma * penalty
-    end_loop = time.time()
-    print('Timing pre part: ', end_pre - start_pre)
-    print('Timing loop part: ', end_loop - start_loop)
     print('Augmented Lagrangian terminated.')
+    return R
 
 
 def _basis_vector(size, index):
@@ -70,7 +64,7 @@ def _constraint_term_vec(n, R):
     return constraint
 
 
-def _augmented_lagrangian_func(Rv, y, penalty, n, k):
+def _augmented_lagrangian_func(Rv, Y, y, penalty, n, k):
     # print('Start computing objective function...')
     R = _Rv_to_R(Rv, n, k)
     # X = R.dot(R.T)
@@ -121,18 +115,21 @@ def _jacobian(Rv, Y, n, y, penalty, k):
     #                   for l in range(n)]
     vec_second_part = R.copy()
     for l in range(n):
-        vec_second_part[l,:] *= y.ravel()[l]
+        vec_second_part[l, :] *= y.ravel()[l]
     vec_third_part = R.copy()
     for l in range(n):
-        vec_third_part[l,:] *= (vec_trace_A[l] - 1)
-    jacobian = -2 * Y.dot(R) - 2 * vec_second_part + 2 * penalty * vec_third_part
+        vec_third_part[l, :] *= (vec_trace_A[l] - 1)
+    jacobian = -2 * Y.dot(R) - 2 * vec_second_part + \
+        2 * penalty * vec_third_part
     jac_vec = _R_to_Rv(jacobian, k)
     # print('Finish computing Jacobian!!!')
     return jac_vec.reshape((1, -1)).ravel()
 
+
 def _plot_R(R):
     plt.scatter(R.T[0], R.T[1], alpha=0.25, label='Rows of R')
-    circle = plt.Circle((0, 0), 1, fill=False, linestyle='--', color='xkcd:blue violet')
+    circle = plt.Circle((0, 0), 1, fill=False,
+                        linestyle='--', color='xkcd:blue violet')
     plt.gcf().gca().add_artist(circle)
     plt.legend()
     plt.show()
@@ -141,7 +138,7 @@ def _plot_R(R):
 if __name__ == "__main__":
     Y, z = gensbm.sbm_linear(500, 10, 2)
     Y = aux.demean(Y, 10, 2)
-    # Y, z = gensync.synchronization_usual(1000, .5, 2)
+    Y, z = gensync.synchronization_usual(1000, .5, 2)
     # print(Y)
     # print(Y)
     # Y_re = Y.reshape((1, -1)).ravel()
