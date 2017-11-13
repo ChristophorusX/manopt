@@ -82,7 +82,7 @@ def monotone_sync(n, percentage, snr, noise_deviation, generator=gen.synchroniza
     for i in range(n):
         for j in range(n):
             if i > j:
-                Y[i,j] = Y[j,i]
+                Y[i, j] = Y[j, i]
     print('Monotone adversary (Gaussian) has been performed...')
     return Y, Y_sync, z
 

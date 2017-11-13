@@ -4,6 +4,7 @@ import monotone_adversaries as mono
 import burer_monteiro as bm
 import aux
 
+
 def spectral_gap_increase(n, percentage, snr, noise_deviation):
     Y_adv, Y_sync, z = mono.monotone_sync(n, percentage, snr, noise_deviation)
     S_sync = dual_feasibility(Y_sync)

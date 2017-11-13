@@ -50,6 +50,7 @@ def normalize(vec):
         return vec
     return vec / norm
 
+
 def sorted_eigenvalues(S):
     return np.sort(np.linalg.eigvals(S)).reshape((-1, 1))
 

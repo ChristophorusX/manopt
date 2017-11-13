@@ -59,7 +59,6 @@ def _A_trace_vec(n, R):
 
 def _constraint_term_vec(n, R):
     vec = _A_trace_vec(n, R)
-    # for general case, all one vector should be replaced by a vector b
     constraint = vec - np.ones(n).reshape((-1, 1))
     return constraint
 
@@ -133,6 +132,11 @@ def _plot_R(R):
     plt.gcf().gca().add_artist(circle)
     plt.legend()
     plt.show()
+
+
+def _projection(Z, Y):
+    dia = np.diag(np.diag(Z.dot(Y.T)))
+    return Z - dia.dot(Y)
 
 
 if __name__ == "__main__":
