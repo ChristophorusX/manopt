@@ -18,12 +18,12 @@ def augmented_lagrangian(Y, k):
     v = vec.reshape((1, -1)).dot(vec)
     v_best = v
     while v > target:
-        Rv = _matrix_to_vector(R, k)
+        Rv = _matrix_to_vector(R)
         print('Starting L-BFGS-B on augmented Lagrangian...')
         optimizer = opt.minimize(lambda R_vec: _augmented_lagrangian_func(
             R_vec, Y, y, penalty, n, k), Rv, jac=lambda R_vec: _jacobian(R_vec, Y, n, y, penalty, k), method="L-BFGS-B")
         print('Finishing L-BFGS-B on augmented Lagrangian...')
-        R = _vector_to_matrix(optimizer.x, n, k)
+        R = _vector_to_matrix(optimizer.x, k)
         vec = _constraint_term_vec(n, R)
         v = vec.reshape((1, -1)).dot(vec)
         print('Finish updating variables...')
@@ -57,19 +57,19 @@ def _constraint_term_vec(n, R):
 
 
 def _augmented_lagrangian_func(Rv, Y, y, penalty, n, k):
-    R = _vector_to_matrix(Rv, n, k)
+    R = _vector_to_matrix(Rv, k)
     vec = _constraint_term_vec(n, R)
     objective = -np.trace(Y.dot(R.dot(R.T))) - y.reshape((1, -1)
                                                          ).dot(vec) + penalty / 2 * vec.reshape((1, -1)).dot(vec)
     return objective
 
 
-def _vector_to_matrix(Rv, n, k):
+def _vector_to_matrix(Rv, k):
     U = Rv.reshape((-1, k))
     return U
 
 
-def _matrix_to_vector(R, k):
+def _matrix_to_vector(R):
     u = R.reshape((1, -1)).ravel()
     return u
 
@@ -79,7 +79,7 @@ def _matrix_to_vector(R, k):
 
 
 def _jacobian(Rv, Y, n, y, penalty, k):
-    R = _vector_to_matrix(Rv, n, k)
+    R = _vector_to_matrix(Rv, k)
     vec_trace_A = _A_trace_vec(n, R).ravel()
     vec_second_part = R.copy()
     for l in range(n):
@@ -89,7 +89,7 @@ def _jacobian(Rv, Y, n, y, penalty, k):
         vec_third_part[l, :] *= (vec_trace_A[l] - 1)
     jacobian = -2 * Y.dot(R) - 2 * vec_second_part + \
         2 * penalty * vec_third_part
-    jac_vec = _matrix_to_vector(jacobian, k)
+    jac_vec = _matrix_to_vector(jacobian)
     return jac_vec.reshape((1, -1)).ravel()
 
 
@@ -111,7 +111,7 @@ def trust_region(A, k):
 
 
 def obj_function(A, Yv, n, k):
-    Y = _vector_to_matrix(Yv, n, k)
+    Y = _vector_to_matrix(Yv, k)
     return -np.trace(A.dot(Y.dot(Y.T)))
 
 
@@ -125,24 +125,24 @@ def _grad(A, Y):
 
 
 def _proj_grad_from_vec(A, Yv, n, k):
-    Y = _vector_to_matrix(Yv, n, k)
+    Y = _vector_to_matrix(Yv, k)
     proj_grad = _projection(_grad(A, Y), Y)
-    return _matrix_to_vector(proj_grad, k)
+    return _matrix_to_vector(proj_grad)
 
 
 def _hessian_p(A, Yv, Tv, n, k):
-    Y = _vector_to_matrix(Yv, n, k)
-    T = _vector_to_matrix(Tv, n, k)
+    Y = _vector_to_matrix(Yv, k)
+    T = _vector_to_matrix(Tv, k)
     directional_hess = (A - np.diag((A.dot(Y)).dot(Y.T))).dot(T)
-    return _matrix_to_vector(directional_hess, k)
+    return _matrix_to_vector(directional_hess)
 
 
 def _retraction(Tv):
-    T = _vector_to_matrix(Tv, 0, 2)
+    T = _vector_to_matrix(Tv, 2)
     n, _ = T.shape
     for i in range(n):
         T[i, :] = T[i, :] / np.linalg.norm(T[i, :])
-    return _matrix_to_vector(T, 2)
+    return _matrix_to_vector(T)
 
 
 """Trust-region optimization."""
@@ -407,6 +407,7 @@ def _minimize_trust_region(fun, x0, args=(), jac=None, hess=None, hessp=None,
 
         # define the local approximation at the proposed point
         # retract the point x from tangent space to the manifold
+        print('Start retracting onto the manifold...')
         x_proposed = _retraction(x + p)
         m_proposed = subproblem(x_proposed, fun, jac, hess, hessp)
 
@@ -428,6 +429,9 @@ def _minimize_trust_region(fun, x0, args=(), jac=None, hess=None, hessp=None,
         if rho > eta:
             x = x_proposed
             m = m_proposed
+            print('Proposed step accept...')
+            R = _vector_to_matrix(x, 2)
+            _plot_R(R)
 
         # append the best guess, call back, increment the iteration count
         if return_all:
@@ -615,5 +619,5 @@ if __name__ == "__main__":
     # print(Y_back)
     # augmented_lagrangian(Y, 2)
     result = trust_region(Y, 2)
-    R = _vector_to_matrix(result.x, n, 2)
+    R = _vector_to_matrix(result.x, 2)
     _plot_R(R)
