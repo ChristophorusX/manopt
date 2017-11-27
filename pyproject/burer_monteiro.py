@@ -37,6 +37,13 @@ def augmented_lagrangian(Y, k):
     return R
 
 
+def _generate_random_R(n, k):
+    R = np.random.uniform(-1, 1, (n, k))
+    for i in range(n):
+        R[i, :] = R[i, :] / np.linalg.norm(R[i, :])
+    return R
+
+
 def _basis_vector(size, index):
     vec = np.zeros(size)
     vec[index] = 1
@@ -105,7 +112,7 @@ def _plot_R(R):
 def trust_region(A, k):
     print('Starting trust region on manifold...')
     n, _ = A.shape
-    Y = np.random.random_sample((n, k))
+    Y = _generate_random_R(n, k)
     return minimize_with_trust(lambda Yv: obj_function(A, Yv, n, k), Y, jac=lambda Yv: _proj_grad_from_vec(
         A, Yv, n, k), hessp=lambda Yv, Tv: _hessian_p(A, Yv, Tv, n, k))
 
@@ -344,24 +351,6 @@ def _minimize_trust_region(fun, x0, args=(), jac=None, hess=None, hessp=None,
     It is not supposed to be called directly.
     """
     _check_unknown_options(unknown_options)
-    if jac is None:
-        raise ValueError('Jacobian is currently required for trust-region '
-                         'methods')
-    if hess is None and hessp is None:
-        raise ValueError('Either the Hessian or the Hessian-vector product '
-                         'is currently required for trust-region methods')
-    if subproblem is None:
-        raise ValueError('A subproblem solving strategy is required for '
-                         'trust-region methods')
-    if not (0 <= eta < 0.25):
-        raise Exception('invalid acceptance stringency')
-    if max_trust_radius <= 0:
-        raise Exception('the max trust radius must be positive')
-    if initial_trust_radius <= 0:
-        raise ValueError('the initial trust radius must be positive')
-    if initial_trust_radius >= max_trust_radius:
-        raise ValueError('the initial trust radius must be less than the '
-                         'max trust radius')
 
     # force the initial guess into a nice format
     x0 = np.asarray(x0).flatten()
@@ -482,29 +471,8 @@ def _minimize_trust_region(fun, x0, args=(), jac=None, hess=None, hessp=None,
 
 
 """Newton-CG trust-region optimization."""
-from __future__ import division, print_function, absolute_import
-import math
-import numpy as np
-import scipy.linalg
-
-__all__ = []
-
-
 def _minimize_trust_ncg(fun, x0, args=(), jac=None, hess=None, hessp=None,
                         **trust_region_options):
-    """
-    Minimization of scalar function of one or more variables using
-    the Newton conjugate gradient trust-region algorithm.
-
-    This function is called by the `minimize` function.
-    It is not supposed to be called directly.
-    """
-    if jac is None:
-        raise ValueError('Jacobian is required for Newton-CG trust-region '
-                         'minimization')
-    if hess is None and hessp is None:
-        raise ValueError('Either the Hessian or the Hessian-vector product '
-                         'is required for Newton-CG trust-region minimization')
     return _minimize_trust_region(fun, x0, args=args, jac=jac, hess=hess,
                                   hessp=hessp, subproblem=CGSteihaugSubproblem,
                                   **trust_region_options)
@@ -609,7 +577,7 @@ def minimize_with_trust(fun, x0, args=(), jac=None, hess=None,
 if __name__ == "__main__":
     # Y, z = gensbm.sbm_linear(500, 10, 2)
     # Y = aux.demean(Y, 10, 2)
-    Y, z = gensync.synchronization_usual(1000, .5, 5)
+    Y, z = gensync.synchronization_usual(1000, .5, 2)
     n, _ = Y.shape
     # print(Y)
     # print(Y)
@@ -617,7 +585,5 @@ if __name__ == "__main__":
     # print(Y_re)
     # Y_back = Y_re.reshape((10,10))
     # print(Y_back)
-    # augmented_lagrangian(Y, 2)
-    result = trust_region(Y, 2)
-    R = _vector_to_matrix(result.x, 2)
-    _plot_R(R)
+    augmented_lagrangian(Y, 2)
+    # result = trust_region(Y, 2)
