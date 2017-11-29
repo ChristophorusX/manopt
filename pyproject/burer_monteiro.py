@@ -6,7 +6,7 @@ import sync_generator as gensync
 import aux
 
 
-def augmented_lagrangian(Y, k):
+def augmented_lagrangian(Y, k, plotting=False):
     n, _ = Y.shape
     y = np.ones(n).reshape((-1, 1))
     R = np.random.random_sample((n, k))
@@ -27,7 +27,8 @@ def augmented_lagrangian(Y, k):
         vec = _constraint_term_vec(n, R)
         v = vec.reshape((1, -1)).dot(vec)
         print('Finish updating variables...')
-        _plot_R(R)
+        if plotting == True:
+            _plot_R(R)
         if v < eta * v_best:
             y = y - penalty * vec
             v_best = v
@@ -109,11 +110,19 @@ def _plot_R(R):
     plt.show()
 
 
-def trust_region(A, k):
+def trust_region(A, k, plotting=False):
     print('Starting trust region on manifold...')
     n, _ = A.shape
     Y = _generate_random_R(n, k)
-    return minimize_with_trust(lambda Yv: obj_function(A, Yv, n, k), Y, jac=lambda Yv: _proj_grad_from_vec(
+    return minimize_with_trust(lambda Yv: obj_function(A, Yv, n, k), Y, k, plotting, jac=lambda Yv: _proj_grad_from_vec(
+        A, Yv, n, k), hessp=lambda Yv, Tv: _hessian_p(A, Yv, Tv, n, k))
+
+
+def trust_region_plotting(A, k):
+    print('Starting trust region on manifold...')
+    n, _ = A.shape
+    Y = _generate_random_R(n, k)
+    return minimize_with_trust(lambda Yv: obj_function(A, Yv, n, k), Y, k, jac=lambda Yv: _proj_grad_from_vec(
         A, Yv, n, k), hessp=lambda Yv, Tv: _hessian_p(A, Yv, Tv, n, k))
 
 
@@ -323,7 +332,7 @@ class BaseQuadraticSubproblem(object):
                                   'the child class')
 
 
-def _minimize_trust_region(fun, x0, args=(), jac=None, hess=None, hessp=None,
+def _minimize_trust_region(fun, x0, n_rows, plotting, args=(), jac=None, hess=None, hessp=None,
                            subproblem=None, initial_trust_radius=1.0,
                            max_trust_radius=1000.0, eta=0.15, gtol=1e-4,
                            maxiter=None, disp=False, return_all=False,
@@ -418,9 +427,10 @@ def _minimize_trust_region(fun, x0, args=(), jac=None, hess=None, hessp=None,
         if rho > eta:
             x = x_proposed
             m = m_proposed
-            print('Proposed step accept...')
-            R = _vector_to_matrix(x, 2)
-            _plot_R(R)
+            print('Proposed step accepted...')
+            R = _vector_to_matrix(x, n_rows)
+            if plotting == True:
+                _plot_R(R)
 
         # append the best guess, call back, increment the iteration count
         if return_all:
@@ -471,9 +481,9 @@ def _minimize_trust_region(fun, x0, args=(), jac=None, hess=None, hessp=None,
 
 
 """Newton-CG trust-region optimization."""
-def _minimize_trust_ncg(fun, x0, args=(), jac=None, hess=None, hessp=None,
+def _minimize_trust_ncg(fun, x0, n_rows, plotting, args=(), jac=None, hess=None, hessp=None,
                         **trust_region_options):
-    return _minimize_trust_region(fun, x0, args=args, jac=jac, hess=hess,
+    return _minimize_trust_region(fun, x0, n_rows, plotting, args=args, jac=jac, hess=hess,
                                   hessp=hessp, subproblem=CGSteihaugSubproblem,
                                   **trust_region_options)
 
@@ -566,18 +576,18 @@ class CGSteihaugSubproblem(BaseQuadraticSubproblem):
             d = d_next
 
 
-def minimize_with_trust(fun, x0, args=(), jac=None, hess=None,
+def minimize_with_trust(fun, x0, n_rows, plotting, args=(), jac=None, hess=None,
                         hessp=None, callback=None, options=None):
     if options is None:
         options = {}
-    return _minimize_trust_ncg(fun, x0, args, jac, hess, hessp,
+    return _minimize_trust_ncg(fun, x0, n_rows, plotting, args, jac, hess, hessp,
                                callback=callback, **options)
 
 
 if __name__ == "__main__":
     # Y, z = gensbm.sbm_linear(500, 10, 2)
     # Y = aux.demean(Y, 10, 2)
-    Y, z = gensync.synchronization_usual(1000, .5, 2)
+    Y, z = gensync.synchronization_usual(1000, .5, 6)
     n, _ = Y.shape
     # print(Y)
     # print(Y)
@@ -585,5 +595,5 @@ if __name__ == "__main__":
     # print(Y_re)
     # Y_back = Y_re.reshape((10,10))
     # print(Y_back)
-    augmented_lagrangian(Y, 2)
-    # result = trust_region(Y, 2)
+    # augmented_lagrangian(Y, 2)
+    result = trust_region(Y, 2)
