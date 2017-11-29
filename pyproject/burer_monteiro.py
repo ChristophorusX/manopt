@@ -5,6 +5,11 @@ import sbm_generator as gensbm
 import sync_generator as gensync
 import aux
 
+from __future__ import division, print_function, absolute_import
+import math
+import numpy as np
+import scipy.linalg
+
 
 def augmented_lagrangian(Y, k, plotting=False):
     n, _ = Y.shape
@@ -162,10 +167,6 @@ def _retraction(Tv):
 
 
 """Trust-region optimization."""
-from __future__ import division, print_function, absolute_import
-import math
-import numpy as np
-import scipy.linalg
 
 
 def _check_unknown_options(unknown_options):
@@ -481,6 +482,8 @@ def _minimize_trust_region(fun, x0, n_rows, plotting, args=(), jac=None, hess=No
 
 
 """Newton-CG trust-region optimization."""
+
+
 def _minimize_trust_ncg(fun, x0, n_rows, plotting, args=(), jac=None, hess=None, hessp=None,
                         **trust_region_options):
     return _minimize_trust_region(fun, x0, n_rows, plotting, args=args, jac=jac, hess=hess,
