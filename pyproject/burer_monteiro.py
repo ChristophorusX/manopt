@@ -1,14 +1,13 @@
+from __future__ import division, print_function, absolute_import
+import math
+import scipy.linalg
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import optimize as opt
 import sbm_generator as gensbm
 import sync_generator as gensync
 import aux
-
-from __future__ import division, print_function, absolute_import
-import math
-import numpy as np
-import scipy.linalg
 
 
 def augmented_lagrangian(Y, k, plotting=False):
