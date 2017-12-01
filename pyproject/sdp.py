@@ -26,5 +26,5 @@ def sdp_relaxation(Y, z):
 if __name__ == "__main__":
     Y, z = gen.synchronization_usual(1000, .5, 10)
     value, X, _ = sdp_relaxation(Y, z)
-    Z = (z.reshape((-1, 1))).dot(z)
+    Z = z.dot(z.T)
     print(np.linalg.norm(Z - X))
