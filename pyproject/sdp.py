@@ -1,6 +1,7 @@
 import numpy as np
 import cvxpy as cvx
-import sbm_generator as gen
+import sync_generator as gen
+import aux
 
 
 def sdp_relaxation(Y, z):
@@ -23,5 +24,7 @@ def sdp_relaxation(Y, z):
 
 
 if __name__ == "__main__":
-    Y, z = gen.sbm_linear(10, 9, 2)
-    sdp_relaxation(Y, z)
+    Y, z = gen.synchronization_usual(1000, .5, 10)
+    value, X, _ = sdp_relaxation(Y, z)
+    Z = (z.reshape((-1, 1))).dot(z)
+    print(np.linalg.norm(Z - X))

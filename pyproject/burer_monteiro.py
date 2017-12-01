@@ -174,7 +174,7 @@ def _check_unknown_options(unknown_options):
         # Stack level 4: this is called from _minimize_*, which is
         # called from another function in Scipy. Level 4 is the first
         # level in user code.
-        warnings.warn("Unknown solver options: %s" % msg, OptimizeWarning, 4)
+        # warnings.warn("Unknown solver options: %s" % msg, OptimizeWarning, 4)
 
 
 def wrap_function(function, args):
@@ -589,7 +589,7 @@ def minimize_with_trust(fun, x0, n_rows, plotting, args=(), jac=None, hess=None,
 if __name__ == "__main__":
     # Y, z = gensbm.sbm_linear(500, 10, 2)
     # Y = aux.demean(Y, 10, 2)
-    Y, z = gensync.synchronization_usual(1000, .5, 6)
+    Y, z = gensync.synchronization_usual(1000, .5, 10)
     n, _ = Y.shape
     # print(Y)
     # print(Y)
@@ -597,5 +597,5 @@ if __name__ == "__main__":
     # print(Y_re)
     # Y_back = Y_re.reshape((10,10))
     # print(Y_back)
-    # augmented_lagrangian(Y, 2)
-    result = trust_region(Y, 2)
+    augmented_lagrangian(Y, 2, plotting=True)
+    # result = trust_region(Y, 2)

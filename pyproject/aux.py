@@ -54,6 +54,15 @@ def normalize(vec):
 def sorted_eigenvalues(S):
     return np.sort(np.linalg.eigvals(S)).reshape((-1, 1))
 
+
+def error_rate(labels, true_labels):
+    diff1 = labels - true_labels
+    diff2 = labels + true_labels
+    rate1 = np.linalg.norm(diff1, 1) / 2 / labels.shape[0]
+    rate2 = np.linalg.norm(diff2, 1) / 2 / labels.shape[0]
+    return np.min(rate1, rate2)
+
+
 if __name__ == "__main__":
     Y = np.diag([1, 1, 3, 4]) + [[2, 5, 3, 5],
                                  [4, 5, 1, 2], [4, 5, 1, 2], [4, 5, 1, 2]]
