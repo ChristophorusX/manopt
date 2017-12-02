@@ -32,8 +32,8 @@ def search_counter_eg(n, snr, n_iter, n_trail):
     percentage = .5
     examples = []
 
-    while found_target == False and snr > 1:
-        snr -= 1
+    while found_target == False and snr > 3:
+        snr -= .1
         print('Starting loops with SNR = {}...'.format(snr))
 
         for i in range(n_iter):
@@ -55,21 +55,22 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                     if err != 0:
                         found_target = True
                         print('One instance found when SNR = {}!'.format(snr))
-                        example = CounterExample(A, z, Q)
+                        example = CounterExample(A, z, Q, aux.laplacian_eigs(A, z)[1])
                         examples.append(example)
                         print(A)
     return examples
 
 
 class CounterExample():
-    def __init__(self, A, z, Q):
+    def __init__(self, A, z, Q, gap):
         self.A = A
         self.z = z
         self.Q = Q
+        self.gap = gap
 
     def get_noise(self):
         return self.A - self.z.dot(self.z.T)
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(1000, 7, 20, 10)
+    examples = search_counter_eg(1000, 3.9, 20, 10)
