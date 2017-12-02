@@ -28,8 +28,9 @@ def create_one_vector(n):
     return np.ones(n).reshape((-1, 1))
 
 
-def laplacian_eigs(Y):
-    D = np.diag(np.sum(Y, axis=1))
+def laplacian_eigs(Y, z):
+    compo = (np.diag(z.ravel()).dot(Y)).dot(np.diag(z.ravel()))
+    D = np.diag(np.sum(compo, axis=1))
     L = D - Y
     w, _ = np.linalg.eig(L)
     eigs = np.sort(w, axis=None)
@@ -60,7 +61,7 @@ def error_rate(labels, true_labels):
     diff2 = labels + true_labels
     rate1 = np.linalg.norm(diff1, 1) / 2 / labels.shape[0]
     rate2 = np.linalg.norm(diff2, 1) / 2 / labels.shape[0]
-    return np.min(rate1, rate2)
+    return min(rate1, rate2)
 
 
 if __name__ == "__main__":

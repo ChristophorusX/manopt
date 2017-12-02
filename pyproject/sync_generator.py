@@ -29,9 +29,11 @@ def synchronization_usual(n, percentage, snr):
 
 if __name__ == "__main__":
     print('Test starts for module sync_generator...')
-    Y_usual, z_usual = synchronization_usual(10, 0.5, 15)
-    Y_normalized, z_normalized = synchronization_normalized(10, 0.5, 15)
+    Y_usual, z_usual = synchronization_usual(10, 0.5, 15000)
+    Y_normalized, z_normalized = synchronization_normalized(10, 0.5, 15000)
     print(Y_usual)
     print(z_usual)
     print(Y_normalized)
     print(z_normalized)
+    print(aux.laplacian_eigs(Y_usual, z_usual))
+    print(np.linalg.norm(Y_usual - z_usual.dot(z_usual.T)))
