@@ -46,7 +46,8 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                 for j in range(n_trail):
                     print(
                         '>>>>>>Finding global optimizer with BM (trail {})...'.format(j + 1))
-                    Q = bm.augmented_lagrangian(A, 2, plotting=False, printing=False)
+                    Q = bm.augmented_lagrangian(
+                        A, 2, plotting=False, printing=False)
                     kmeans = cluster.KMeans(
                         n_clusters=2, random_state=0).fit(Q)
                     clustering = 2 * kmeans.labels_ - 1
@@ -55,13 +56,16 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                     if err != 0:
                         found_target = True
                         print('One instance found when SNR = {}!'.format(snr))
-                        example = CounterExample(A, z, Q, aux.laplacian_eigs(A, z)[1])
-                        examples.append(example)
-                        print(A)
+                        gap = aux.laplacian_eigs(A, z)[1]
+                        if gap > .01:
+                            example = CounterExample(A, z, Q, gap)
+                            examples.append(example)
+                            print(A)
     return examples
 
 
 class CounterExample():
+
     def __init__(self, A, z, Q, gap):
         self.A = A
         self.z = z
