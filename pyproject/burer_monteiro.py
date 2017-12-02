@@ -10,7 +10,7 @@ import sync_generator as gensync
 import aux
 
 
-def augmented_lagrangian(Y, k, plotting=False):
+def augmented_lagrangian(Y, k, plotting=False, printing=True):
     n, _ = Y.shape
     y = np.ones(n).reshape((-1, 1))
     R = np.random.random_sample((n, k))
@@ -23,14 +23,17 @@ def augmented_lagrangian(Y, k, plotting=False):
     v_best = v
     while v > target:
         Rv = _matrix_to_vector(R)
-        print('Starting L-BFGS-B on augmented Lagrangian...')
+        if printing == True:
+            print('Starting L-BFGS-B on augmented Lagrangian...')
         optimizer = opt.minimize(lambda R_vec: _augmented_lagrangian_func(
             R_vec, Y, y, penalty, n, k), Rv, jac=lambda R_vec: _jacobian(R_vec, Y, n, y, penalty, k), method="L-BFGS-B")
-        print('Finishing L-BFGS-B on augmented Lagrangian...')
+        if printing == True:
+            print('Finishing L-BFGS-B on augmented Lagrangian...')
         R = _vector_to_matrix(optimizer.x, k)
         vec = _constraint_term_vec(n, R)
         v = vec.reshape((1, -1)).dot(vec)
-        print('Finish updating variables...')
+        if printing == True:
+            print('Finish updating variables...')
         if plotting == True:
             _plot_R(R)
         if v < eta * v_best:
@@ -38,7 +41,8 @@ def augmented_lagrangian(Y, k, plotting=False):
             v_best = v
         else:
             penalty = gamma * penalty
-    print('Augmented Lagrangian terminated.')
+    if printing == True:
+        print('Augmented Lagrangian terminated.')
     return R
 
 

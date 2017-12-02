@@ -30,6 +30,7 @@ def _check_spectral_gap(A, z):
 def search_counter_eg(n, snr, n_iter, n_trail):
     found_target = False
     percentage = .5
+    examples = []
 
     while found_target == False and snr > 1:
         snr -= 1
@@ -45,7 +46,7 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                 for j in range(n_trail):
                     print(
                         '>>>>>>Finding global optimizer with BM (trail {})...'.format(j + 1))
-                    Q = bm.augmented_lagrangian(A, 2, plotting=False)
+                    Q = bm.augmented_lagrangian(A, 2, plotting=False, printing=False)
                     kmeans = cluster.KMeans(
                         n_clusters=2, random_state=0).fit(Q)
                     clustering = 2 * kmeans.labels_ - 1
@@ -54,8 +55,21 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                     if err != 0:
                         found_target = True
                         print('One instance found when SNR = {}!'.format(snr))
+                        example = CounterExample(A, z, Q)
+                        examples.append(example)
                         print(A)
+    return examples
+
+
+class CounterExample():
+    def __init__(self, A, z, Q):
+        self.A = A
+        self.z = z
+        self.Q = Q
+
+    def get_noise(self):
+        return self.A - self.z.dot(self.z.T)
 
 
 if __name__ == '__main__':
-    search_counter_eg(1000, 10, 20, 10)
+    examples = search_counter_eg(1000, 7, 20, 10)
