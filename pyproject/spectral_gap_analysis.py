@@ -54,27 +54,46 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                     err = aux.error_rate(clustering, z.ravel())
                     print('The error rate for BM is: {}...'.format(err))
                     if err != 0:
-                        found_target = True
-                        print('One instance found when SNR = {}!'.format(snr))
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
-                            example = CounterExample(A, z, Q, gap)
+                            found_target = True
+                            print('One instance found when SNR = {}!'.format(snr))
+                            example = CounterExample(A, z, Q, gap, snr)
                             examples.append(example)
                             print(A)
+            else:
+                print('===SDP fails===')
+                Q = bm.augmented_lagrangian(
+                    A, 2, plotting=False, printing=False)
+                kmeans = cluster.KMeans(
+                    n_clusters=2, random_state=0).fit(Q)
+                clustering = 2 * kmeans.labels_ - 1
+                err = aux.error_rate(clustering, z.ravel())
+                print('===Error rate for BM is: {}==='.format(err))
     return examples
 
 
 class CounterExample():
 
-    def __init__(self, A, z, Q, gap):
+    def __init__(self, A, z, Q, gap, snr):
         self.A = A
         self.z = z
         self.Q = Q
         self.gap = gap
+        self.snr = snr
 
     def get_noise(self):
         return self.A - self.z.dot(self.z.T)
 
+    def printing(self):
+        print('Noise Level: {}'.format(self.snr))
+        print('Dual Gap: {}'.format(self.gap))
+        print('Noise: ')
+        print(self.get_noise())
+
+
 
 if __name__ == '__main__':
     examples = search_counter_eg(1000, 3.9, 20, 10)
+    for example in examples:
+        example.printing()
