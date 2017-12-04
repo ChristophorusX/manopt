@@ -58,7 +58,7 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                     err = np.linalg.norm(X - X_result)
                     print('The norm error for BM is: {}...'.format(err))
                     N = A - z.dot(z.T)
-                    diagN = np.diag(N.dot(z))
+                    diagN = np.diag(N.dot(z).ravel())
                     eig_max_overall = np.sort(np.linalg.eigvals(N - diagN))[-1]
                     print('Max eigenvalue overall: {}'.format(eig_max_overall))
                     eig_max_N = np.sort(np.linalg.eigvals(N))[-1]
