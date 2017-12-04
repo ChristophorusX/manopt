@@ -59,12 +59,14 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                     print('The norm error for BM is: {}...'.format(err))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
-                    eig_max_overall = np.sort(np.linalg.eigvals(N - diagN))[-1]
-                    print('Max eigenvalue overall: {}'.format(eig_max_overall))
-                    eig_max_N = np.sort(np.linalg.eigvals(N))[-1]
-                    print('Max eigenvalue of N: {}'.format(eig_max_N))
-                    eig_min_diagN = np.sort(np.linalg.eigvals(diagN))[0]
-                    print('Min eigenvalue of diagN: {}'.format(eig_min_diagN))
+                    spectral_overall = np.sort(np.linalg.eigvals(N - diagN))
+                    print('Max eigenvalue overall: {}'.format(spectral_overall[-1]))
+                    spectral_N = np.sort(np.linalg.eigvals(N))
+                    print('>>Max eigenvalue of N: {}'.format(spectral_N[-1]))
+                    print('Min eigenvalue of N: {}'.format(spectral_N[0]))
+                    spectral_diagN = np.sort(np.linalg.eigvals(diagN))
+                    print('Max eigenvalue of diagN: {}'.format(spectral_diagN[-1]))
+                    print('>>Min eigenvalue of diagN: {}'.format(spectral_diagN[0]))
                     if err > .1:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
@@ -106,6 +108,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(1000, 3.8, 20, 10)
+    examples = search_counter_eg(1000, 3.8, 2, 1)
     for example in examples:
         example.printing()
