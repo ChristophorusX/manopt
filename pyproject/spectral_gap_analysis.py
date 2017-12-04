@@ -33,7 +33,7 @@ def search_counter_eg(n, snr, n_iter, n_trail):
     examples = []
 
     while found_target == False and snr > 3:
-        snr -= .1
+        snr -= .05
         print('Starting loops with SNR = {}...'.format(snr))
 
         for i in range(n_iter):
@@ -48,12 +48,16 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                         '>>>>>>Finding global optimizer with BM (trail {})...'.format(j + 1))
                     Q = bm.augmented_lagrangian(
                         A, 2, plotting=False, printing=False)
-                    kmeans = cluster.KMeans(
-                        n_clusters=2, random_state=0).fit(Q)
-                    clustering = 2 * kmeans.labels_ - 1
-                    err = aux.error_rate(clustering, z.ravel())
-                    print('The error rate for BM is: {}...'.format(err))
-                    if err != 0:
+                    # kmeans = cluster.KMeans(
+                    #     n_clusters=2, random_state=0).fit(Q)
+                    # clustering = 2 * kmeans.labels_ - 1
+                    # err = aux.error_rate(clustering, z.ravel())
+                    # print('The error rate for BM is: {}...'.format(err))
+                    X_result = Q.dot(Q.T)
+                    X = z.dot(z.T)
+                    err = np.linalg.norm(X - X_result)
+                    print('The norm error for BM is: {}...'.format(err))
+                    if err > .1:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
                             found_target = True
@@ -94,6 +98,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(1000, 3.9, 20, 10)
+    examples = search_counter_eg(1000, 3.8, 20, 10)
     for example in examples:
         example.printing()
