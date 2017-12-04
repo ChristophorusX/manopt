@@ -32,7 +32,7 @@ def search_counter_eg(n, snr, n_iter, n_trail):
     percentage = .5
     examples = []
 
-    while found_target == False and snr > 3:
+    while snr > 3:
         snr -= .05
         print('Starting loops with SNR = {}...'.format(snr))
 
