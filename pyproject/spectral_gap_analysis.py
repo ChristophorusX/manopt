@@ -1,6 +1,7 @@
 import numpy as np
 import sync_generator as syncgen
 import sbm_generator as sbmgen
+import noise_generator as gen
 import burer_monteiro as bm
 from sklearn import cluster
 import aux
@@ -27,18 +28,21 @@ def _check_spectral_gap(A, z):
         return False
 
 
-def search_counter_eg(n, snr, n_iter, n_trail):
-    found_target = False
-    percentage = .5
+def search_counter_eg(n, level, n_iter, n_trail):
+    # found_target = False
     examples = []
 
-    while snr > 3:
-        snr -= .05
-        print('Starting loops with SNR = {}...'.format(snr))
+    while level > 0:
+        level -= .05
+        print('Starting loops with noise level = {}...'.format(level))
 
         for i in range(n_iter):
             print('Loop #{}'.format(i + 1))
-            A, z = _gen_sync(n, percentage, snr)
+            z = aux.rounding_with_prob(np.random.random_sample(n), .5)
+            z = 2 * z.reshape(n, 1) - 1
+            ground_truth = z.dot(z.T)
+            N = gen.uniform_noise(n, level)
+            A = ground_truth + N
             # A, z = _gen_sbm(n, 10, 2)
 
             if _check_spectral_gap(A, z):
@@ -70,9 +74,9 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                     if err > .1:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
-                            found_target = True
-                            print('One instance found when SNR = {}!'.format(snr))
-                            example = CounterExample(A, z, Q, gap, snr)
+                            # found_target = True
+                            print('One instance found when noise level = {}!'.format(level))
+                            example = CounterExample(A, z, Q, gap, level)
                             examples.append(example)
                             print(A)
             else:
@@ -108,6 +112,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(1000, 3.8, 2, 1)
+    examples = search_counter_eg(100, 1, 2, 1)
     for example in examples:
         example.printing()
