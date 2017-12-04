@@ -57,6 +57,14 @@ def search_counter_eg(n, snr, n_iter, n_trail):
                     X = z.dot(z.T)
                     err = np.linalg.norm(X - X_result)
                     print('The norm error for BM is: {}...'.format(err))
+                    N = A - z.dot(z.T)
+                    diagN = np.diag(N.dot(z))
+                    eig_max_overall = np.sort(np.linalg.eigvals(N - diagN))[-1]
+                    print('Max eigenvalue overall: {}'.format(eig_max_overall))
+                    eig_max_N = np.sort(np.linalg.eigvals(N))[-1]
+                    print('Max eigenvalue of N: {}'.format(eig_max_N))
+                    eig_min_diagN = np.sort(np.linalg.eigvals(diagN))[0]
+                    print('Min eigenvalue of diagN: {}'.format(eig_min_diagN))
                     if err > .1:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
