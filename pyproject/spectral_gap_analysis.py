@@ -32,9 +32,11 @@ def search_counter_eg(n, level, n_iter, n_trail):
     # found_target = False
     examples = []
 
-    while level < 2:
+    while level < 3:
         level += .05
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++')
         print('Starting loops with noise level = {}...'.format(level))
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++')
 
         for i in range(n_iter):
             print('Loop #{}'.format(i + 1))
@@ -46,10 +48,10 @@ def search_counter_eg(n, level, n_iter, n_trail):
             # A, z = _gen_sbm(n, 10, 2)
 
             if _check_spectral_gap(A, z):
-                print('>>>Found matrix where SDP tight...')
+                print('------------Found matrix where SDP tight------------')
                 for j in range(n_trail):
                     print(
-                        '>>>>>>Finding global optimizer with BM (trail {})...'.format(j + 1))
+                        'Finding global optimizer with BM (trail {})...'.format(j + 1))
                     Q = bm.augmented_lagrangian(
                         A, 2, plotting=False, printing=False)
                     # kmeans = cluster.KMeans(
@@ -61,20 +63,20 @@ def search_counter_eg(n, level, n_iter, n_trail):
                     X = z.dot(z.T)
                     err = np.linalg.norm(X - X_result, 1)
                     corr = np.linalg.norm(np.dot(Q.T, z), 2)
-                    print('The correlation factor is: {}...'.format(corr / n))
-                    print('The norm 1 error for BM is: {}...'.format(err / n**2))
+                    print('>>>>>>The correlation factor is: {}...'.format(corr / n))
+                    print('>>>>>>The norm 1 error for BM is: {}...'.format(err / n**2))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
                     spectral_overall = np.sort(np.linalg.eigvals(N - diagN))
                     print('Max eigenvalue overall: {}'.format(
                         spectral_overall[-1]))
                     spectral_N = np.sort(np.linalg.eigvals(N))
-                    print('>>Max eigenvalue of N: {}'.format(spectral_N[-1]))
+                    print('###### Max eigenvalue of N: {}'.format(spectral_N[-1]))
                     print('Min eigenvalue of N: {}'.format(spectral_N[0]))
                     spectral_diagN = np.sort(np.linalg.eigvals(diagN))
                     print('Max eigenvalue of diagN: {}'.format(
                         spectral_diagN[-1]))
-                    print('>>Min eigenvalue of diagN: {}'.format(
+                    print('###### Min eigenvalue of diagN: {}'.format(
                         spectral_diagN[0]))
                     if np.max(np.abs(X - X_result)) > .05:
                         gap = aux.laplacian_eigs(A, z)[1]
@@ -143,6 +145,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(100, .5, 2, 1)
+    examples = search_counter_eg(100, 1, 2, 1)
     for example in examples:
         example.printing()
