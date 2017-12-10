@@ -62,22 +62,26 @@ def search_counter_eg(n, level, n_iter, n_trail):
                     err = np.linalg.norm(X - X_result)
                     corr = np.linalg.norm(np.dot(Q.T, z), 2)
                     print('The correlation is: {}...'.format(corr))
-                    print('The norm error for BM is: {}...'.format(err))
+                    print('The norm error for BM is: {}...'.format(err / n**2))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
                     spectral_overall = np.sort(np.linalg.eigvals(N - diagN))
-                    print('Max eigenvalue overall: {}'.format(spectral_overall[-1]))
+                    print('Max eigenvalue overall: {}'.format(
+                        spectral_overall[-1]))
                     spectral_N = np.sort(np.linalg.eigvals(N))
                     print('>>Max eigenvalue of N: {}'.format(spectral_N[-1]))
                     print('Min eigenvalue of N: {}'.format(spectral_N[0]))
                     spectral_diagN = np.sort(np.linalg.eigvals(diagN))
-                    print('Max eigenvalue of diagN: {}'.format(spectral_diagN[-1]))
-                    print('>>Min eigenvalue of diagN: {}'.format(spectral_diagN[0]))
+                    print('Max eigenvalue of diagN: {}'.format(
+                        spectral_diagN[-1]))
+                    print('>>Min eigenvalue of diagN: {}'.format(
+                        spectral_diagN[0]))
                     if err > .1:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
                             # found_target = True
-                            print('One instance found when noise level = {}!'.format(level))
+                            print(
+                                'One instance found when noise level = {}!'.format(level))
                             example = CounterExample(A, z, Q, gap, level)
                             examples.append(example)
                             print(A)
@@ -110,7 +114,6 @@ class CounterExample():
         print('Dual Gap: {}'.format(self.gap))
         print('Noise: ')
         print(self.get_noise())
-
 
 
 if __name__ == '__main__':
