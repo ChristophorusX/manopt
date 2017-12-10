@@ -63,22 +63,24 @@ def search_counter_eg(n, level, n_iter, n_trail):
                     X = z.dot(z.T)
                     err = np.linalg.norm(X - X_result, 1)
                     corr = np.linalg.norm(np.dot(Q.T, z), 2)
+                    largest_diff = np.max(np.abs(X - X_result))
                     print('>>>>>>The correlation factor is: {}...'.format(corr / n))
                     print('>>>>>>The norm 1 error for BM is: {}...'.format(err / n**2))
+                    print('>>>>>>The largest element diff is: {}...'.format(largest_diff))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
                     spectral_overall = np.sort(np.linalg.eigvals(N - diagN))
                     print('Max eigenvalue overall: {}'.format(
                         spectral_overall[-1]))
                     spectral_N = np.sort(np.linalg.eigvals(N))
-                    print('###### Max eigenvalue of N: {}'.format(spectral_N[-1]))
+                    print('###### Max eigenvalue of N: {} ######'.format(spectral_N[-1]))
                     print('Min eigenvalue of N: {}'.format(spectral_N[0]))
                     spectral_diagN = np.sort(np.linalg.eigvals(diagN))
                     print('Max eigenvalue of diagN: {}'.format(
                         spectral_diagN[-1]))
-                    print('###### Min eigenvalue of diagN: {}'.format(
+                    print('###### Min eigenvalue of diagN: {} ######'.format(
                         spectral_diagN[0]))
-                    if np.max(np.abs(X - X_result)) > .05:
+                    if largest_diff > .05:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
                             # found_target = True
