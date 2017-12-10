@@ -60,6 +60,8 @@ def search_counter_eg(n, level, n_iter, n_trail):
                     X_result = Q.dot(Q.T)
                     X = z.dot(z.T)
                     err = np.linalg.norm(X - X_result)
+                    corr = np.linalg.norm(np.dot(Q.T, z), 2)
+                    print('The correlation is: {}...'.format(corr))
                     print('The norm error for BM is: {}...'.format(err))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
