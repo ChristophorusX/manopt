@@ -32,7 +32,7 @@ def search_counter_eg(n, level, n_iter, n_trail):
     # found_target = False
     examples = []
 
-    while level > 0:
+    while level < 2:
         level += .05
         print('Starting loops with noise level = {}...'.format(level))
 
@@ -76,7 +76,7 @@ def search_counter_eg(n, level, n_iter, n_trail):
                         spectral_diagN[-1]))
                     print('>>Min eigenvalue of diagN: {}'.format(
                         spectral_diagN[0]))
-                    if err > .01:
+                    if np.max(np.abs(X - X_result)) > .05:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
                             # found_target = True
