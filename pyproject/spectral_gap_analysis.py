@@ -61,7 +61,7 @@ def search_counter_eg(n, level, n_iter, n_trail):
                     X = z.dot(z.T)
                     err = np.linalg.norm(X - X_result, 1)
                     corr = np.linalg.norm(np.dot(Q.T, z), 2)
-                    print('The correlation is: {}...'.format(corr))
+                    print('The correlation factor is: {}...'.format(corr / n))
                     print('The norm 1 error for BM is: {}...'.format(err / n**2))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
@@ -76,7 +76,7 @@ def search_counter_eg(n, level, n_iter, n_trail):
                         spectral_diagN[-1]))
                     print('>>Min eigenvalue of diagN: {}'.format(
                         spectral_diagN[0]))
-                    if err > 1:
+                    if err > .01:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
                             # found_target = True
@@ -94,6 +94,32 @@ def search_counter_eg(n, level, n_iter, n_trail):
                 clustering = 2 * kmeans.labels_ - 1
                 err = aux.error_rate(clustering, z.ravel())
                 print('===Error rate for BM is: {}==='.format(err))
+                Q = bm.augmented_lagrangian(
+                    A, 2, plotting=False, printing=False)
+                # kmeans = cluster.KMeans(
+                #     n_clusters=2, random_state=0).fit(Q)
+                # clustering = 2 * kmeans.labels_ - 1
+                # err = aux.error_rate(clustering, z.ravel())
+                # print('The error rate for BM is: {}...'.format(err))
+                X_result = Q.dot(Q.T)
+                X = z.dot(z.T)
+                err = np.linalg.norm(X - X_result, 1)
+                corr = np.linalg.norm(np.dot(Q.T, z), 2)
+                print('The correlation factor is: {}...'.format(corr / n))
+                print('The norm 1 error for BM is: {}...'.format(err / n**2))
+                N = A - z.dot(z.T)
+                diagN = np.diag(N.dot(z).ravel())
+                spectral_overall = np.sort(np.linalg.eigvals(N - diagN))
+                print('Max eigenvalue overall: {}'.format(
+                    spectral_overall[-1]))
+                spectral_N = np.sort(np.linalg.eigvals(N))
+                print('>>Max eigenvalue of N: {}'.format(spectral_N[-1]))
+                print('Min eigenvalue of N: {}'.format(spectral_N[0]))
+                spectral_diagN = np.sort(np.linalg.eigvals(diagN))
+                print('Max eigenvalue of diagN: {}'.format(
+                    spectral_diagN[-1]))
+                print('>>Min eigenvalue of diagN: {}'.format(
+                    spectral_diagN[0]))
     return examples
 
 
