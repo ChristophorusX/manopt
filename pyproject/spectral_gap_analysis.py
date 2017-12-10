@@ -149,6 +149,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(100, 1, 1, 2, 1)
+    examples = search_counter_eg(100, 1, 1.2, 2, 1)
     for example in examples:
         example.printing()
