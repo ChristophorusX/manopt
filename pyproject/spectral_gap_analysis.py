@@ -45,6 +45,7 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
             ground_truth = z.dot(z.T)
             N = gen.uniform_noise(n, level) + drift
             A = ground_truth + N
+            A = aux.demean_adversary(A)
             # A, z = _gen_sbm(n, 10, 2)
 
             if _check_spectral_gap(A, z):
