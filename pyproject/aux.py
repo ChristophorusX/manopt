@@ -17,7 +17,7 @@ def demean(A, p, q):
 
 def demean_adversary(V):
     n, _ = V.shape
-    col_sum = np.sum(V, axis=1).shape(-1, 1)
+    col_sum = (np.sum(V, axis=1)).shape(-1, 1)
     one_vector = create_one_vector(n)
     V_bm = V - col_sum.dot(one_vector.shape(1, -1)) / n
     print('Demeaned the adversary SBM matrix into non-biased matrix for BM...')
