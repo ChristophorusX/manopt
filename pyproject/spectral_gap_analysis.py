@@ -22,7 +22,7 @@ def _gen_sbm(n, a, b):
 
 
 def _check_spectral_gap(A, z):
-    if _spectral_gap(A, z) > 0:
+    if _spectral_gap(A, z) > .001:
         return True
     else:
         return False
@@ -38,7 +38,7 @@ def search_counter_eg(n, level, n_iter, n_trail):
 
         for i in range(n_iter):
             print('Loop #{}'.format(i + 1))
-            z = aux.rounding_with_prob(np.random.random_sample(n), level)
+            z = aux.rounding_with_prob(np.random.random_sample(n), .5)
             z = 2 * z.reshape(n, 1) - 1
             ground_truth = z.dot(z.T)
             N = gen.uniform_noise(n, level)
@@ -59,10 +59,10 @@ def search_counter_eg(n, level, n_iter, n_trail):
                     # print('The error rate for BM is: {}...'.format(err))
                     X_result = Q.dot(Q.T)
                     X = z.dot(z.T)
-                    err = np.linalg.norm(X - X_result)
+                    err = np.linalg.norm(X - X_result, 1)
                     corr = np.linalg.norm(np.dot(Q.T, z), 2)
                     print('The correlation is: {}...'.format(corr))
-                    print('The norm error for BM is: {}...'.format(err / n**2))
+                    print('The norm 1 error for BM is: {}...'.format(err / n**2))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
                     spectral_overall = np.sort(np.linalg.eigvals(N - diagN))
