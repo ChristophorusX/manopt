@@ -32,8 +32,8 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
     # found_target = False
     examples = []
 
-    while level < 3:
-        level += .05
+    while level > 0:
+        level -= .05
         print('+++++++++++++++++++++++++++++++++++++++++++++++++')
         print('Starting loops with noise level = {}...'.format(level))
         print('+++++++++++++++++++++++++++++++++++++++++++++++++')
@@ -149,6 +149,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(100, 1, 1.2, 2, 1)
+    examples = search_counter_eg(100, 1, 1.5, 2, 1)
     for example in examples:
         example.printing()
