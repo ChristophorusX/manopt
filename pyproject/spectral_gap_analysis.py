@@ -28,7 +28,7 @@ def _check_spectral_gap(A, z):
         return False
 
 
-def search_counter_eg(n, level, n_iter, n_trail):
+def search_counter_eg(n, level, drift, n_iter, n_trail):
     # found_target = False
     examples = []
 
@@ -43,7 +43,7 @@ def search_counter_eg(n, level, n_iter, n_trail):
             z = aux.rounding_with_prob(np.random.random_sample(n), .5)
             z = 2 * z.reshape(n, 1) - 1
             ground_truth = z.dot(z.T)
-            N = gen.uniform_noise(n, level)
+            N = gen.uniform_noise(n, level) + drift
             A = ground_truth + N
             # A, z = _gen_sbm(n, 10, 2)
 
@@ -147,6 +147,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(100, 1, 2, 1)
+    examples = search_counter_eg(100, 1, .5, 2, 1)
     for example in examples:
         example.printing()
