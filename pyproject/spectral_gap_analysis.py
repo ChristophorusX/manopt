@@ -45,7 +45,7 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
             z = [i for i in range(n)]
             z = np.array(z).reshape((-1, 1))
             mat = z.dot(z.T)
-            N = level * aux.laplacian(mat)
+            N = - level * aux.laplacian(mat)
             z = np.ones(n).reshape((-1, 1))
             ground_truth = z.dot(z.T)
             # N = gen.uniform_noise(n, level) + drift
