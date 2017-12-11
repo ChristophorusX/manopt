@@ -40,8 +40,10 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
 
         for i in range(n_iter):
             print('Loop #{}'.format(i + 1))
-            z = aux.rounding_with_prob(np.random.random_sample(n), .5)
-            z = 2 * z.reshape(n, 1) - 1
+            # z = aux.rounding_with_prob(np.random.random_sample(n), .5)
+            # z = 2 * z.reshape(n, 1) - 1
+            z = [i for i in range(n)]
+            z = np.array(z)
             mat = z.dot(z.T)
             N = level * aux.laplacian(mat)
             z = np.ones(n).reshape((-1, 1))
