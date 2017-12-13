@@ -32,23 +32,30 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
     # found_target = False
     examples = []
 
-    while level > 0:
-        level += .05
+    while True: # level > 0
+        # level += .05
         print('+++++++++++++++++++++++++++++++++++++++++++++++++')
         print('Starting loops with noise level = {}...'.format(level))
         print('+++++++++++++++++++++++++++++++++++++++++++++++++')
+
+        n_tests = 0
+        print('This is #{} loop...........'.format(n_tests))
 
         for i in range(n_iter):
             print('Loop #{}'.format(i + 1))
             # z = aux.rounding_with_prob(np.random.random_sample(n), .5)
             # z = 2 * z.reshape(n, 1) - 1
-            z = [i for i in range(n)]
-            z = np.array(z).reshape((-1, 1))
-            mat = z.dot(z.T)
-            N = - level * aux.laplacian(mat)
             z = np.ones(n).reshape((-1, 1))
             ground_truth = z.dot(z.T)
-            # N = gen.uniform_noise(n, level) + drift
+            # noise = [i for i in range(n)]
+            # noise = np.array(noise).reshape((-1, 1))
+            # mat = noise.dot(noise.T)
+            # N_pre = aux.laplacian(mat)
+            # N_pre = N_pre - np.diag(np.diag(N_pre))
+            # N = - level * N_pre
+
+            N = gen.uniform_noise(n, level) + drift
+            N = N - np.diag(np.diag(N))
             A = ground_truth + N
             # A = aux.demean_adversary(A)
             # A, z = _gen_sbm(n, 10, 2)
@@ -72,14 +79,16 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
                     largest_diff = np.max(np.abs(X - X_result))
                     print('>>>>>>The correlation factor is: {}...'.format(corr / n))
                     print('>>>>>>The norm 1 error for BM is: {}...'.format(err / n**2))
-                    print('>>>>>>The largest element diff is: {}...'.format(largest_diff))
+                    print('>>>>>>The largest element diff is: {}...'.format(
+                        largest_diff))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
                     spectral_overall = np.sort(np.linalg.eigvals(N - diagN))
                     print('Max eigenvalue overall: {}'.format(
                         spectral_overall[-1]))
                     spectral_N = np.sort(np.linalg.eigvals(N))
-                    print('###### Max eigenvalue of N: {} ######'.format(spectral_N[-1]))
+                    print('###### Max eigenvalue of N: {} ######'.format(
+                        spectral_N[-1]))
                     print('Min eigenvalue of N: {}'.format(spectral_N[0]))
                     spectral_diagN = np.sort(np.linalg.eigvals(diagN))
                     print('Max eigenvalue of diagN: {}'.format(
@@ -95,6 +104,7 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
                             example = CounterExample(A, z, Q, gap, level)
                             examples.append(example)
                             print(A)
+                            exit(0)
             else:
                 print('===SDP fails===')
                 Q = bm.augmented_lagrangian(
@@ -155,6 +165,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(100, 3, .05, 2, 1)
+    examples = search_counter_eg(10, 10, 10, 1, 100)
     for example in examples:
         example.printing()
