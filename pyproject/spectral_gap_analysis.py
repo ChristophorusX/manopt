@@ -50,7 +50,7 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
     # found_target = False
     examples = []
 
-    while True: # level > 0
+    while True:  # level > 0
         # level += .05
         print('+++++++++++++++++++++++++++++++++++++++++++++++++')
         print('Starting loops with noise level = {}...'.format(level))

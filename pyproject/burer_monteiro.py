@@ -460,16 +460,15 @@ def _minimize_trust_region(fun, x0, n_rows, plotting, args=(), jac=None, hess=No
         'A bad approximation caused failure to predict improvement.',
         'A linalg error occurred, such as a non-psd Hessian.',
     )
-    if disp:
-        if warnflag == 0:
-            print(status_messages[warnflag])
-        else:
-            print('Warning: ' + status_messages[warnflag])
-        print("         Current function value: %f" % m())
-        print("         Iterations: %d" % k)
-        print("         Function evaluations: %d" % nfun[0])
-        print("         Gradient evaluations: %d" % njac[0])
-        print("         Hessian evaluations: %d" % nhess[0])
+    if warnflag == 0:
+        print(status_messages[warnflag])
+    else:
+        print('Warning: ' + status_messages[warnflag])
+    print("         Current function value: %f" % m())
+    print("         Iterations: %d" % k)
+    print("         Function evaluations: %d" % nfun[0])
+    print("         Gradient evaluations: %d" % njac[0])
+    print("         Hessian evaluations: %d" % nhess[0])
 
     result = Result(x=x, success=(warnflag == 0), status=warnflag, fun=m.fun,
                     jac=m.jac, nfev=nfun[0], njev=njac[0], nhev=nhess[0],
