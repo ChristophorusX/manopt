@@ -28,6 +28,24 @@ def _check_spectral_gap(A, z):
         return False
 
 
+def _gen_sparse_mat(n, level):
+    mat = np.zeros(n**2)
+    for i in range(2):
+        index = np.random.randint(n**2)
+        mat[index] = level
+    mat = mat.reshape((n, n))
+    return mat
+
+
+def _gen_row_mat(n, level):
+    mat = np.zeros((n, n))
+    for i in range(2):
+        index = np.random.randint(n)
+        mat[index, :] = level
+        mat[:, index] = level
+    return mat
+
+
 def search_counter_eg(n, level, drift, n_iter, n_trail):
     # found_target = False
     examples = []
@@ -54,7 +72,8 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
             # N_pre = N_pre - np.diag(np.diag(N_pre))
             # N = - level * N_pre
 
-            N = gen.uniform_noise(n, level) + drift
+            # N = gen.uniform_noise(n, level) + drift
+            N = _gen_row_mat(n, level)
             N = N - np.diag(np.diag(N))
             A = ground_truth + N
             # A = aux.demean_adversary(A)
@@ -65,8 +84,13 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
                 for j in range(n_trail):
                     print(
                         'Finding global optimizer with BM (trail {})...'.format(j + 1))
-                    Q = bm.augmented_lagrangian(
-                        A, 2, plotting=False, printing=False)
+                    # Q = bm.augmented_lagrangian(
+                    #     A, 2, plotting=False, printing=False)
+                    result = bm.trust_region(A, 2, plotting=False)
+                    Q_vec = result.x
+                    Q = Q_vec.reshape((n, 2))
+                    flag = result.success
+                    print('Success: {}'.format(flag))
                     # kmeans = cluster.KMeans(
                     #     n_clusters=2, random_state=0).fit(Q)
                     # clustering = 2 * kmeans.labels_ - 1
@@ -77,10 +101,22 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
                     err = np.linalg.norm(X - X_result, 1)
                     corr = np.linalg.norm(np.dot(Q.T, z), 2)
                     largest_diff = np.max(np.abs(X - X_result))
+                    pair_diff = 0
+                    for k in range(n):
+                        for l in range(n):
+                            if k != l:
+                                vec1 = Q[k, :]
+                                vec2 = Q[l, :]
+                                d = np.linalg.norm(vec1 - vec2, 2)
+                                if d > pair_diff:
+                                    pair_diff = d
+
                     print('>>>>>>The correlation factor is: {}...'.format(corr / n))
                     print('>>>>>>The norm 1 error for BM is: {}...'.format(err / n**2))
                     print('>>>>>>The largest element diff is: {}...'.format(
                         largest_diff))
+                    print('>>>>>>The largest pairwise difference is: {}...'.format(
+                        pair_diff))
                     N = A - z.dot(z.T)
                     diagN = np.diag(N.dot(z).ravel())
                     spectral_overall = np.sort(np.linalg.eigvals(N - diagN))
@@ -95,7 +131,7 @@ def search_counter_eg(n, level, drift, n_iter, n_trail):
                         spectral_diagN[-1]))
                     print('###### Min eigenvalue of diagN: {} ######'.format(
                         spectral_diagN[0]))
-                    if largest_diff > .05:
+                    if pair_diff > .1:
                         gap = aux.laplacian_eigs(A, z)[1]
                         if gap > .01:
                             # found_target = True
@@ -165,6 +201,6 @@ class CounterExample():
 
 
 if __name__ == '__main__':
-    examples = search_counter_eg(10, 10, 10, 1, 100)
+    examples = search_counter_eg(10, 10, 0, 1, 100)
     for example in examples:
         example.printing()
