@@ -464,7 +464,7 @@ def _minimize_trust_region(fun, x0, n_rows, plotting, args=(), jac=None, hess=No
         print(status_messages[warnflag])
     else:
         print('Warning: ' + status_messages[warnflag])
-    print("         Current function value: %f" % m())
+    # print("         Current function value: %f" % m())
     print("         Iterations: %d" % k)
     print("         Function evaluations: %d" % nfun[0])
     print("         Gradient evaluations: %d" % njac[0])
